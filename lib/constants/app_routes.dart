@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
 
 abstract class AppRoutes {
   const AppRoutes._();
@@ -17,8 +18,7 @@ abstract class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case home:
-        //TODO: Replace Placeholder with HomeScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const HomePage());
       case login:
         //TODO: Replace Placeholder with HomeScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
