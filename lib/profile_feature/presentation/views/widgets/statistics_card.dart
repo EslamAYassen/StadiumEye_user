@@ -1,6 +1,12 @@
-import'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+
 class StatisticsCard extends StatelessWidget {
-  const StatisticsCard({super.key, required this.reports, required this.approved, required this.pending});
+  const StatisticsCard({
+    super.key,
+    required this.reports,
+    required this.approved,
+    required this.pending,
+  });
   //replace API data
   final int reports;
   final int approved;
@@ -9,16 +15,17 @@ class StatisticsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 25),
+      margin: const EdgeInsets.symmetric(horizontal: 25),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Statistics",style: TextStyle(fontSize:18,fontWeight: FontWeight.bold),),
-            SizedBox(
-              height: 7,
+            const Text(
+              "Statistics",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 7),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -30,14 +37,18 @@ class StatisticsCard extends StatelessWidget {
           ],
         ),
       ),
-    ) ;
+    );
   }
 }
-Column build_static_card(String title,int value){
+
+Column build_static_card(String title, int value) {
   return Column(
     children: [
-      Text(value.toString(),style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
-      Text(title, style: TextStyle(color: Colors.grey,fontSize: 16)),
+      Text(
+        value.toString(),
+        style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+      ),
+      Text(title, style: const TextStyle(color: Colors.grey, fontSize: 16)),
     ],
   );
 }
