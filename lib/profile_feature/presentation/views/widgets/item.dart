@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 
 class Item extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class Item extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ListTile(
-        leading: Icon(icon, color: Colors.green),
+        leading: Icon(icon, color:AppColors.lightGreen),
         title: Text(title),
         trailing: Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () {},

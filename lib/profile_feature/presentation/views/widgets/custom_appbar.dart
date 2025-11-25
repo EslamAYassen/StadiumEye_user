@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/profile_feature/presentation/views/widgets/conect_information_card.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({super.key});
@@ -13,7 +14,7 @@ class CustomAppbar extends StatelessWidget {
           width: double.infinity,
           height: 200,
           decoration: BoxDecoration(
-            color: Colors.green[800],
+            color: AppColors.primary,
             borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(25),
               bottomLeft: Radius.circular(25),
@@ -31,7 +32,7 @@ class CustomAppbar extends StatelessWidget {
                   child: Icon(
                     Icons.person_outline,
                     size: 45,
-                    color: Colors.green[800],
+                    color: AppColors.primary,
                   ),
                 ),
               ),
@@ -41,7 +42,7 @@ class CustomAppbar extends StatelessWidget {
                   Text(
                     'John Smith',
                     style: TextStyle(
-                      color: Colors.black54,
+                      color:AppColors.blackColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -49,7 +50,7 @@ class CustomAppbar extends StatelessWidget {
                   Text(
                     'Field Reporter',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.whiteColor,
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
