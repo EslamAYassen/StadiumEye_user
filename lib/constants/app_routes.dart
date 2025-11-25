@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
 
+import '../features/report/presentation/pages/add_report_page.dart';
+
 abstract class AppRoutes {
   const AppRoutes._();
   static const String navigator = '/';
@@ -26,8 +28,7 @@ abstract class AppRoutes {
         //TODO: Replace Placeholder with RegisterScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
       case addReportPage:
-        //TODO: Replace Placeholder with AddTicketPage
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const AddReportPage());
       case profile:
         //TODO: Replace Placeholder with ProfileScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
