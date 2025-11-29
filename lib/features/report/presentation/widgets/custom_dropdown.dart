@@ -30,11 +30,11 @@ class CustomDropdown extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
         border: Border.all(color: Colors.grey.shade300),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
+          // BoxShadow(
+          //   color: Colors.black.withOpacity(0.05),
+          //   blurRadius: 6,
+          //   offset: const Offset(0, 3),
+          // ),
         ],
       ),
       child: DropdownButtonHideUnderline(

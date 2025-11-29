@@ -20,9 +20,48 @@ class _AddReportPageState extends State<AddReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      body: Padding(padding: EdgeInsets.all(20.0), child: ReportForm()),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Row(
+                  children: [
+                    Container(
+                      // margin: const EdgeInsets.(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.green.shade400,
+                      ),
+                      child: Center(
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Add Report",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              const ReportForm(),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
     );
     // Scaffold(
     //   body: BlocProvider(
