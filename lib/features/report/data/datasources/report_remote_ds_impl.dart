@@ -1,5 +1,8 @@
+//TODO: Implement Dio method
+
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+
 import '../models/report_model.dart';
 import 'report_remote_ds.dart';
 
@@ -9,41 +12,41 @@ class ReportRemoteDSImpl implements ReportRemoteDS {
 
   ReportRemoteDSImpl({required this.baseUrl, this.token});
 
-  Map<String, String> get _headers => {
-    "Content-Type": "application/json",
-    if (token != null) "Authorization": "Bearer $token",
-  };
+  // Map<String, String> get _headers => {
+  //   "Content-Type": "application/json",
+  //   if (token != null) "Authorization": "Bearer $token",
+  // };
 
   @override
   Future<void> createReport(ReportModel report) async {
-    final url = Uri.parse("$baseUrl/reports");
+    // final url = Uri.parse("$baseUrl/reports");
+    // final dio = Dio();
+    // final response = await dio.post(
+    //   url,
+    //   headers: _headers,
+    //   body: jsonEncode(report.toJson()),
+    // );
 
-    final response = await http.post(
-      url,
-      headers: _headers,
-      body: jsonEncode(report.toJson()),
-    );
-
-    if (response.statusCode != 201 && response.statusCode != 200) {
-      throw Exception(
-        "Failed to create report: ${response.statusCode} - ${response.body}",
-      );
-    }
+    // if (response.statusCode != 201 && response.statusCode != 200) {
+    //   throw Exception(
+    //     "Failed to create report: ${response.statusCode} - ${response.body}",
+    //   );
+    // }
   }
 
   @override
   Future<List<ReportModel>> getMyReports() async {
-    final url = Uri.parse("$baseUrl/reports/my");
-
-    final response = await http.get(url, headers: _headers);
+    final url = "$baseUrl/reports/my";
+    final dio = Dio();
+    final response = await dio.get(url);
 
     if (response.statusCode != 200) {
       throw Exception(
-        "Failed to fetch reports: ${response.statusCode} - ${response.body}",
+        "Failed to fetch reports: ${response.statusCode} - ${response.data}",
       );
     }
 
-    final List decoded = jsonDecode(response.body);
+    final List decoded = jsonDecode(response.data);
 
     return decoded
         .map((e) => ReportModel.fromJson(e as Map<String, dynamic>))

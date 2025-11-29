@@ -5,6 +5,7 @@ import 'package:stadium_eye/features/report/presentation/bloc/report_bloc.dart';
 import 'package:stadium_eye/features/report/presentation/bloc/report_event.dart';
 import 'package:stadium_eye/features/report/presentation/bloc/report_state.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/report_form.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 
 class AddReportPage extends StatefulWidget {
   const AddReportPage({super.key});
@@ -20,7 +21,7 @@ class _AddReportPageState extends State<AddReportPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color(0xFFf5fcf8),
+      backgroundColor: AppColors.backgroundColor,
       body: Padding(padding: EdgeInsets.all(20.0), child: ReportForm()),
     );
     // Scaffold(

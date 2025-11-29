@@ -19,6 +19,8 @@ dependencies:
   iconsax_flutter: ^1.0.1
   intl: ^0.20.2
   persistent_bottom_nav_bar_v2: ^6.2.0
+  dio: ^5.9.0
+  dotted_border: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^6.0.0

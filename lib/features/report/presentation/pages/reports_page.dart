@@ -17,7 +17,6 @@ class ReportsPage extends StatelessWidget {
           if (state is ReportLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (state is ReportLoaded) {
             return ListView.builder(
               itemCount: state.reports.length,
@@ -30,7 +29,6 @@ class ReportsPage extends StatelessWidget {
               },
             );
           }
-
           return Center(
             child: ElevatedButton(
               child: const Text("Load Reports"),
