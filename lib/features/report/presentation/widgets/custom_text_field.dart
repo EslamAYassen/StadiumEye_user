@@ -33,14 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
-
+        border: Border.all(width: 0, color: Colors.transparent),
         borderRadius: const BorderRadius.all(
           Radius.circular(AppThemeConsts.radius16lg),
         ),
@@ -62,28 +55,41 @@ class _CustomTextFieldState extends State<CustomTextField> {
           filled: true,
 
           fillColor: const Color.fromARGB(255, 255, 255, 255),
+
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(AppThemeConsts.radius12md),
+            ),
+          ),
+
+          // focused state
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Theme.of(context).primaryColor,
               width: 1.7,
             ),
             borderRadius: const BorderRadius.all(
-              Radius.circular(AppThemeConsts.radius16lg),
+              Radius.circular(AppThemeConsts.radius12md),
+            ),
+          ),
+
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade300),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(AppThemeConsts.radius12md),
+            ),
+          ),
+
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red, width: 1.0),
+            borderRadius: BorderRadius.all(
+              Radius.circular(AppThemeConsts.radius12md),
             ),
           ),
 
           floatingLabelAlignment: FloatingLabelAlignment.start,
 
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color.fromRGBO(224, 224, 224, 1),
-              width: 1,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(AppThemeConsts.radius12md),
-            ),
-          ),
-          // labelText: widget.labelText,
           hint: Text(
             widget.hint ?? "",
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(

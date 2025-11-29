@@ -28,14 +28,15 @@ class QuickActionsSection extends StatelessWidget {
 
         const SizedBox(height: 30),
 
-        const _ActionButton(
+        _ActionButton(
           textColor: Colors.black,
+          onTap: () => Navigator.pushNamed(context, AppRoutes.myReports),
           icon: Iconsax.document_copy,
           title: "My Reports",
           subtitle: "View your submitted reports",
           iconColor: Colors.green,
           fontWeight: FontWeight.w400,
-          gradientColors: [Color(0xFFE8FFF1)],
+          gradientColors: const [Color(0xFFE8FFF1)],
           iconBackgroundColor: Colors.white,
           numberOfReports: 23,
         ),
