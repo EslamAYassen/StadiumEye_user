@@ -10,8 +10,8 @@ class LogOut extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: OutlinedButton.icon(
         onPressed: () {},
-        icon: Icon(Icons.logout, color: AppColors.lightGreen),
-        label: Text('Logout', style: TextStyle(color: AppColors.lightGreen)),
+        icon:const Icon(Icons.logout, color: AppColors.lightGreen),
+        label:const Text('Logout', style: TextStyle(color: AppColors.lightGreen)),
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 45),
           side: const BorderSide(color:AppColors.primary),

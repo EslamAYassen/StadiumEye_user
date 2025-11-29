@@ -29,9 +29,9 @@ class StatisticsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                build_static_card("Reports", reports),
-                build_static_card("Approved", approved),
-                build_static_card("Pending", pending),
+                buildStaticCard("Reports", reports),
+                buildStaticCard("Approved", approved),
+                buildStaticCard("Pending", pending),
               ],
             ),
           ],
@@ -41,7 +41,7 @@ class StatisticsCard extends StatelessWidget {
   }
 }
 
-Column build_static_card(String title, int value) {
+Column  buildStaticCard(String title, int value) {
   return Column(
     children: [
       Text(

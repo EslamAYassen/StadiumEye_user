@@ -13,17 +13,17 @@ class CustomAppbar extends StatelessWidget {
         Container(
           width: double.infinity,
           height: 200,
-          decoration: BoxDecoration(
+          decoration:const BoxDecoration(
             color: AppColors.primary,
             borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(25),
               bottomLeft: Radius.circular(25),
             ),
           ),
-          child: Row(
+          child:const Row(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 20.0,
                   vertical: 30.0,
                 ),
@@ -36,7 +36,7 @@ class CustomAppbar extends StatelessWidget {
                   ),
                 ),
               ),
-              const Column(
+               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
