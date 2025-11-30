@@ -6,7 +6,7 @@ import 'package:stadium_eye/theme/app_colors.dart';
 abstract class AppTheme {
   const AppTheme._();
   static const TextStyle _mainTextTheme = TextStyle(
-    color: AppColors.whiteColor,
+    color: AppColors.blackColor,
     // fontFamily: AppThemeConsts.outfitfontFamily,
   );
   static final ThemeData mainTheme = ThemeData(

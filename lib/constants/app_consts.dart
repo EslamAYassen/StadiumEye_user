@@ -6,6 +6,8 @@ abstract class AppConsts {
   static const String dateFormat = 'yyyy-MM-dd';
   static const String dateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
   static const int itemsPerPage = 20;
+  static const String stadiumLight = 'assets/images/stadium_light.jpeg';
+  static const String stadiumDark = 'assets/images/stadium_night.jpeg';
   // static const String logoImagesPathNobackGround = 'assets/images/logo.png';
   // static const String logoImagesPathWithBackGround =
   //     'assets/images/logo design.png';
