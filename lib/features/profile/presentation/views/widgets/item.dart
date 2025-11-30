@@ -4,8 +4,9 @@ import 'package:stadium_eye/theme/app_colors.dart';
 class Item extends StatelessWidget {
   final String title;
   final IconData icon;
+  final VoidCallback? onTap;
 
-  const Item({super.key, required this.title, required this.icon});
+  const Item({super.key, required this.title, required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class Item extends StatelessWidget {
         leading: Icon(icon, color: AppColors.lightGreen),
         title: Text(title),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: () {},
+        onTap: onTap,
       ),
     );
   }

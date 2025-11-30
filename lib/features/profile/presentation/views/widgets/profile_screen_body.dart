@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/profile/presentation/views/widgets/custom_appbar.dart';
 import 'package:stadium_eye/features/profile/presentation/views/widgets/item.dart';
 import 'package:stadium_eye/features/profile/presentation/views/widgets/logout.dart';
@@ -9,22 +10,26 @@ class ProfileScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          CustomAppbar(),
-          SizedBox(height: 220),
-          StatisticsCard(
+          const CustomAppbar(),
+          const SizedBox(height: 220),
+          const StatisticsCard(
             reports: 24,
             approved: 18,
             pending: 3,
           ), //replace API data
-          SizedBox(height: 15),
-          Item(title: 'Settings', icon: Icons.settings),
-          Item(title: 'Help & Support', icon: Icons.help_outline),
-          SizedBox(height: 10),
-          LogOut(),
-          SizedBox(height: 10),
+          const SizedBox(height: 15),
+          const Item(title: 'Settings', icon: Icons.settings),
+          Item(
+            title: 'Help & Support',
+            icon: Icons.help_outline,
+            onTap: () => Navigator.pushNamed(context, AppRoutes.settingsPage),
+          ),
+          const SizedBox(height: 10),
+          const LogOut(),
+          const SizedBox(height: 10),
         ],
       ),
     );
