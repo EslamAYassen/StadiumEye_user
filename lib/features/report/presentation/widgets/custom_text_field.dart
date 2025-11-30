@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 // ignore: must_be_immutable
