@@ -64,20 +64,33 @@ class HeaderSection extends StatelessWidget {
           ),
           const SizedBox(height: 25),
 
-          const Row(
+          const Flex(
+            direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              StatCard(
-                title: "Reports",
-                value: "23",
-                icon: Iconsax.document_copy,
+              Expanded(
+                child: StatCard(
+                  title: "Reports",
+                  value: "23",
+                  icon: Iconsax.document_copy,
+                ),
               ),
-              StatCard(
-                title: "Active",
-                value: "5",
-                icon: Iconsax.activity_copy,
+              SizedBox(width: 16),
+              Expanded(
+                child: StatCard(
+                  title: "Active",
+                  value: "5",
+                  icon: Iconsax.activity_copy,
+                ),
               ),
-              StatCard(title: "Team", value: "12", icon: Iconsax.people_copy),
+              SizedBox(width: 16),
+              Expanded(
+                child: StatCard(
+                  title: "Team",
+                  value: "12",
+                  icon: Iconsax.people_copy,
+                ),
+              ),
             ],
           ),
         ],
@@ -153,7 +166,7 @@ class _StatCardState extends State<StatCard>
             onTapDown: _onTapDown,
             onTapUp: _onTapUp,
             child: Container(
-              width: 130,
+              // width: 130,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: Colors.white12,

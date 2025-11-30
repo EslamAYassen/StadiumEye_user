@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_theme.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
-class CustomAppBarForMyReport extends StatelessWidget {
-  final int totalReports;
-  final int monthReports;
+class CustomAppBarForReport extends StatelessWidget {
+  // final Map data;
+  final int? id;
   final VoidCallback? onBackPressed;
 
-  const CustomAppBarForMyReport({
+  const CustomAppBarForReport({
+    // required this.data,
     super.key,
-    this.totalReports = 3,
-    this.monthReports = 3,
+    this.id = 45,
     this.onBackPressed,
   });
 
@@ -61,7 +61,7 @@ class CustomAppBarForMyReport extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               opacity: shrinkPercentage > 0.5 ? 1.0 : 0.0,
               child: const Text(
-                'My Reports',
+                'Report Details',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -124,28 +124,8 @@ class CustomAppBarForMyReport extends StatelessWidget {
                                       child: Opacity(
                                         opacity: value,
                                         child: _buildStatCard(
-                                          'Total Reports',
-                                          totalReports.toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: TweenAnimationBuilder<double>(
-                                  duration: const Duration(milliseconds: 800),
-                                  tween: Tween(begin: 0.0, end: 1.0),
-                                  curve: Curves.easeOutCubic,
-                                  builder: (context, value, child) {
-                                    return Transform.translate(
-                                      offset: Offset(50 * (1 - value), 0),
-                                      child: Opacity(
-                                        opacity: value,
-                                        child: _buildStatCard(
-                                          'This Month',
-                                          monthReports.toString(),
+                                          'Report ID',
+                                          id.toString(),
                                         ),
                                       ),
                                     );
@@ -193,7 +173,7 @@ class CustomAppBarForMyReport extends StatelessWidget {
             curve: Curves.easeOutCubic,
             builder: (context, animatedValue, child) {
               return Text(
-                animatedValue.toString(),
+                "#$animatedValue",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 32,

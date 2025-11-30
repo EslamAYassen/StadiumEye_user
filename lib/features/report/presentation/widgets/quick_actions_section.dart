@@ -1,7 +1,5 @@
-// ignore_for_file: unused_element_parameter
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 
 class QuickActionsSection extends StatelessWidget {
@@ -9,38 +7,84 @@ class QuickActionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Quick Actions",
-          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(height: 15),
-        _ActionButton(
-          onTap: () => Navigator.pushNamed(context, AppRoutes.addReportPage),
-          textColor: Colors.white,
-          icon: Iconsax.add_copy,
-          gradientColors: const [Color(0xFF00c951), Color(0xFF00bd7e)],
-          title: "Create Report",
-          subtitle: "Report an issue quickly",
-        ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 10.0),
 
-        const SizedBox(height: 30),
-
-        _ActionButton(
-          textColor: Colors.black,
-          onTap: () => Navigator.pushNamed(context, AppRoutes.myReports),
-          icon: Iconsax.document_copy,
-          title: "My Reports",
-          subtitle: "View your submitted reports",
-          iconColor: Colors.green,
-          fontWeight: FontWeight.w400,
-          gradientColors: const [Color(0xFFE8FFF1)],
-          iconBackgroundColor: Colors.white,
-          numberOfReports: 23,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(26, 255, 255, 255),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(50, 255, 255, 255),
+                Color.fromARGB(26, 255, 255, 255),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: const Color.fromARGB(75, 255, 255, 255),
+              width: 1.5,
+            ),
+            boxShadow: [
+              const BoxShadow(
+                color: Color.fromARGB(26, 255, 255, 255),
+                blurRadius: 20,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  "Quick Actions",
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                ),
+              ),
+              const SizedBox(height: 15),
+              _ActionButton(
+                onTap: () =>
+                    Navigator.pushNamed(context, AppRoutes.addReportPage),
+                textColor: Colors.white,
+                icon: Icons.add_circle_outline,
+                gradientColors: const [Color(0xFF00c951), Color(0xFF00bd7e)],
+                title: "Create Report",
+                subtitle: "Report an issue quickly",
+              ),
+              const SizedBox(height: 15),
+              _ActionButton(
+                textColor: Colors.black,
+                onTap: () => Navigator.pushNamed(context, AppRoutes.myReports),
+                icon: Icons.description_outlined,
+                title: "My Reports",
+                subtitle: "View your submitted reports",
+                iconColor: Colors.green,
+                fontWeight: FontWeight.w400,
+                gradientColors: const [Color(0xFFE8FFF1)],
+                iconBackgroundColor: Colors.white,
+                numberOfReports: 23,
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -127,11 +171,11 @@ class _ActionButtonState extends State<_ActionButton>
                 color: widget.gradientColors.length != 1
                     ? null
                     : widget.gradientColors[0],
-                boxShadow: const [
+                boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 14,
-                    offset: Offset(0, 2),
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 12,
+                    offset: const Offset(0, 2),
                   ),
                 ],
                 gradient: widget.gradientColors.length == 1
@@ -147,25 +191,29 @@ class _ActionButtonState extends State<_ActionButton>
                     child: Icon(widget.icon, size: 30, color: widget.iconColor),
                   ),
                   const SizedBox(width: 18),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                          color: widget.textColor,
-                          fontSize: 18,
-                          fontWeight: widget.fontWeight,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.title,
+                          style: TextStyle(
+                            color: widget.textColor,
+                            fontSize: 18,
+                            fontWeight: widget.fontWeight,
+                          ),
                         ),
-                      ),
-                      Text(
-                        widget.subtitle,
-                        style: TextStyle(color: widget.textColor, fontSize: 14),
-                      ),
-                    ],
+                        Text(
+                          widget.subtitle,
+                          style: TextStyle(
+                            color: widget.textColor,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   if (widget.numberOfReports != null) ...[
-                    const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 15,

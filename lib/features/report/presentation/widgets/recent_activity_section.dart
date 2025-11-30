@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
@@ -6,31 +8,77 @@ class RecentActivitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Recent Activity",
-          style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 10.0),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(26, 255, 255, 255),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromARGB(50, 255, 255, 255),
+                Color.fromARGB(26, 255, 255, 255),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: const Color.fromARGB(75, 255, 255, 255),
+              width: 1.5,
+            ),
+            boxShadow: [
+              const BoxShadow(
+                color: Color.fromARGB(26, 0, 0, 0),
+                blurRadius: 20,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 12,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  "Recent Activity",
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                ),
+              ),
+              const SizedBox(height: 15),
+              const _RecentActivityItem(
+                title: "Report submitted",
+                subtitle: "King Fahd Stadium - North Stand",
+                timeAgo: "2 hours ago",
+              ),
+              const _RecentActivityItem(
+                title: "Photo captured",
+                subtitle: "Al Janoub Stadium - West Entrance",
+                timeAgo: "5 hours ago",
+                icon: Iconsax.camera,
+              ),
+              const _RecentActivityItem(
+                title: "Report submitted",
+                subtitle: "Education City Stadium - East Stand",
+                timeAgo: "1 day ago",
+              ),
+            ],
+          ),
         ),
-        SizedBox(height: 15),
-        _RecentActivityItem(
-          title: "Report submitted",
-          subtitle: "King Fahd Stadium - North Stand",
-          timeAgo: "2 hours ago",
-        ),
-        _RecentActivityItem(
-          title: "Photo captured",
-          subtitle: "Al Janoub Stadium - West Entrance",
-          timeAgo: "5 hours ago",
-          icon: Iconsax.camera,
-        ),
-        _RecentActivityItem(
-          title: "Report submitted",
-          subtitle: "Education City Stadium - East Stand",
-          timeAgo: "1 day ago",
-        ),
-      ],
+      ),
     );
   }
 }

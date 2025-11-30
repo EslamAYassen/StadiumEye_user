@@ -15,6 +15,7 @@ class ReportForm extends StatefulWidget {
 class _ReportFormState extends State<ReportForm> {
   final _observationsCtrl = TextEditingController();
   final _challengesCtrl = TextEditingController();
+  final _lessonsCtrl = TextEditingController();
   String _stadiumCtrl = "King Fahd Stadium";
   String _areaCtrl = "North Stand";
   final List<String> _stadiums = [
@@ -130,7 +131,7 @@ class _ReportFormState extends State<ReportForm> {
           keyboardType: .text,
 
           hint: "Key takeaways...",
-          controller: _challengesCtrl,
+          controller: _lessonsCtrl,
           maxLines: 4,
         ),
         const SizedBox(height: 26),
