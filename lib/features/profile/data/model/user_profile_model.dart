@@ -1,4 +1,4 @@
-import 'package:stadium_eye/profile_feature/domain/entities/user_profile.dart';
+import 'package:stadium_eye/features/profile/domain/entities/user_profile.dart';
 
 class UserProfileModel extends UserProfile {
   UserProfileModel({
@@ -9,7 +9,7 @@ class UserProfileModel extends UserProfile {
     required super.reports,
     required super.approved,
     required super.pending,
-    super.avatarUrl,       //optional
+    super.avatarUrl, //optional
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {

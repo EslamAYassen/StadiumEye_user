@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/report_page.dart';
-
+import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
 import '../features/report/presentation/pages/add_report_page.dart';
 
 abstract class AppRoutes {
@@ -37,8 +37,7 @@ abstract class AppRoutes {
         final data = settings.arguments as Map;
         return MaterialPageRoute(builder: (_) => ReportPage(data: data));
       case profile:
-        //TODO: Replace Placeholder with ProfileScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case about:
         //TODO: Replace Placeholder with AboutScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());

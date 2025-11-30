@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/profile_feature/presentation/views/widgets/profile_screen_body.dart';
+import 'package:stadium_eye/features/profile/presentation/views/widgets/profile_screen_body.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

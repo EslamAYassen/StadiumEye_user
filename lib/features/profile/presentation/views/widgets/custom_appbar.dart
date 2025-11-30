@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/profile_feature/presentation/views/widgets/conect_information_card.dart';
+import 'package:stadium_eye/features/profile/presentation/views/widgets/conect_information_card.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 
 class CustomAppbar extends StatelessWidget {
@@ -42,7 +42,7 @@ class CustomAppbar extends StatelessWidget {
                   Text(
                     'John Smith',
                     style: TextStyle(
-                      color:AppColors.blackColor,
+                      color: AppColors.blackColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

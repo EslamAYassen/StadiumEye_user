@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/profile_feature/presentation/views/widgets/custom_appbar.dart';
-import 'package:stadium_eye/profile_feature/presentation/views/widgets/item.dart';
-import 'package:stadium_eye/profile_feature/presentation/views/widgets/logout.dart';
-import 'package:stadium_eye/profile_feature/presentation/views/widgets/statistics_card.dart';
+import 'package:stadium_eye/features/profile/presentation/views/widgets/custom_appbar.dart';
+import 'package:stadium_eye/features/profile/presentation/views/widgets/item.dart';
+import 'package:stadium_eye/features/profile/presentation/views/widgets/logout.dart';
+import 'package:stadium_eye/features/profile/presentation/views/widgets/statistics_card.dart';
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({super.key});
@@ -24,6 +24,7 @@ class ProfileScreenBody extends StatelessWidget {
           Item(title: 'Help & Support', icon: Icons.help_outline),
           SizedBox(height: 10),
           LogOut(),
+          SizedBox(height: 10),
         ],
       ),
     );
