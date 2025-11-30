@@ -6,21 +6,16 @@ import 'package:stadium_eye/theme/app_theme_consts.dart';
 class CustomTextField extends StatefulWidget {
   CustomTextField({
     super.key,
-
     this.maxLines = 1,
-
     this.hint,
     required this.keyboardType,
-
     required this.controller,
     this.isPassword = false,
   });
   final TextEditingController controller;
   final TextInputType keyboardType;
-
   final int maxLines;
   final String? hint;
-
   bool isPassword;
 
   @override

@@ -35,10 +35,7 @@ class HomePage extends StatelessWidget {
 
                         QuickActionsSection(),
 
-                        SizedBox(height: 30),
-
-                        // MyReportsButton(),
-                        SizedBox(height: 30),
+                        SizedBox(height: 60),
 
                         RecentActivitySection(),
                       ],
