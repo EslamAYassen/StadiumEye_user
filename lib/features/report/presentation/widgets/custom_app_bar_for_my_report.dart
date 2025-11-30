@@ -171,17 +171,21 @@ class CustomAppBarForMyReport extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: const Color.fromARGB(38, 255, 255, 255),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
+        border: Border.all(
+          color: const Color.fromARGB(51, 255, 255, 255),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
+            style: const TextStyle(
+              // ignore: unnecessary_const
+              color: const Color.fromARGB(230, 255, 255, 255),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),

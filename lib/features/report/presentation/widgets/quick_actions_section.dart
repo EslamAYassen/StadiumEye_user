@@ -43,13 +43,13 @@ class QuickActionsSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.9),
+                  color: const Color.fromARGB(230, 255, 255, 255),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                    const BoxShadow(
+                      color: Color.fromARGB(13, 0, 0, 0),
                       blurRadius: 8,
-                      offset: const Offset(0, 2),
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
@@ -115,7 +115,6 @@ class _ActionButton extends StatefulWidget {
   final VoidCallback? onTap;
 
   const _ActionButton({
-    super.key,
     required this.icon,
     this.iconColor = Colors.white,
     this.iconBackgroundColor = Colors.white24,
@@ -185,10 +184,10 @@ class _ActionButtonState extends State<_ActionButton>
                     ? null
                     : widget.gradientColors[0],
                 boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                  const BoxShadow(
+                    color: Color.fromARGB(20, 0, 0, 0),
                     blurRadius: 12,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ],
                 gradient: widget.gradientColors.length == 1

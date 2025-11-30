@@ -92,10 +92,10 @@ class _ReportHeaderWidget extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+          const BoxShadow(
+            color: Color.fromARGB(13, 0, 0, 0),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -109,7 +109,7 @@ class _ReportHeaderWidget extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF10B981).withOpacity(0.1),
+                  color: const Color.fromARGB(26, 16, 185, 129),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -240,10 +240,10 @@ class _MediaGalleryWidget extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+          const BoxShadow(
+            color: Color.fromARGB(13, 0, 0, 0),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -305,7 +305,7 @@ class _MediaGalleryWidget extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.6),
+                            color: const Color.fromARGB(153, 0, 0, 0),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
@@ -354,10 +354,10 @@ class _ReportSectionWidget extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+          const BoxShadow(
+            color: Color.fromARGB(13, 0, 0, 0),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),

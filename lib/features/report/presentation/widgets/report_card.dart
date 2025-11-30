@@ -89,10 +89,10 @@ class _ReportCardState extends State<ReportCard>
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                const BoxShadow(
+                  color: Color.fromARGB(20, 0, 0, 0),
                   blurRadius: 10,
-                  offset: const Offset(0, 2),
+                  offset: Offset(0, 2),
                 ),
               ],
             ),

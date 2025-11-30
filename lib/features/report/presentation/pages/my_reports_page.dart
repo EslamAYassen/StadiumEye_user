@@ -217,10 +217,10 @@ class _MyReportsPageState extends State<MyReportsPage> {
           ),
           boxShadow: isSelected
               ? [
-                  BoxShadow(
-                    color: const Color(0xFF10B981).withOpacity(0.3),
+                  const BoxShadow(
+                    color: Color.fromARGB(77, 16, 185, 129),
                     blurRadius: 8,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ]
               : [],

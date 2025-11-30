@@ -59,7 +59,6 @@ class _GlassmorphicImage extends StatelessWidget {
   final BoxFit fit;
 
   const _GlassmorphicImage({
-    super.key,
     required this.imagePath,
     this.width,
     this.height,
@@ -92,7 +91,7 @@ class _GlassmorphicImage extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(0),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.2),
+                  color: const Color.fromARGB(51, 255, 255, 255),
                   width: 1.5,
                 ),
               ),
