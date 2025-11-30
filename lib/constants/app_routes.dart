@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
+import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.dart';
+import 'package:stadium_eye/features/report/presentation/pages/report_page.dart';
+
+import '../features/report/presentation/pages/add_report_page.dart';
 
 abstract class AppRoutes {
   const AppRoutes._();
@@ -17,8 +22,7 @@ abstract class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case home:
-        //TODO: Replace Placeholder with HomeScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const HomePage());
       case login:
         //TODO: Replace Placeholder with HomeScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
@@ -26,8 +30,12 @@ abstract class AppRoutes {
         //TODO: Replace Placeholder with RegisterScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
       case addReportPage:
-        //TODO: Replace Placeholder with AddTicketPage
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const AddReportPage());
+      case myReports:
+        return MaterialPageRoute(builder: (_) => const MyReportsPage());
+      case reportDetails:
+        final data = settings.arguments as Map;
+        return MaterialPageRoute(builder: (_) => ReportPage(data: data));
       case profile:
         //TODO: Replace Placeholder with ProfileScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
