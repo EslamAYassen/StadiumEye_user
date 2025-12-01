@@ -47,7 +47,7 @@ class SettingsView extends StatelessWidget {
                       width: 48,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: const Color.fromRGBO(255, 255, 255, 0.2),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: IconButton(
@@ -141,7 +141,7 @@ class SettingsView extends StatelessWidget {
                                   value,
                                 );
                               },
-                              activeColor: const Color(0xFF00C853),
+                              activeThumbColor: const Color(0xFF00C853),
                             ),
                           ),
 
@@ -201,7 +201,7 @@ class SettingsView extends StatelessWidget {
                                     .read<SettingsCubit>()
                                     .toggleNotifications(value);
                               },
-                              activeColor: const Color(0xFF00C853),
+                              activeThumbColor: const Color(0xFF00C853),
                             ),
                           ),
                         ],
