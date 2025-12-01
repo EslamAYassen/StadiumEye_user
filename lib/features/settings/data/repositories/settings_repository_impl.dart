@@ -21,7 +21,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
   @override
   Future<String> getLocale() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_localeKey) ?? 'English';
+    return prefs.getString(_localeKey) ?? 'en';
   }
 
   @override

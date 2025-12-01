@@ -1,11 +1,11 @@
 part of 'settings_cubit.dart';
 
 @immutable
-abstract class SettingsState extends Equatable {
+abstract class SettingsState {
   const SettingsState();
 
-  @override
-  List<Object> get props => [];
+  // @override
+  // List<Object> get props => [];
 }
 
 class SettingsInitial extends SettingsState {}
@@ -15,7 +15,7 @@ class SettingsLoading extends SettingsState {}
 class SettingsLoaded extends SettingsState {
   final bool isDarkMode;
   final bool notificationsEnabled;
-  final String locale;
+  final AppLanguage locale;
 
   const SettingsLoaded({
     required this.isDarkMode,
@@ -23,13 +23,13 @@ class SettingsLoaded extends SettingsState {
     required this.locale,
   });
 
-  @override
-  List<Object> get props => [isDarkMode, notificationsEnabled, locale];
+  // @override
+  // List<Object> get props => [isDarkMode, notificationsEnabled, locale];
 
   SettingsLoaded copyWith({
     bool? isDarkMode,
     bool? notificationsEnabled,
-    String? locale,
+    AppLanguage? locale,
   }) {
     return SettingsLoaded(
       isDarkMode: isDarkMode ?? this.isDarkMode,
@@ -44,6 +44,6 @@ class SettingsError extends SettingsState {
 
   const SettingsError(this.message);
 
-  @override
-  List<Object> get props => [message];
+  // @override
+  // List<Object> get props => [message];
 }

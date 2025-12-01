@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadium_eye/features/settings/presentation/bloc/settings_cubit.dart';
 import 'package:stadium_eye/features/settings/presentation/widgets/setting_card.dart';
+import 'package:stadium_eye/utils/language.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -162,7 +163,7 @@ class SettingsView extends StatelessWidget {
                             // context,
                             icon: Icons.language_outlined,
                             title: 'Language',
-                            subtitle: state.locale,
+                            subtitle: state.locale.displayName,
                             trailing: Icon(
                               Icons.arrow_forward_ios,
                               size: 16,
@@ -218,7 +219,7 @@ class SettingsView extends StatelessWidget {
     );
   }
 
-  void _showLocaleDialog(BuildContext context, String currentLocale) {
+  void _showLocaleDialog(BuildContext context, AppLanguage currentLocale) {
     showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
@@ -232,8 +233,6 @@ class SettingsView extends StatelessWidget {
             children: [
               _buildLocaleOption(context, 'English', currentLocale),
               _buildLocaleOption(context, 'Arabic', currentLocale),
-              _buildLocaleOption(context, 'Spanish', currentLocale),
-              _buildLocaleOption(context, 'French', currentLocale),
             ],
           ),
         );
@@ -244,9 +243,9 @@ class SettingsView extends StatelessWidget {
   Widget _buildLocaleOption(
     BuildContext context,
     String locale,
-    String currentLocale,
+    AppLanguage currentLocale,
   ) {
-    final isSelected = currentLocale == locale;
+    final isSelected = currentLocale.displayName == locale;
     return ListTile(
       title: Text(locale),
       trailing: isSelected

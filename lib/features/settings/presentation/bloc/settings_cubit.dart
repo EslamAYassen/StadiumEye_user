@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:stadium_eye/features/settings/domain/repositories/settings_repository.dart';
+import 'package:stadium_eye/utils/language.dart';
 
 part 'settings_state.dart';
 
@@ -24,7 +24,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         SettingsLoaded(
           isDarkMode: isDarkMode,
           notificationsEnabled: notificationsEnabled,
-          locale: locale,
+          locale: AppLanguageExtension.fromCode(locale),
         ),
       );
     } catch (e) {
@@ -64,7 +64,9 @@ class SettingsCubit extends Cubit<SettingsState> {
       try {
         await settingsRepository.saveLocale(locale);
         final currentState = state as SettingsLoaded;
-        emit(currentState.copyWith(locale: locale));
+        emit(
+          currentState.copyWith(locale: AppLanguageExtension.fromCode(locale)),
+        );
       } catch (e) {
         emit(SettingsError('Failed to update locale: ${e.toString()}'));
       }
@@ -80,7 +82,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         const SettingsLoaded(
           isDarkMode: false,
           notificationsEnabled: true,
-          locale: 'English',
+          locale: AppLanguage.english,
         ),
       );
     } catch (e) {

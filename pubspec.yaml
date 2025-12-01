@@ -23,6 +23,8 @@ dependencies:
   dotted_border: ^3.1.0
   equatable: ^2.0.5
   shared_preferences: ^2.2.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_lints: ^6.0.0
@@ -40,3 +42,8 @@ flutter:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
+flutter_intl:
+  enabled: true
+  arb_dir: lib/l10n
+  template_arbs: [app_en.arb]
+  output_dir: lib/l10n/generated
