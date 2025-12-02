@@ -4,6 +4,7 @@ import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.d
 import 'package:stadium_eye/features/report/presentation/pages/report_page.dart';
 import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
 import '../features/report/presentation/pages/add_report_page.dart';
+import '../features/settings/presentation/pages/settings_page.dart';
 
 abstract class AppRoutes {
   const AppRoutes._();
@@ -15,7 +16,7 @@ abstract class AppRoutes {
   static const String addReportPage = '/addTicketPage';
   static const String myReports = '/myReports';
   static const String profile = '/profile';
-  static const String settings = '/settings';
+  static const String settingsPage = '/settings';
   static const String about = '/about';
   static const String help = '/help';
 
@@ -41,7 +42,8 @@ abstract class AppRoutes {
       case about:
         //TODO: Replace Placeholder with AboutScreen
         return MaterialPageRoute(builder: (_) => const Placeholder());
-
+      case settingsPage:
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
       default:
         return MaterialPageRoute(builder: (_) => const Placeholder());
     }
