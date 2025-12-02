@@ -29,4 +29,15 @@ extension AppLanguageExtension on AppLanguage {
         throw ArgumentError('Invalid language code: $code');
     }
   }
+
+  static AppLanguage fromName(String string) {
+    switch (string) {
+      case "English":
+        return AppLanguage.english;
+      case "Arabic":
+        return AppLanguage.arabic;
+      default:
+        throw ArgumentError('Invalid language string: $string');
+    }
+  }
 }

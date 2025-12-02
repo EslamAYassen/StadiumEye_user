@@ -242,17 +242,19 @@ class SettingsView extends StatelessWidget {
 
   Widget _buildLocaleOption(
     BuildContext context,
-    String locale,
+    String localeName,
     AppLanguage currentLocale,
   ) {
-    final isSelected = currentLocale.displayName == locale;
+    final isSelected = currentLocale.displayName == localeName;
     return ListTile(
-      title: Text(locale),
+      title: Text(localeName),
       trailing: isSelected
           ? const Icon(Icons.check_circle, color: Color(0xFF00C853))
           : null,
       onTap: () {
-        context.read<SettingsCubit>().changeLocale(locale);
+        context.read<SettingsCubit>().changeLocale(
+          AppLanguageExtension.fromName(localeName).code,
+        );
         Navigator.pop(context);
       },
     );

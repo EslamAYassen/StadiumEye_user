@@ -1,6 +1,6 @@
 part of 'settings_cubit.dart';
 
-@immutable
+// @immutable
 abstract class SettingsState {
   const SettingsState();
 

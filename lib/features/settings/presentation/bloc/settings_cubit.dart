@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:stadium_eye/features/settings/domain/repositories/settings_repository.dart';
 import 'package:stadium_eye/utils/language.dart';
 
@@ -59,13 +59,15 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   // Change locale
-  Future<void> changeLocale(String locale) async {
+  Future<void> changeLocale(String localeCode) async {
     if (state is SettingsLoaded) {
       try {
-        await settingsRepository.saveLocale(locale);
+        await settingsRepository.saveLocale(localeCode);
         final currentState = state as SettingsLoaded;
         emit(
-          currentState.copyWith(locale: AppLanguageExtension.fromCode(locale)),
+          currentState.copyWith(
+            locale: AppLanguageExtension.fromCode(localeCode),
+          ),
         );
       } catch (e) {
         emit(SettingsError('Failed to update locale: ${e.toString()}'));

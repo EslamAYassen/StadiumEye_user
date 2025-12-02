@@ -22,10 +22,10 @@ class SettingCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+          const BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -43,7 +43,7 @@ class SettingCard extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00C853).withOpacity(0.1),
+                    color: const Color.fromRGBO(0, 200, 83, 0.1),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Icon(icon, color: const Color(0xFF00C853), size: 24),

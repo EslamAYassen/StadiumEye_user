@@ -5,7 +5,6 @@ import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/settings/presentation/bloc/settings_cubit.dart';
 import 'package:stadium_eye/theme/app_theme.dart';
 import 'package:stadium_eye/utils/language.dart';
-import 'package:flutter_localizations/src/material_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
