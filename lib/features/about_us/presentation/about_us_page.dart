@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../widgets/bottom_back_button.dart';
 import '../widgets/feature_card.dart';
 import '../widgets/mission_statement.dart';
 
 class AboutUsPage extends StatefulWidget {
-  const AboutUsPage({Key? key}) : super(key: key);
+  const AboutUsPage({super.key});
 
   @override
   State<AboutUsPage> createState() => _AboutUsPageState();
@@ -420,7 +421,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                         const SizedBox(height: 50),
 
                         // Back Button - Fades in on scroll
-                        const BackButton(),
+                        const BottomBackButton(),
                         const SizedBox(height: 50),
                       ],
                     ),

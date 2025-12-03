@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 
-class BackButton extends StatelessWidget {
-  const BackButton({super.key});
+class BottomBackButton extends StatelessWidget {
+  const BottomBackButton({super.key});
 
   @override
   Widget build(BuildContext context) {
