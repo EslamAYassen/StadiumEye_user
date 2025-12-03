@@ -38,6 +38,8 @@ flutter:
   assets:
     - assets/images/stadium_light.jpeg
     - assets/images/stadium_night.jpeg
+    - assets/videos/initVideo.mp4
+    - assets/videos/motion4.1.mp4
   # fonts:
   #   - family: Schyler
   #     fonts:
