@@ -1,31 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../widgets/feature_card.dart';
+import '../widgets/mission_statement.dart';
+
 class AboutUsPage extends StatefulWidget {
-  const AboutUsPage({super.key});
+  const AboutUsPage({Key? key}) : super(key: key);
 
   @override
   State<AboutUsPage> createState() => _AboutUsPageState();
 }
 
 class _AboutUsPageState extends State<AboutUsPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
+
+  // Animation Controllers
   late AnimationController _logoAnimationController;
+  late AnimationController _contentAnimationController;
+
+  // Animations
   late Animation<double> _logoFadeAnimation;
-  late Animation<double> _logoScaleAnimation;
+  // late Animation<double> _contentFadeAnimation;
+
   late VideoPlayerController _videoController;
 
   double _logoOpacity = 1.0;
+  double _videoOpacity = 0.0;
+
+  double _featuresOpacity = 0.0;
+  double _missionOpacity = 0.0;
+  // double _buttonOpacity = 1.0;
+
   bool _isVideoInitialized = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Logo animation setup
+    // Logo animation
     _logoAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
 
@@ -33,29 +48,49 @@ class _AboutUsPageState extends State<AboutUsPage>
       CurvedAnimation(parent: _logoAnimationController, curve: Curves.easeIn),
     );
 
-    _logoScaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _logoAnimationController,
-        curve: Curves.elasticOut,
-      ),
+    // Content animation
+    _contentAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
     );
 
-    _logoAnimationController.forward();
+    // _contentFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+    //   CurvedAnimation(
+    //     parent: _contentAnimationController,
+    //     curve: Curves.easeIn,
+    //   ),
+    // );
 
-    // Scroll listener for fade out effect
+    // Start animations in sequence
+    _startAnimations();
+
+    // Scroll listener for fade effects
     _scrollController.addListener(() {
       setState(() {
         double offset = _scrollController.offset;
+
+        // Logo fades out as you scroll
         _logoOpacity = (1 - (offset / 200)).clamp(0.0, 1.0);
+
+        // Video fades in when you scroll down
+        _videoOpacity = ((offset - 100) / 200).clamp(0.0, 1.0);
+
+        // Features fade in
+        _featuresOpacity = ((offset - 300) / 200).clamp(0.0, 1.0);
+
+        // Mission fades in
+        _missionOpacity = ((offset - 500) / 200).clamp(0.0, 1.0);
+
+        // Button fades in
+        // _buttonOpacity = ((offset - 700) / 200).clamp(0.0, 1.0);
       });
     });
 
-    // Initialize video player
-    // Replace with your video URL or asset
+    // Initialize video
     _videoController =
         VideoPlayerController.networkUrl(
             Uri.parse(
-              'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+              'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
             ),
           )
           ..initialize().then((_) {
@@ -65,9 +100,17 @@ class _AboutUsPageState extends State<AboutUsPage>
           });
   }
 
+  void _startAnimations() async {
+    _logoAnimationController.forward();
+
+    await Future.delayed(const Duration(milliseconds: 600));
+    _contentAnimationController.forward();
+  }
+
   @override
   void dispose() {
     _logoAnimationController.dispose();
+    _contentAnimationController.dispose();
     _scrollController.dispose();
     _videoController.dispose();
     super.dispose();
@@ -76,62 +119,244 @@ class _AboutUsPageState extends State<AboutUsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF00D856), Color(0xFF00B347)],
-          ),
-        ),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              // Scrollable content
-              SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(
-                  children: [
-                    // Logo section with animation
-                    SizedBox(
-                      height: 300,
-                      child: Center(
-                        child: Opacity(
-                          opacity: _logoOpacity,
-                          child: FadeTransition(
-                            opacity: _logoFadeAnimation,
-                            child: ScaleTransition(
-                              scale: _logoScaleAnimation,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // Main scrollable content
+            SingleChildScrollView(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  // Logo Section with fade out on scroll
+                  SizedBox(
+                    height: 600,
+                    child: Center(
+                      child: AnimatedBuilder(
+                        animation: _logoAnimationController,
+                        builder: (context, child) {
+                          return Opacity(
+                            opacity: _logoOpacity * _logoFadeAnimation.value,
+                            child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 120,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
+                                    width: 140,
+                                    height: 140,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF00D856),
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 20,
-                                          offset: const Offset(0, 10),
+                                          color: Color.fromRGBO(
+                                            0,
+                                            216,
+                                            86,
+                                            0.3,
+                                          ),
+                                          blurRadius: 30,
+                                          spreadRadius: 5,
+                                          offset: Offset(0, 10),
                                         ),
                                       ],
                                     ),
                                     child: const Icon(
                                       Icons.stadium,
-                                      size: 60,
-                                      color: Color(0xFF00D856),
+                                      size: 70,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 25),
                                   const Text(
                                     'Stadium Reports',
                                     style: TextStyle(
-                                      fontSize: 28,
+                                      fontSize: 32,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: Color(0xFF00D856),
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Excellence in Stadium Management',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Content Section
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 20),
+
+                        // Video Section - Fades in on scroll
+                        Opacity(
+                          opacity: _videoOpacity,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(25),
+                              boxShadow: [
+                                const BoxShadow(
+                                  color: Color.fromRGBO(158, 158, 158, 0.2),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF00D856),
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.play_circle_filled,
+                                          color: Colors.white,
+                                          size: 28,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 15),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Watch Our Story',
+                                              style: TextStyle(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF00D856),
+                                              ),
+                                            ),
+                                            Text(
+                                              'See how we transform stadiums',
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20),
+
+                                  // Video Player
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        AspectRatio(
+                                          aspectRatio: 16 / 9,
+                                          child: _isVideoInitialized
+                                              ? VideoPlayer(_videoController)
+                                              : Container(
+                                                  color: Colors.grey[100],
+                                                  child: const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                          color: Color(
+                                                            0xFF00D856,
+                                                          ),
+                                                          strokeWidth: 3,
+                                                        ),
+                                                  ),
+                                                ),
+                                        ),
+
+                                        // Play button overlay - tappable entire video area
+                                        if (_isVideoInitialized)
+                                          Positioned.fill(
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (_videoController
+                                                      .value
+                                                      .isPlaying) {
+                                                    _videoController.pause();
+                                                  } else {
+                                                    _videoController.play();
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                color: Colors.transparent,
+                                                child: Center(
+                                                  child: AnimatedOpacity(
+                                                    opacity:
+                                                        _videoController
+                                                            .value
+                                                            .isPlaying
+                                                        ? 0.0
+                                                        : 1.0,
+                                                    duration: const Duration(
+                                                      milliseconds: 300,
+                                                    ),
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                            10,
+                                                          ),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                            color: Color(
+                                                              0xFF00D856,
+                                                            ),
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color:
+                                                                    Color.fromRGBO(
+                                                                      0,
+                                                                      216,
+                                                                      86,
+                                                                      0.5,
+                                                                    ),
+                                                                blurRadius: 20,
+                                                                spreadRadius: 5,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                      child: const Icon(
+                                                        Icons.play_arrow,
+                                                        size: 20,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -139,246 +364,108 @@ class _AboutUsPageState extends State<AboutUsPage>
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                        const SizedBox(height: 40),
 
-                    // Content section
-                    Container(
+                        // Features Grid - Fades in on scroll
+                        Opacity(
+                          opacity: _featuresOpacity,
+                          child: const Row(
+                            children: [
+                              Expanded(
+                                child: FeatureCard(
+                                  icon: Icons.security,
+                                  title: 'Secure',
+                                  subtitle: 'Top-level security',
+                                ),
+                              ),
+                              SizedBox(width: 15),
+                              Expanded(
+                                child: FeatureCard(
+                                  icon: Icons.speed,
+                                  title: 'Fast',
+                                  subtitle: 'Real-time reports',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+
+                        Opacity(
+                          opacity: _featuresOpacity,
+                          child: const Row(
+                            children: [
+                              Expanded(
+                                child: FeatureCard(
+                                  icon: Icons.verified_user,
+                                  title: 'Reliable',
+                                  subtitle: 'Always available',
+                                ),
+                              ),
+                              SizedBox(width: 15),
+                              Expanded(
+                                child: FeatureCard(
+                                  icon: Icons.analytics,
+                                  title: 'Smart',
+                                  subtitle: 'AI-powered insights',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+
+                        // Mission Statement - Fades in on scroll
+                        MissionStatement(missionOpacity: _missionOpacity),
+                        const SizedBox(height: 50),
+
+                        // Back Button - Fades in on scroll
+                        const BackButton(),
+                        const SizedBox(height: 50),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Back button at top
+            Positioned(
+              top: 16,
+              left: 16,
+              child: AnimatedBuilder(
+                animation: _logoAnimationController,
+                builder: (context, child) {
+                  return FadeTransition(
+                    opacity: _logoFadeAnimation,
+                    child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(158, 158, 158, 0.3),
+                            blurRadius: 10,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const SizedBox(height: 20),
-
-                            // About Us Title
-                            const Text(
-                              'About Us',
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF00D856),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 20),
-
-                            // Description
-                            const Text(
-                              'We provide comprehensive stadium reporting solutions to ensure the best experience for fans and efficient management for venues.',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black87,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 40),
-
-                            // Video Section
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 5),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.video_library,
-                                          color: Color(0xFF00D856),
-                                          size: 28,
-                                        ),
-                                        SizedBox(width: 12),
-                                        Text(
-                                          'Watch Our Story',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 16),
-
-                                    // Video Player
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: AspectRatio(
-                                        aspectRatio: 16 / 9,
-                                        child: _isVideoInitialized
-                                            ? Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  VideoPlayer(_videoController),
-                                                  // Play/Pause button overlay
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        if (_videoController
-                                                            .value
-                                                            .isPlaying) {
-                                                          _videoController
-                                                              .pause();
-                                                        } else {
-                                                          _videoController
-                                                              .play();
-                                                        }
-                                                      });
-                                                    },
-                                                    child: Container(
-                                                      color: Colors.transparent,
-                                                      child: Center(
-                                                        child: Icon(
-                                                          _videoController
-                                                                  .value
-                                                                  .isPlaying
-                                                              ? Icons
-                                                                    .pause_circle_outline
-                                                              : Icons
-                                                                    .play_circle_outline,
-                                                          size: 60,
-                                                          color: Colors.white
-                                                              .withOpacity(0.8),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : Container(
-                                                color: Colors.black12,
-                                                child: const Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                        color: Color(
-                                                          0xFF00D856,
-                                                        ),
-                                                      ),
-                                                ),
-                                              ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 40),
-
-                            // Mission Statement
-                            Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF00D856).withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: const Column(
-                                children: [
-                                  Icon(
-                                    Icons.emoji_events,
-                                    color: Color(0xFF00D856),
-                                    size: 40,
-                                  ),
-                                  SizedBox(height: 12),
-                                  Text(
-                                    'Our Mission',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF00D856),
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    'To revolutionize stadium management through innovative reporting and real-time insights.',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black87,
-                                      height: 1.4,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 60),
-
-                            // Back to Sign In Button
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF00D856),
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                elevation: 3,
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.arrow_back),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    'Back to Sign In',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 40),
-                          ],
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Color(0xFF00D856),
+                          size: 26,
                         ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-
-              // Back button at top
-              Positioned(
-                top: 16,
-                left: 16,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.3),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
