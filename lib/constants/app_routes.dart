@@ -3,6 +3,7 @@ import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/report_page.dart';
 import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
+import '../features/about_us/presentation/about_us_page.dart';
 import '../features/report/presentation/pages/add_report_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
 
@@ -40,8 +41,7 @@ abstract class AppRoutes {
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case about:
-        //TODO: Replace Placeholder with AboutScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const AboutUsPage());
       case settingsPage:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       default:
