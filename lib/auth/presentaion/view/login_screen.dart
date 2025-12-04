@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/login_screen_body.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/login_screen_body.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 

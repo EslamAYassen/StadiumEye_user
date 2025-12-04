@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/app_name.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/login_container.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/app_name.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/login_container.dart';
 class LogoIcon extends StatelessWidget {
   const LogoIcon({super.key});
 

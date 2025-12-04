@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/forget_password.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/no_account.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/signin_button.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/forget_password.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/no_account.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/signin_button.dart';
 class LoginContainer extends StatefulWidget {
   const LoginContainer({super.key});
 
@@ -37,7 +37,7 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(30),
+      padding:const EdgeInsets.all(30),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),

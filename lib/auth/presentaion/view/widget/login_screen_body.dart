@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/geometriclinespainter.dart';
-import 'package:stadium_eye/login_feature/presentaion/view/widget/logo_icon.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/geometriclinespainter.dart';
+import 'package:stadium_eye/auth/presentaion/view/widget/logo_icon.dart';
 class LoginBody extends StatefulWidget {
   const LoginBody({super.key});
 
