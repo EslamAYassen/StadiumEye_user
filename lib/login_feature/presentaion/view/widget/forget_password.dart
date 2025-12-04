@@ -4,14 +4,15 @@ class ForgetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
-      child: InkWell(
-        onTap: () {},
-        child: const Text(
-          "Forgot Password?",
+    return Center(
+      child: TextButton(
+        onPressed: () {},
+        child:const Text(
+          'Forgot Password?',
           style: TextStyle(
-            color: Colors.green,
-            fontSize: 13,
+            color: Color(0xFF2E7D32),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
