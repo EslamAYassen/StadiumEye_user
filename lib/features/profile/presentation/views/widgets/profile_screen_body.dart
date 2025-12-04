@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'conect_information_card.dart';
+import 'help_support.dart';
+import 'logout.dart';
+import 'profile_header.dart';
+import 'settings.dart';
+import 'statistics_card.dart';
+
 class ProfilescreenBody extends StatelessWidget {
   const ProfilescreenBody({super.key});
 
