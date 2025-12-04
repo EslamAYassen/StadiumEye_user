@@ -14,17 +14,18 @@ class AuthEndpoints extends Endpoints {
 
   // verify email
   static const verifyEmail = "/users/auth/verify-account";
+}
 
+class UserEndpoints extends Endpoints {
+  static const _me = "/users/me";
   // personal info
-  static const myProfile = "/users/me";
+  static const myProfile = _me;
 
   // update personal info
-  //TODO: add this part after seif finish it in the backend
-  // static const updateMyProfile = "/users/me";
+  static const updateMyProfile = _me;
 
   // delete personal info
-  //TODO: add this part after seif finish it in the backend
-  // static const deleteMyProfile = "/users/me";
+  static const deleteMyProfile = _me;
 }
 
 class ReportEndpoints extends Endpoints {
