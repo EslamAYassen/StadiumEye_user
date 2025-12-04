@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/profile/presentation/views/widgets/conect_information_card.dart';
+import 'conect_information_card.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 
 class CustomAppbar extends StatelessWidget {
@@ -61,7 +61,7 @@ class CustomAppbar extends StatelessWidget {
           bottom: -195,
           left: 20,
           right: 20,
-          child: ContectInformationCard(),
+          child: ConectInformationCard(),
         ),
       ],
     );
