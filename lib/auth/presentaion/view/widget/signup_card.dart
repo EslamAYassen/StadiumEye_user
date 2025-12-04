@@ -410,10 +410,10 @@ class _SignupCardState extends State<SignupCard> {
       );
 
       // TODO: Add your signup logic here
-      print('Full Name: ${_fullNameController.text}');
-      print('Email: ${_emailController.text}');
-      print('Role: $selectedRole');
-      print('Password: ${_passwordController.text}');
+      // print('Full Name: ${_fullNameController.text}');
+      // print('Email: ${_emailController.text}');
+      // print('Role: $selectedRole');
+      // print('Password: ${_passwordController.text}');
     }
   }
 }
