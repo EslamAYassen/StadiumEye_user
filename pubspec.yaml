@@ -21,6 +21,12 @@ dependencies:
   intl: ^0.20.2
   persistent_bottom_nav_bar_v2: ^6.2.0
   dotted_border: ^3.1.0
+  equatable: ^2.0.5
+  shared_preferences: ^2.2.2
+  flutter_localizations:
+    sdk: flutter
+  bloc: ^9.1.0
+  video_player: ^2.10.1
 
 dev_dependencies:
   flutter_lints: ^6.0.0
@@ -32,12 +38,14 @@ flutter:
   assets:
     - assets/images/stadium_light.jpeg
     - assets/images/stadium_night.jpeg
-
-    - assets/images/
-
   # fonts:
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
+flutter_intl:
+  enabled: true
+  arb_dir: lib/l10n
+  template_arbs: [app_en.arb]
+  output_dir: lib/l10n/generated

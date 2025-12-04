@@ -8,6 +8,7 @@ abstract class AppConsts {
   static const int itemsPerPage = 20;
   static const String stadiumLight = 'assets/images/stadium_light.jpeg';
   static const String stadiumDark = 'assets/images/stadium_night.jpeg';
+  static const String initVideo = 'assets/videos/initVideo.mp4';
   // static const String logoImagesPathNobackGround = 'assets/images/logo.png';
   // static const String logoImagesPathWithBackGround =
   //     'assets/images/logo design.png';
