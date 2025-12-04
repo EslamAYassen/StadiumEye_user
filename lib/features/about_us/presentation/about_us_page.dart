@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
 import 'package:video_player/video_player.dart';
@@ -17,7 +16,7 @@ class AboutUsPage extends StatefulWidget {
 
 class _AboutUsPageState extends State<AboutUsPage>
     with TickerProviderStateMixin {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   ScrollController? _attachedController;
 
   // Animation Controllers
