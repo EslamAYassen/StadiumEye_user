@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/auth/presentaion/view/login_screen.dart';
+import 'package:stadium_eye/features/auth/presentaion/view/signup_screen.dart';
 import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
 import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.dart';
@@ -30,11 +32,9 @@ abstract class AppRoutes {
       case home:
         return MaterialPageRoute(builder: (_) => const HomePage());
       case login:
-        //TODO: Replace Placeholder with HomeScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       case register:
-        //TODO: Replace Placeholder with RegisterScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const SignupScreen());
       case addReportPage:
         return MaterialPageRoute(builder: (_) => const AddReportPage());
       case myReports:

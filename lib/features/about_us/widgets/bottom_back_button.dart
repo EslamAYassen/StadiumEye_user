@@ -19,7 +19,7 @@ class BottomBackButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacementNamed(context, AppRoutes.home);
+          Navigator.pushReplacementNamed(context, AppRoutes.login);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF00D856),

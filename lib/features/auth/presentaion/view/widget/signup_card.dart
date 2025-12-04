@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/auth/presentaion/view/widget/signup_text.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:stadium_eye/features/auth/presentaion/view/widget/signup_text.dart';
 
 class SignupCard extends StatefulWidget {
   const SignupCard({super.key});
@@ -17,13 +18,10 @@ class _SignupCardState extends State<SignupCard> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
-  final List<String> roles = [
-    "Field Staff",
-    "Administrator",
-    "Manager",
-  ];
+  final List<String> roles = ["Field Staff", "Administrator", "Manager"];
 
   @override
   void dispose() {
@@ -42,10 +40,10 @@ class _SignupCardState extends State<SignupCard> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
-          const  BoxShadow(
-            color:  Color.fromRGBO(0, 0, 0, 0.1),
+          const BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.1),
             blurRadius: 20,
-            offset:  Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
@@ -54,7 +52,7 @@ class _SignupCardState extends State<SignupCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const  SignupText(),
+            const SignupText(),
             const SizedBox(height: 30),
 
             // Full Name
@@ -151,10 +149,7 @@ class _SignupCardState extends State<SignupCard> {
               onPressed: _handleSignup,
               child: const Text(
                 "Create Account",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
             ),
 
@@ -166,15 +161,10 @@ class _SignupCardState extends State<SignupCard> {
               children: [
                 Text(
                   "Already have an account? ",
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    // Navigate to login
-                  },
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.login),
                   child: const Text(
                     "Login",
                     style: TextStyle(
@@ -243,8 +233,10 @@ class _SignupCardState extends State<SignupCard> {
               borderRadius: BorderRadius.circular(15),
               borderSide: const BorderSide(color: Colors.red, width: 2),
             ),
-            contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
           ),
         ),
       ],
@@ -276,8 +268,10 @@ class _SignupCardState extends State<SignupCard> {
           obscureText: isHidden,
           validator: validator,
           decoration: InputDecoration(
-            prefixIcon:
-            const Icon(Icons.lock_outline, color: Color(0xFF00C853)),
+            prefixIcon: const Icon(
+              Icons.lock_outline,
+              color: Color(0xFF00C853),
+            ),
             hintText: "••••••••",
             hintStyle: TextStyle(color: Colors.grey[400]),
             filled: true,
@@ -302,8 +296,10 @@ class _SignupCardState extends State<SignupCard> {
               borderRadius: BorderRadius.circular(15),
               borderSide: const BorderSide(color: Colors.red, width: 2),
             ),
-            contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 16,
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 isHidden
@@ -362,8 +358,11 @@ class _SignupCardState extends State<SignupCard> {
                   value: role,
                   child: Row(
                     children: [
-                      const Icon(Icons.badge,
-                          color: Color(0xFF00C853), size: 20),
+                      const Icon(
+                        Icons.badge,
+                        color: Color(0xFF00C853),
+                        size: 20,
+                      ),
                       const SizedBox(width: 10),
                       Text(
                         role,

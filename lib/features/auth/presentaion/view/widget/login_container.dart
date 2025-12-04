@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/auth/presentaion/view/widget/forget_password.dart';
-import 'package:stadium_eye/auth/presentaion/view/widget/no_account.dart';
-import 'package:stadium_eye/auth/presentaion/view/widget/signin_button.dart';
+import 'package:stadium_eye/features/auth/presentaion/view/widget/forget_password.dart';
+import 'package:stadium_eye/features/auth/presentaion/view/widget/no_account.dart';
+import 'package:stadium_eye/features/auth/presentaion/view/widget/signin_button.dart';
+
 class LoginContainer extends StatefulWidget {
   const LoginContainer({super.key});
 
@@ -9,7 +10,8 @@ class LoginContainer extends StatefulWidget {
   State<LoginContainer> createState() => _LoginContainerState();
 }
 
-class _LoginContainerState extends State<LoginContainer>with SingleTickerProviderStateMixin {
+class _LoginContainerState extends State<LoginContainer>
+    with SingleTickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -19,7 +21,7 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration:const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -37,21 +39,21 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color:const Color.fromRGBO(118, 255, 3, 0.3),
+          color: const Color.fromRGBO(118, 255, 3, 0.3),
           width: 1.5,
         ),
         boxShadow: [
-         const BoxShadow(
+          const BoxShadow(
             color: Color.fromRGBO(118, 255, 3, 0.2),
             blurRadius: 40,
             spreadRadius: 5,
           ),
-         const BoxShadow(
+          const BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.1),
             blurRadius: 20,
             offset: Offset(0, 10),
@@ -61,8 +63,7 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-
-         const Text(
+          const Text(
             'Welcome Back',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -72,21 +73,17 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
             ),
           ),
 
-         const SizedBox(height: 8),
+          const SizedBox(height: 8),
 
           Text(
             'Sign in to continue monitoring',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
           ),
 
-         const SizedBox(height: 35),
+          const SizedBox(height: 35),
 
-
-         const Text(
+          const Text(
             'Email',
             style: TextStyle(
               fontSize: 15,
@@ -95,19 +92,16 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
             ),
           ),
 
-         const SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           // Email Field
           Container(
             decoration: BoxDecoration(
               color: Colors.grey[50],
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                color: Colors.grey[300]!,
-                width: 1,
-              ),
+              border: Border.all(color: Colors.grey[300]!, width: 1),
               boxShadow: [
-               const BoxShadow(
+                const BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.03),
                   blurRadius: 10,
                   offset: Offset(0, 4),
@@ -117,29 +111,36 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
             child: TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              style:const TextStyle(fontSize: 15),
+              style: const TextStyle(fontSize: 15),
               decoration: InputDecoration(
                 hintText: 'your.email@example.com',
                 hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
                 prefixIcon: Container(
-                  margin:const EdgeInsets.all(12),
-                  padding:const EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color:const Color.fromRGBO(118, 255, 3, 0.1),
+                    color: const Color.fromRGBO(118, 255, 3, 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child:const Icon(Icons.email_outlined, color: Color(0xFF2E7D32), size: 20),
+                  child: const Icon(
+                    Icons.email_outlined,
+                    color: Color(0xFF2E7D32),
+                    size: 20,
+                  ),
                 ),
                 border: InputBorder.none,
-                contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 18,
+                ),
               ),
             ),
           ),
 
-         const SizedBox(height: 25),
+          const SizedBox(height: 25),
 
           // Password Label
-         const Text(
+          const Text(
             'Password',
             style: TextStyle(
               fontSize: 15,
@@ -148,19 +149,16 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
             ),
           ),
 
-         const SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           // Password Field
           Container(
             decoration: BoxDecoration(
               color: Colors.grey[50],
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                color: Colors.grey[300]!,
-                width: 1,
-              ),
+              border: Border.all(color: Colors.grey[300]!, width: 1),
               boxShadow: [
-               const BoxShadow(
+                const BoxShadow(
                   color: Color.fromRGBO(0, 0, 0, 0.03),
                   blurRadius: 10,
                   offset: Offset(0, 4),
@@ -170,22 +168,28 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
             child: TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
-              style:const TextStyle(fontSize: 15),
+              style: const TextStyle(fontSize: 15),
               decoration: InputDecoration(
                 hintText: '••••••••',
                 hintStyle: TextStyle(color: Colors.grey[400]),
                 prefixIcon: Container(
-                  margin:const EdgeInsets.all(12),
-                  padding:const EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color:const Color.fromRGBO(118, 255, 3, 0.1),
+                    color: const Color.fromRGBO(118, 255, 3, 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child:const Icon(Icons.lock_outline, color: Color(0xFF2E7D32), size: 20),
+                  child: const Icon(
+                    Icons.lock_outline,
+                    color: Color(0xFF2E7D32),
+                    size: 20,
+                  ),
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                     color: Colors.grey[600],
                     size: 22,
                   ),
@@ -196,26 +200,30 @@ class _LoginContainerState extends State<LoginContainer>with SingleTickerProvide
                   },
                 ),
                 border: InputBorder.none,
-                contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 18,
+                ),
               ),
             ),
           ),
 
-         const SizedBox(height: 35),
+          const SizedBox(height: 35),
 
           // Sign In Button
           const SigninButton(),
 
-         const SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // Forgot Password
-         const ForgetPassword(),
+          const ForgetPassword(),
 
-         const SizedBox(height: 15),
+          const SizedBox(height: 15),
 
           // Sign Up
           const NoAccount(),
         ],
-      ),);
+      ),
+    );
   }
 }
