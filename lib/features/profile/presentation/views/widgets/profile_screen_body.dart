@@ -27,22 +27,50 @@ class ProfileScreenBody extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
       ),
-      child: const SafeArea(
+      child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 46),
-              ProfileHeader(),
-              ContactInformationCard(),
-              SizedBox(height: 25),
-              StatisticsCard(),
-              SizedBox(height: 25),
-              Settings(),
-              SizedBox(height: 14),
-              HelpSupport(),
-              SizedBox(height: 26),
-              LogoutButton(),
-              SizedBox(height: 30),
+              // // Back button at top
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0, left: 16),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(158, 158, 158, 0.3),
+                        blurRadius: 10,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_rounded,
+                      color: Color(0xFF00D856),
+                      size: 26,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 46),
+              const ProfileHeader(),
+              const ContactInformationCard(),
+              const SizedBox(height: 25),
+              const StatisticsCard(),
+              const SizedBox(height: 25),
+              const Settings(),
+              const SizedBox(height: 14),
+              const HelpSupport(),
+              const SizedBox(height: 26),
+              const LogoutButton(),
+              const SizedBox(height: 30),
             ],
           ),
         ),

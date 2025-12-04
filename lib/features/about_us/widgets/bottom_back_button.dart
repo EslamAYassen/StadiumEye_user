@@ -19,7 +19,7 @@ class BottomBackButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.home);
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF00D856),
@@ -33,8 +33,6 @@ class BottomBackButton extends StatelessWidget {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.arrow_back, size: 26),
-            SizedBox(width: 12),
             Text(
               'Back to Sign In',
               style: TextStyle(
@@ -43,6 +41,8 @@ class BottomBackButton extends StatelessWidget {
                 letterSpacing: 0.5,
               ),
             ),
+            SizedBox(width: 12),
+            Icon(Icons.arrow_forward_ios_rounded, size: 26),
           ],
         ),
       ),

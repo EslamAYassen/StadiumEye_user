@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../constants/app_routes.dart';
+
 class Settings extends StatelessWidget {
   const Settings({super.key});
 
@@ -7,17 +9,17 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+        Navigator.pushNamed(context, AppRoutes.settingsPage);
       },
       borderRadius: BorderRadius.circular(16.0),
       child: Container(
-        margin:const EdgeInsets.symmetric(horizontal: 20.0),
-        padding:const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16.0),
         ),
-        child:const Row(
+        child: const Row(
           children: [
             Icon(Icons.settings, color: Color(0xFF2E7D32)),
             SizedBox(width: 20),

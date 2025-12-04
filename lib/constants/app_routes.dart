@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
 import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.dart';
 import 'package:stadium_eye/features/report/presentation/pages/report_page.dart';
+import 'package:stadium_eye/features/splash_screen/presentaion/view/splash_screen.dart';
 import '../features/about_us/presentation/about_us_page.dart';
 import '../features/report/presentation/pages/add_report_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
@@ -9,6 +11,7 @@ import '../features/settings/presentation/pages/settings_page.dart';
 abstract class AppRoutes {
   const AppRoutes._();
   static const String navigator = '/';
+  static const String splash = '/splash';
   static const String home = '/home';
   static const String login = '/login';
   static const String register = '/signup';
@@ -22,6 +25,8 @@ abstract class AppRoutes {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case home:
         return MaterialPageRoute(builder: (_) => const HomePage());
       case login:
@@ -38,8 +43,7 @@ abstract class AppRoutes {
         final data = settings.arguments as Map;
         return MaterialPageRoute(builder: (_) => ReportPage(data: data));
       case profile:
-        //TODO: Replace Placeholder with ProfileScreen
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case about:
         return MaterialPageRoute(builder: (_) => const AboutUsPage());
       case settingsPage:

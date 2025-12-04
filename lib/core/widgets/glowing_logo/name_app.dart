@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
+
 class NameApp extends StatelessWidget {
-  const NameApp({super.key});
+  const NameApp({super.key, this.color = Colors.white});
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Text(
           'StadiumEye',
           style: TextStyle(
-            color: Colors.white,
+            color: color,
             fontSize: 28,
             fontWeight: FontWeight.bold,
             letterSpacing: 2,
-            shadows: [
-              Shadow(
-                color: Color(0xFF76FF03),
-                blurRadius: 10,
-              ),
-            ],
+            shadows: [const Shadow(color: Color(0xFF76FF03), blurRadius: 10)],
           ),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           'Monitoring & Reporting System',
           style: TextStyle(
             color: Colors.white70,

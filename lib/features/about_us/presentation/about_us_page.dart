@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
+import 'package:stadium_eye/core/widgets/glowing_logo/logo_splash.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/animated_arrow.dart';
@@ -158,42 +159,6 @@ class _AboutUsPageState extends State<AboutUsPage>
                       ),
                     ),
             ),
-            // Align(
-            //   alignment: Alignment.topCenter,
-            //   child: Container(
-            //     // height: size.height * 0.5,
-            //     alignment: Alignment.center,
-            //     child: _isInitVideoInitialized
-            //         ? VideoPlayer(_initvideoController)
-            //         : Container(
-            //             color: Colors.grey[100],
-            //             child: const Center(
-            //               child: CircularProgressIndicator(
-            //                 color: Color(0xFF00D856),
-            //                 strokeWidth: 3,
-            //               ),
-            //             ),
-            //           ),
-            //   ),
-            // ),
-
-            // Align(
-            //   alignment: Alignment.topCenter,
-            //   child: AspectRatio(
-            //     aspectRatio: 16 / 9,
-            //     child: _isInitVideoInitialized
-            //         ? VideoPlayer(_initvideoController)
-            //         : Container(
-            //             color: Colors.grey[100],
-            //             child: const Center(
-            //               child: CircularProgressIndicator(
-            //                 color: Color(0xFF00D856),
-            //                 strokeWidth: 3,
-            //               ),
-            //             ),
-            //           ),
-            //   ),
-            // ),
 
             // Main scrollable content
             DraggableScrollableSheet(
@@ -224,7 +189,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                       children: [
                         const AnimatedUpArrows(),
                         SizedBox(
-                          height: 600,
+                          height: 500,
                           child: Center(
                             child: AnimatedBuilder(
                               animation: _logoAnimationController,
@@ -232,58 +197,59 @@ class _AboutUsPageState extends State<AboutUsPage>
                                 return Opacity(
                                   opacity:
                                       _logoOpacity * _logoFadeAnimation.value,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 140,
-                                          height: 140,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFF00D856),
-                                            shape: BoxShape.circle,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Color.fromRGBO(
-                                                  0,
-                                                  216,
-                                                  86,
-                                                  0.3,
-                                                ),
-                                                blurRadius: 30,
-                                                spreadRadius: 5,
-                                                offset: Offset(0, 10),
-                                              ),
-                                            ],
-                                          ),
-                                          child: const Icon(
-                                            Icons.stadium,
-                                            size: 70,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 25),
-                                        const Text(
-                                          'Stadium Reports',
-                                          style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF00D856),
-                                            letterSpacing: 1,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          'Excellence in Stadium Management',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey[600],
-                                            letterSpacing: 0.5,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  child: const Center(
+                                    child: LogoSplash(textColor: Colors.green),
+                                    // child: Column(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.center,
+                                    //   children: [
+                                    //     Container(
+                                    //       width: 140,
+                                    //       height: 140,
+                                    //       decoration: const BoxDecoration(
+                                    //         color: Color(0xFF00D856),
+                                    //         shape: BoxShape.circle,
+                                    //         boxShadow: [
+                                    //           BoxShadow(
+                                    //             color: Color.fromRGBO(
+                                    //               0,
+                                    //               216,
+                                    //               86,
+                                    //               0.3,
+                                    //             ),
+                                    //             blurRadius: 30,
+                                    //             spreadRadius: 5,
+                                    //             offset: Offset(0, 10),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //       child: const Icon(
+                                    //         Icons.stadium,
+                                    //         size: 70,
+                                    //         color: Colors.white,
+                                    //       ),
+                                    //     ),
+                                    //     const SizedBox(height: 25),
+                                    //     const Text(
+                                    //       'Stadium Reports',
+                                    //       style: TextStyle(
+                                    //         fontSize: 32,
+                                    //         fontWeight: FontWeight.bold,
+                                    //         color: Color(0xFF00D856),
+                                    //         letterSpacing: 1,
+                                    //       ),
+                                    //     ),
+                                    //     const SizedBox(height: 8),
+                                    //     Text(
+                                    //       'Excellence in Stadium Management',
+                                    //       style: TextStyle(
+                                    //         fontSize: 14,
+                                    //         color: Colors.grey[600],
+                                    //         letterSpacing: 0.5,
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ),
                                 );
                               },
@@ -542,42 +508,42 @@ class _AboutUsPageState extends State<AboutUsPage>
               },
             ),
 
-            // Back button at top
-            Positioned(
-              top: 16,
-              left: 16,
-              child: AnimatedBuilder(
-                animation: _logoAnimationController,
-                builder: (context, child) {
-                  return FadeTransition(
-                    opacity: _logoFadeAnimation,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(158, 158, 158, 0.3),
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Color(0xFF00D856),
-                          size: 26,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            // // Back button at top
+            // Positioned(
+            //   top: 16,
+            //   right: 16,
+            //   child: AnimatedBuilder(
+            //     animation: _logoAnimationController,
+            //     builder: (context, child) {
+            //       return FadeTransition(
+            //         opacity: _logoFadeAnimation,
+            //         child: Container(
+            //           decoration: const BoxDecoration(
+            //             color: Colors.white,
+            //             shape: BoxShape.circle,
+            //             boxShadow: [
+            //               BoxShadow(
+            //                 color: Color.fromRGBO(158, 158, 158, 0.3),
+            //                 blurRadius: 10,
+            //                 offset: Offset(0, 3),
+            //               ),
+            //             ],
+            //           ),
+            //           child: IconButton(
+            //             icon: const Icon(
+            //               Icons.arrow_forward_ios_rounded,
+            //               color: Color(0xFF00D856),
+            //               size: 26,
+            //             ),
+            //             onPressed: () {
+            //               Navigator.pop(context);
+            //             },
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
