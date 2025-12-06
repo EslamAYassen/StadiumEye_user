@@ -6,6 +6,6 @@ class LottieLoader extends StatelessWidget {
   const LottieLoader({super.key});
   @override
   Widget build(BuildContext context) => Center(
-    child: Lottie.asset(AppConsts.lottieLoading, height: 100.0, width: 100.0),
+    child: Lottie.asset(AppConsts.lottieLoading, width: 80, height: 80),
   );
 }

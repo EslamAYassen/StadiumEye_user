@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/signup_text.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/signup_text.dart';
 
 class SignupCard extends StatefulWidget {
   const SignupCard({super.key});

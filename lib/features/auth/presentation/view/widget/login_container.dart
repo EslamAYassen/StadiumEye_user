@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/forget_password.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/no_account.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/signin_button.dart';
+
+import 'package:stadium_eye/features/auth/presentation/view/widget/forget_password.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/no_account.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/signin_button.dart';
 
 class LoginContainer extends StatefulWidget {
   const LoginContainer({super.key});
@@ -211,12 +212,15 @@ class _LoginContainerState extends State<LoginContainer>
           const SizedBox(height: 35),
 
           // Sign In Button
-          const SigninButton(),
+          SigninButton(
+            email: _emailController.text,
+            password: _passwordController.text,
+          ),
 
           const SizedBox(height: 20),
 
           // Forgot Password
-          const ForgetPassword(),
+          ForgetPassword(email: _emailController.text),
 
           const SizedBox(height: 15),
 

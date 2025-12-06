@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/signup_card.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/text_title.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/signup_card.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/text_title.dart';
 
 class SignupIcons extends StatefulWidget {
   const SignupIcons({super.key});

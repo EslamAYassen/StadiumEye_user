@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/auth_bloc.dart';
+import '../../bloc/auth_event.dart';
 
 class SigninButton extends StatelessWidget {
-  const SigninButton({super.key});
+  const SigninButton({super.key, required this.email, required this.password});
+  final String email;
+  final String password;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +27,10 @@ class SigninButton extends StatelessWidget {
         ],
       ),
       child: ElevatedButton(
-        //TODO: implement sign in
-        onPressed: () =>
-            Navigator.pushReplacementNamed(context, AppRoutes.home),
+        onPressed: () => context.read<AuthBloc>().add(
+          LoginEvent(email: email, password: password),
+        ),
+
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,

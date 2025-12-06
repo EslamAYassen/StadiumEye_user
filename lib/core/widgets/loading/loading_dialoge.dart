@@ -8,10 +8,20 @@ class LoadingDialoge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      //TODO: fix this shit Abdou
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      insetPadding: const EdgeInsets.all(20),
-      child: const LottieLoader(),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+
+        constraints: const BoxConstraints(
+          minWidth: 120,
+          maxWidth: 120,
+          minHeight: 120,
+          maxHeight: 120,
+        ),
+        child: const Center(child: LottieLoader()),
+      ),
     );
   }
 }

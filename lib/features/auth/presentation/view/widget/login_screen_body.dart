@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/geometriclinespainter.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/signup_icons.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/geometriclinespainter.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/logo_icon.dart';
 
-class SignupBody extends StatefulWidget {
-  const SignupBody({super.key});
+class LoginBody extends StatefulWidget {
+  const LoginBody({super.key});
 
   @override
-  State<SignupBody> createState() => _SignupBodyState();
+  State<LoginBody> createState() => _LoginBodyState();
 }
 
-class _SignupBodyState extends State<SignupBody>
+class _LoginBodyState extends State<LoginBody>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -88,7 +88,7 @@ class _SignupBodyState extends State<SignupBody>
             painter: GeometricLinesPainter(animation: _fadeAnimation),
             //
           ),
-          const SignupIcons(),
+          const LogoIcon(),
         ],
       ),
     );

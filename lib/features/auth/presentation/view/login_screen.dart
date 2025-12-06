@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/core/widgets/loading/loading_dialoge.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/login_screen_body.dart';
+
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_state.dart';
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoading) {
+            showDialog(
+              useSafeArea: false,
+              barrierDismissible: false,
+              context: context,
+              builder: (_) => const LoadingDialoge(),
+            );
+          }
+
+          if (state is AuthUnauthenticated) {
+            if (Navigator.canPop(context)) Navigator.pop(context);
+          }
+
+          if (state is AuthError) {
+            if (Navigator.canPop(context)) Navigator.pop(context);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthUnauthenticated || state is AuthInitial) {
+            return const LoginBody();
+          }
+
+          // You can show anything here while different states happen
+          return const Center(child: Text("unknown state"));
+        },
+      ),
+    );
+  }
+}
