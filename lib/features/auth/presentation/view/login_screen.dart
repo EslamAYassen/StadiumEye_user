@@ -43,7 +43,6 @@ class LoginScreen extends StatelessWidget {
             return const LoginBody();
           }
 
-          // You can show anything here while different states happen
           return const Center(child: Text("unknown state"));
         },
       ),

@@ -3,7 +3,8 @@
 // lib/features/auth/auth_injection.dart
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 // import '../../core/network/dio_client.dart';
 // import '../../core/network/network_info.dart';
 import '../../core/networking/dio_client.dart';
@@ -85,7 +86,7 @@ Future<void> initAuthDependencies() async {
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
   // Internet Connection Checker
-  sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
+  sl.registerLazySingleton(() => InternetConnection());
 
   // Secure Storage
   sl.registerLazySingleton(() => SecureStorage());

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/core/error/failures.dart';
 import '../../domain/usecases/forgot_password_usecase.dart';
 import '../../domain/usecases/get_cached_user_usecase.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -151,7 +152,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  String _mapFailureToMessage(failure) {
-    return failure.toString();
+  String _mapFailureToMessage(Failure failure) {
+    return failure.message;
   }
 }
