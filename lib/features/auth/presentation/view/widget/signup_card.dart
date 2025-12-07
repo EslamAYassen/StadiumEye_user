@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_text.dart';
+
+import '../../../../../core/widgets/loading/loading_dialoge.dart';
+import '../../../domain/usecases/register_usecase.dart';
+import '../../bloc/auth_state.dart';
 
 class SignupCard extends StatefulWidget {
   const SignupCard({super.key});
@@ -10,22 +18,27 @@ class SignupCard extends StatefulWidget {
 }
 
 class _SignupCardState extends State<SignupCard> {
-  String? selectedRole;
+  String? selectedGender;
   bool hidePassword = true;
   bool hideConfirmPassword = true;
 
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final List<String> roles = ["Field Staff", "Administrator", "Manager"];
+  final List<String> genders = ["male", "female"];
 
   @override
   void dispose() {
-    _fullNameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneNumberController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -47,137 +60,213 @@ class _SignupCardState extends State<SignupCard> {
           ),
         ],
       ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SignupText(),
-            const SizedBox(height: 30),
-
-            // Full Name
-            buildTextField(
-              controller: _fullNameController,
-              label: "Full Name",
-              hint: "Ahmed Al-Salem",
-              icon: Icons.person_outline,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your full name';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-
-            // Email
-            buildTextField(
-              controller: _emailController,
-              label: "Email",
-              hint: "your.email@example.com",
-              icon: Icons.email_outlined,
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your email';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-
-            // Role Dropdown
-            buildRoleDropdown(),
-            const SizedBox(height: 20),
-
-            // Password
-            buildPasswordField(
-              controller: _passwordController,
-              label: "Password",
-              isHidden: hidePassword,
-              toggle: () {
-                setState(() {
-                  hidePassword = !hidePassword;
-                });
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
-                }
-                if (value.length < 6) {
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-
-            // Confirm Password
-            buildPasswordField(
-              controller: _confirmPasswordController,
-              label: "Confirm Password",
-              isHidden: hideConfirmPassword,
-              toggle: () {
-                setState(() {
-                  hideConfirmPassword = !hideConfirmPassword;
-                });
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please confirm your password';
-                }
-                if (value != _passwordController.text) {
-                  return 'Passwords do not match';
-                }
-                return null;
-              },
-            ),
-
-            const SizedBox(height: 35),
-
-            // Create Account Button
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                backgroundColor: const Color(0xFF00C853),
-                foregroundColor: Colors.white,
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        // listener: (context, state) {
+        //   // if (state is AuthError) {
+        //   //   ScaffoldMessenger.of(context).showSnackBar(
+        //   //     SnackBar(
+        //   //       content: Text(state.message),
+        //   //       backgroundColor: Colors.red,
+        //   //     ),
+        //   //   );
+        //   // }
+        //   // if (state is AuthLoading) {
+        //   //   showDialog(
+        //   //     useSafeArea: false,
+        //   //     barrierDismissible: false,
+        //   //     context: context,
+        //   //     builder: (_) => const LoadingDialoge(),
+        //   //   );
+        //   // }
+        // },
+        builder: (context, state) {
+          if (state is AuthRegistrationSuccess) {
+            return Center(
+              child: OtpTextField(
+                numberOfFields: 4,
+                borderColor: Colors.lightGreen,
+                //set to true to show as box or false to show as dash
+                showFieldAsBox: true,
+                //runs when a code is typed in
+                onCodeChanged: (String code) {
+                  //handle validation or checks here
+                },
+                //runs when every textfield is filled
+                onSubmit: (String verificationCode) {
+                  BlocProvider.of<AuthBloc>(context).add(
+                    VerifyEmailEvent(
+                      email: _emailController.text,
+                      code: verificationCode,
+                    ),
+                  );
+                },
               ),
-              onPressed: _handleSignup,
-              child: const Text(
-                "Create Account",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Login Link
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            );
+          }
+          return Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  "Already have an account? ",
-                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                const SignupText(),
+                const SizedBox(height: 30),
+
+                // First Name
+                buildTextField(
+                  controller: _firstNameController,
+                  label: "First Name",
+                  hint: "Ahmed",
+                  icon: Icons.person_outline,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your First name';
+                    }
+                    return null;
+                  },
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.login),
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(
-                      color: Color(0xFF00C853),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                const SizedBox(height: 20),
+
+                // Second Name
+                buildTextField(
+                  controller: _lastNameController,
+                  label: "Last Name",
+                  hint: "Al-Salem",
+                  icon: Icons.person_outline,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Email
+                buildTextField(
+                  controller: _emailController,
+                  label: "Email",
+                  hint: "your.email@example.com",
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Phone
+                buildTextField(
+                  controller: _phoneNumberController,
+                  label: "Phone",
+                  hint: "01xxx",
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                buildGenderDropdown(),
+                const SizedBox(height: 20),
+
+                // Password
+                buildPasswordField(
+                  controller: _passwordController,
+                  label: "Password",
+                  isHidden: hidePassword,
+                  toggle: () {
+                    setState(() {
+                      hidePassword = !hidePassword;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a password';
+                    }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Confirm Password
+                buildPasswordField(
+                  controller: _confirmPasswordController,
+                  label: "Confirm Password",
+                  isHidden: hideConfirmPassword,
+                  toggle: () {
+                    setState(() {
+                      hideConfirmPassword = !hideConfirmPassword;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm your password';
+                    }
+                    if (value != _passwordController.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 35),
+
+                // Create Account Button
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: const Color(0xFF00C853),
+                    foregroundColor: Colors.white,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
                   ),
+                  onPressed: _handleSignup,
+                  child: const Text(
+                    "Create Account",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Login Link
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account? ",
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    ),
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoutes.login),
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(
+                          color: Color(0xFF00C853),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -315,13 +404,13 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  // Role Dropdown Widget
-  Widget buildRoleDropdown() {
+  // Gender Dropdown Widget
+  Widget buildGenderDropdown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Role",
+          "Gender",
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
@@ -334,26 +423,26 @@ class _SignupCardState extends State<SignupCard> {
           decoration: BoxDecoration(
             color: const Color(0xFFF7F7F7),
             borderRadius: BorderRadius.circular(15),
-            border: selectedRole == null
+            border: selectedGender == null
                 ? Border.all(color: Colors.transparent)
                 : Border.all(color: const Color(0xFF00C853), width: 2),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: selectedRole,
+              value: selectedGender,
               isExpanded: true,
               hint: Row(
                 children: [
                   const Icon(Icons.badge_outlined, color: Colors.grey),
                   const SizedBox(width: 10),
                   Text(
-                    "Select Role",
+                    "Select Gender",
                     style: TextStyle(color: Colors.grey[400]),
                   ),
                 ],
               ),
               icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
-              items: roles.map((role) {
+              items: genders.map((role) {
                 return DropdownMenuItem(
                   value: role,
                   child: Row(
@@ -377,7 +466,7 @@ class _SignupCardState extends State<SignupCard> {
               }).toList(),
               onChanged: (value) {
                 setState(() {
-                  selectedRole = value;
+                  selectedGender = value;
                 });
               },
             ),
@@ -390,29 +479,35 @@ class _SignupCardState extends State<SignupCard> {
   // Handle Signup
   void _handleSignup() {
     if (_formKey.currentState!.validate()) {
-      if (selectedRole == null) {
+      if (selectedGender == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Please select a role'),
+            content: Text('Please select a Gender'),
             backgroundColor: Colors.red,
           ),
         );
         return;
       }
-
-      // Process signup
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Account created successfully!'),
-          backgroundColor: Color(0xFF00C853),
-        ),
-      );
-
-      // TODO: Add your signup logic here
-      // print('Full Name: ${_fullNameController.text}');
-      // print('Email: ${_emailController.text}');
-      // print('Role: $selectedRole');
-      // print('Password: ${_passwordController.text}');
     }
+
+    context.read<AuthBloc>().add(
+      RegisterEvent(
+        RegisterParams(
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          email: _emailController.text,
+          phone: _phoneNumberController.text,
+          genderEn: selectedGender ?? 'male',
+
+          //TODO: change this
+          dateOfBirth: "2000-01-01",
+          password: _passwordController.text,
+          confirmPassword: _confirmPasswordController.text,
+          //TODO:change those if u can
+          city: '691cfbe9aad9af7504b0f29c',
+          country: '691cfbe9aad9af7504b0f29c',
+        ),
+      ),
+    );
   }
 }

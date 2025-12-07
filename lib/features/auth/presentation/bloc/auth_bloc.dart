@@ -97,7 +97,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     CheckAuthStatusEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthLoading());
+    emit(const AuthLodingForCheckAuthStatus());
 
     final result = await getCachedUserUseCase();
 

@@ -12,6 +12,10 @@ class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
+class AuthLodingForCheckAuthStatus extends AuthState {
+  const AuthLodingForCheckAuthStatus();
+}
+
 class AuthLoading extends AuthState {
   const AuthLoading();
 }

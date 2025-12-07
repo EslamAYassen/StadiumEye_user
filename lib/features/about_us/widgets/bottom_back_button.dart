@@ -34,7 +34,7 @@ class BottomBackButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Back to Sign In',
+              'Go to Sign In',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+
+import '../../../auth/presentation/bloc/auth_event.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
@@ -48,16 +52,19 @@ class HeaderSection extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white12,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Iconsax.logout_1_copy,
-                  color: Colors.white,
-                  size: 32,
+              InkWell(
+                onTap: () => context.read<AuthBloc>().add(const LogoutEvent()),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white12,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Iconsax.logout_1_copy,
+                    color: Colors.white,
+                    size: 32,
+                  ),
                 ),
               ),
             ],

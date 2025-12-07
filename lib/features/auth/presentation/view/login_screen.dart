@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/core/widgets/loading/loading_dialoge.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/login_screen_body.dart';
 
@@ -12,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthBloc, AuthState>(
+      body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
             showDialog(
@@ -26,10 +27,13 @@ class LoginScreen extends StatelessWidget {
           if (state is AuthUnauthenticated) {
             if (Navigator.canPop(context)) Navigator.pop(context);
           }
+          if (state is AuthAuthenticated) {
+            Navigator.pushReplacementNamed(context, AppRoutes.home);
+          }
 
           if (state is AuthError) {
             if (Navigator.canPop(context)) Navigator.pop(context);
-
+            // TODO: improve this UI
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -38,13 +42,7 @@ class LoginScreen extends StatelessWidget {
             );
           }
         },
-        builder: (context, state) {
-          if (state is AuthUnauthenticated || state is AuthInitial) {
-            return const LoginBody();
-          }
-
-          return const Center(child: Text("unknown state"));
-        },
+        child: const LoginBody(),
       ),
     );
   }

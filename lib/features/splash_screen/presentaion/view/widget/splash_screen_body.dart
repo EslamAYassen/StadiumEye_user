@@ -1,7 +1,9 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:stadium_eye/core/widgets/glowing_logo/logo_splash.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
 
 class SplashScreenBody extends StatefulWidget {
   const SplashScreenBody({super.key});
@@ -30,12 +32,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
     _controller.forward();
-
-    Timer(const Duration(seconds: 4), () {
-      Navigator.pushReplacementNamed(context, "home");
-
-      Navigator.pushReplacementNamed(context, AppRoutes.about);
-    });
+    context.read<AuthBloc>().add(const CheckAuthStatusEvent());
   }
 
   @override

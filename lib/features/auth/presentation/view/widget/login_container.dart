@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 
 import 'package:stadium_eye/features/auth/presentation/view/widget/forget_password.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/no_account.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signin_button.dart';
+
+import '../../bloc/auth_event.dart';
 
 class LoginContainer extends StatefulWidget {
   const LoginContainer({super.key});
@@ -13,8 +17,8 @@ class LoginContainer extends StatefulWidget {
 
 class _LoginContainerState extends State<LoginContainer>
     with SingleTickerProviderStateMixin {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
   late AnimationController _animationController;
 
@@ -213,8 +217,12 @@ class _LoginContainerState extends State<LoginContainer>
 
           // Sign In Button
           SigninButton(
-            email: _emailController.text,
-            password: _passwordController.text,
+            onPressed: () => context.read<AuthBloc>().add(
+              LoginEvent(
+                email: _emailController.text,
+                password: _passwordController.text,
+              ),
+            ),
           ),
 
           const SizedBox(height: 20),

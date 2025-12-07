@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../bloc/auth_bloc.dart';
-import '../../bloc/auth_event.dart';
 
 class SigninButton extends StatelessWidget {
-  const SigninButton({super.key, required this.email, required this.password});
-  final String email;
-  final String password;
+  const SigninButton({
+    super.key,
+    // required this.email,
+    // required this.password,
+    required this.onPressed,
+  });
+  // final String email;
+  // final String password;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,7 @@ class SigninButton extends StatelessWidget {
         ],
       ),
       child: ElevatedButton(
-        onPressed: () => context.read<AuthBloc>().add(
-          LoginEvent(email: email, password: password),
-        ),
+        onPressed: onPressed,
 
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
