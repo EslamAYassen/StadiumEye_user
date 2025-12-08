@@ -78,7 +78,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     result.fold(
       (failure) => emit(AuthError(_mapFailureToMessage(failure))),
-      (user) => emit(AuthAuthenticated(user)),
+      (user) => emit(
+        AuthVerificationSuccess(
+          user: user,
+          message: 'The Account is verified successfully',
+        ),
+      ),
     );
   }
 

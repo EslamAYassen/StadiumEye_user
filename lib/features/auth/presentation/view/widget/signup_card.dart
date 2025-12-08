@@ -6,7 +6,6 @@ import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_text.dart';
 
-import '../../../../../core/widgets/loading/loading_dialoge.dart';
 import '../../../domain/usecases/register_usecase.dart';
 import '../../bloc/auth_state.dart';
 
@@ -61,24 +60,6 @@ class _SignupCardState extends State<SignupCard> {
         ],
       ),
       child: BlocBuilder<AuthBloc, AuthState>(
-        // listener: (context, state) {
-        //   // if (state is AuthError) {
-        //   //   ScaffoldMessenger.of(context).showSnackBar(
-        //   //     SnackBar(
-        //   //       content: Text(state.message),
-        //   //       backgroundColor: Colors.red,
-        //   //     ),
-        //   //   );
-        //   // }
-        //   // if (state is AuthLoading) {
-        //   //   showDialog(
-        //   //     useSafeArea: false,
-        //   //     barrierDismissible: false,
-        //   //     context: context,
-        //   //     builder: (_) => const LoadingDialoge(),
-        //   //   );
-        //   // }
-        // },
         builder: (context, state) {
           if (state is AuthRegistrationSuccess) {
             return Center(

@@ -16,32 +16,35 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthLoading) {
-            showDialog(
-              useSafeArea: false,
-              barrierDismissible: false,
-              context: context,
-              builder: (_) => const LoadingDialoge(),
-            );
-          }
-
+          // if (state is AuthLoading) {
+          //   showDialog(
+          //     useSafeArea: false,
+          //     barrierDismissible: false,
+          //     context: context,
+          //     builder: (_) => const LoadingDialoge(),
+          //   );
+          // }
+          if (state is AuthRegistrationSuccess && Navigator.canPop(context))
+            Navigator.pop(context);
           if (state is AuthUnauthenticated) {
             if (Navigator.canPop(context)) Navigator.pop(context);
+          }
+          if (state is AuthVerificationSuccess) {
+            Navigator.pushReplacementNamed(context, AppRoutes.login);
           }
           if (state is AuthAuthenticated) {
             Navigator.pushReplacementNamed(context, AppRoutes.home);
           }
-
-          if (state is AuthError) {
-            if (Navigator.canPop(context)) Navigator.pop(context);
-            // TODO: improve this UI
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
+          // if (state is AuthError) {
+          //   if (Navigator.canPop(context)) Navigator.pop(context);
+          //   // TODO: improve this UI
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text(state.message),
+          //       backgroundColor: Colors.red,
+          //     ),
+          //   );
+          // }
         },
         child: const LoginBody(),
       ),
