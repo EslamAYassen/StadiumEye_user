@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/geometriclinespainter.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/logo_icon.dart';
 
-import '../../../../../core/widgets/loading/loading_dialoge.dart';
 import '../../bloc/auth_bloc.dart';
 import '../../bloc/auth_state.dart';
 
@@ -95,16 +94,8 @@ class _LoginBodyState extends State<LoginBody>
           ),
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is AuthLoading) {
-                showDialog(
-                  useSafeArea: false,
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (_) => const LoadingDialoge(),
-                );
-              }
               if (state is AuthError) {
-                if (Navigator.canPop(context)) Navigator.pop(context);
+                // if (Navigator.canPop(context)) Navigator.pop(context);
                 // TODO: improve this UI
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

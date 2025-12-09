@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/auth/presentation/view/login_screen.dart';
+import 'package:stadium_eye/features/auth/presentation/view/otp_screen.dart';
 import 'package:stadium_eye/features/auth/presentation/view/signup_screen.dart';
 import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
 import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
@@ -18,6 +19,7 @@ abstract class AppRoutes {
   static const String home = '/home';
   static const String login = '/login';
   static const String register = '/signup';
+  static const String otp = '/otp';
   static const String reportDetails = '/reportDetails';
   static const String addReportPage = '/addTicketPage';
   static const String myReports = '/myReports';
@@ -38,6 +40,9 @@ abstract class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case register:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
+      case otp:
+        final email = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => OtpScreen(email: email));
       case addReportPage:
         return MaterialPageRoute(builder: (_) => const AddReportPage());
       case myReports:

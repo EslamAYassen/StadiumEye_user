@@ -3,7 +3,8 @@ import 'package:stadium_eye/features/auth/presentation/view/widget/signup_card.d
 import 'package:stadium_eye/features/auth/presentation/view/widget/text_title.dart';
 
 class SignupIcons extends StatefulWidget {
-  const SignupIcons({super.key});
+  const SignupIcons({super.key, this.child});
+  final Widget? child;
 
   @override
   State<SignupIcons> createState() => _SignupIconsState();
@@ -12,20 +13,19 @@ class SignupIcons extends StatefulWidget {
 class _SignupIconsState extends State<SignupIcons> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Center(child: TextTitle2()),
-              SizedBox(height: 40),
-              SignupCard(),
-              SizedBox(height: 20),
-            ],
-          ),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const SizedBox(height: 40),
+            const Center(child: TextTitle2()),
+            const SizedBox(height: 40),
+            //TODO: fix this later
+            widget.child ?? const SignupCard(),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );

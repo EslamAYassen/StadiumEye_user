@@ -3,7 +3,8 @@ import 'package:stadium_eye/features/auth/presentation/view/widget/geometricline
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_icons.dart';
 
 class SignupBody extends StatefulWidget {
-  const SignupBody({super.key});
+  const SignupBody({super.key, this.child});
+  final Widget? child;
 
   @override
   State<SignupBody> createState() => _SignupBodyState();
@@ -88,7 +89,7 @@ class _SignupBodyState extends State<SignupBody>
             painter: GeometricLinesPainter(animation: _fadeAnimation),
             //
           ),
-          const SignupIcons(),
+          SignupIcons(child: widget.child),
         ],
       ),
     );

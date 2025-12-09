@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
+
+import '../../bloc/auth_bloc.dart';
+import '../../bloc/auth_state.dart';
 
 class SigninButton extends StatelessWidget {
   const SigninButton({
@@ -28,25 +33,34 @@ class SigninButton extends StatelessWidget {
           ),
         ],
       ),
-      child: ElevatedButton(
-        onPressed: onPressed,
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return ElevatedButton(
+            onPressed: onPressed,
 
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-        ),
-        child: const Text(
-          'Sign In',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            letterSpacing: 1,
-          ),
-        ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            child: state is AuthLoading
+                ? const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: LottieLoader(),
+                  )
+                : const Text(
+                    'Sign In',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 1,
+                    ),
+                  ),
+          );
+        },
       ),
     );
   }
