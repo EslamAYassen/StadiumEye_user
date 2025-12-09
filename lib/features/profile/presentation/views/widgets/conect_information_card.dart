@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
 
 class ContactInformationCard extends StatelessWidget {
-  const ContactInformationCard({super.key});
+  final UserProfile profile;
+  const ContactInformationCard({super.key,required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +28,16 @@ class ContactInformationCard extends StatelessWidget {
           buildContactItem(
             Icons.email_outlined,
             'Email',
-            'john.smith@company.com',
+            profile.email,
           ),
           const SizedBox(height: 12),
-          buildContactItem(Icons.phone_outlined, 'Phone', '+1 (555) 123-4567'),
+          buildContactItem(Icons.phone_outlined, 'Phone', profile.phone),
           const SizedBox(height: 12),
-          buildContactItem(
-            Icons.location_on_outlined,
-            'Location',
-            'San Francisco, CA',
-          ),
+          // buildContactItem(
+          //   Icons.location_on_outlined,
+          //   'Location',
+          //   'San Francisco, CA',
+          // ),
         ],
       ),
     );
