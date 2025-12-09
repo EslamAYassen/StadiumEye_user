@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:stadium_eye/core/storage/secure_storage.dart';
 import 'endpoints.dart';
+import 'interceptors/auth_interceptor.dart';
 
 class DioClient {
   final storage = SecureStorage();
   static Dio create() {
+    final storage = SecureStorage();
     final dio = Dio(
       BaseOptions(
         baseUrl: Endpoints.baseUrl,
@@ -13,7 +15,7 @@ class DioClient {
         contentType: "application/json",
       ),
     );
-
+    dio.interceptors.add(AuthInterceptor(storage));
     return dio;
   }
 }

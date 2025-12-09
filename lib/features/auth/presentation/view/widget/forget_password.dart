@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../../../../../constants/app_routes.dart';
+
 class ForgetPassword extends StatelessWidget {
   const ForgetPassword({super.key});
 
@@ -6,8 +9,9 @@ class ForgetPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: TextButton(
-        onPressed: () {},
-        child:const Text(
+        onPressed: () =>
+            Navigator.pushNamed(context, AppRoutes.forgetPasswordPage),
+        child: const Text(
           'Forgot Password?',
           style: TextStyle(
             color: Color(0xFF2E7D32),

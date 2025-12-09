@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+
+import '../../../auth/presentation/bloc/auth_event.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
@@ -48,16 +54,32 @@ class HeaderSection extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white12,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Iconsax.logout_1_copy,
-                  color: Colors.white,
-                  size: 32,
+              InkWell(
+                onTap: () => context.read<AuthBloc>().add(const LogoutEvent()),
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white12,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: state is AuthLoading
+                          ? const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: SizedBox(
+                                height: 28,
+                                width: 28,
+                                child: LottieLoader(),
+                              ),
+                            )
+                          : const Icon(
+                              Iconsax.logout_1_copy,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                    );
+                  },
                 ),
               ),
             ],

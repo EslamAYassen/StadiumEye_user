@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/geometriclinespainter.dart';
-import 'package:stadium_eye/features/auth/presentaion/view/widget/signup_icons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/geometriclinespainter.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/logo_icon.dart';
 
-class SignupBody extends StatefulWidget {
-  const SignupBody({super.key});
+import '../../bloc/auth_bloc.dart';
+import '../../bloc/auth_state.dart';
+
+class LoginBody extends StatefulWidget {
+  const LoginBody({super.key});
 
   @override
-  State<SignupBody> createState() => _SignupBodyState();
+  State<LoginBody> createState() => _LoginBodyState();
 }
 
-class _SignupBodyState extends State<SignupBody>
+class _LoginBodyState extends State<LoginBody>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -88,7 +92,21 @@ class _SignupBodyState extends State<SignupBody>
             painter: GeometricLinesPainter(animation: _fadeAnimation),
             //
           ),
-          const SignupIcons(),
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthError) {
+                // if (Navigator.canPop(context)) Navigator.pop(context);
+                // TODO: improve this UI
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+            },
+            child: const LogoIcon(),
+          ),
         ],
       ),
     );
