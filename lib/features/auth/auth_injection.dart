@@ -1,16 +1,4 @@
-// ==================== DEPENDENCY INJECTION ====================
-
-// lib/features/auth/auth_injection.dart
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-// import '../../core/network/dio_client.dart';
-// import '../../core/network/network_info.dart';
-import '../../core/networking/dio_client.dart';
-import '../../core/networking/interceptors/auth_interceptor.dart';
-import '../../core/networking/network_info.dart';
-import '../../core/storage/secure_storage.dart';
 
 import 'data/datasources/auth_local_datasource.dart';
 import 'data/datasources/auth_local_datasource_impl.dart';
@@ -26,7 +14,6 @@ import 'domain/usecases/register_usecase.dart';
 import 'domain/usecases/reset_password_usecase.dart';
 import 'domain/usecases/verify_email_usecase.dart';
 import 'domain/usecases/verify_reset_code_usecase.dart';
-
 import 'presentation/bloc/auth_bloc.dart';
 
 final sl = GetIt.instance;
@@ -73,21 +60,4 @@ Future<void> initAuthDependencies() async {
   sl.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(sl()),
   );
-
-  // ==================== Core ====================
-  // Dio Client with Auth Interceptor
-  sl.registerLazySingleton<Dio>(() {
-    final dio = DioClient.create();
-    dio.interceptors.add(AuthInterceptor(sl()));
-    return dio;
-  });
-
-  // Network Info
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
-
-  // Internet Connection Checker
-  sl.registerLazySingleton(() => InternetConnection());
-
-  // Secure Storage
-  sl.registerLazySingleton(() => SecureStorage());
 }

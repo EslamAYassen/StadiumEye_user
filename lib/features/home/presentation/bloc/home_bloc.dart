@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadium_eye/core/error/failures.dart';
 
@@ -41,6 +42,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   String _mapFailureToMessage(Failure failure) {
-    return failure.toString();
+    return failure.message;
   }
 }

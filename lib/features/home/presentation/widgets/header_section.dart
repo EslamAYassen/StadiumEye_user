@@ -101,7 +101,7 @@ class HeaderSection extends StatelessWidget {
                     child: StatCard(
                       title: "Reports",
                       value: state is! HomeLoaded
-                          ? '-1'
+                          ? '0'
                           : "${state.homeData.totalTickets}",
                       icon: Iconsax.document_copy,
                     ),
@@ -111,7 +111,7 @@ class HeaderSection extends StatelessWidget {
                     child: StatCard(
                       title: "Active",
                       value: state is! HomeLoaded
-                          ? '-1'
+                          ? '0'
                           : "${state.homeData.totalActiveUsers}",
                       icon: Iconsax.activity_copy,
                     ),
@@ -121,7 +121,7 @@ class HeaderSection extends StatelessWidget {
                     child: StatCard(
                       title: "Teams",
                       value: state is! HomeLoaded
-                          ? '-1'
+                          ? '0'
                           : "${state.homeData.totalTeams}",
                       icon: Iconsax.people_copy,
                     ),

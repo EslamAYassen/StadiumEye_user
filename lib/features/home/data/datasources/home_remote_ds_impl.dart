@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../../core/networking/endpoints.dart';
 import '../models/home_data_model.dart';
@@ -15,6 +16,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<HomeDataModel> getHomeData() async {
     try {
+      debugPrint(dio.options.headers['Authorization']);
       final response = await dio.get(UserEndpoints.myProfile);
 
       if (response.statusCode == 200) {

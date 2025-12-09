@@ -1,13 +1,7 @@
-// ==================== DEPENDENCY INJECTION ====================
-
-// lib/features/home/home_injection.dart
 import 'package:get_it/get_it.dart';
-
 import 'data/datasources/home_remote_ds_impl.dart';
 import 'data/repositories/home_repo_impl.dart';
-
 import 'domain/repositories/home_repo.dart';
-
 import 'domain/usecases/get_home_usecase.dart';
 import 'presentation/bloc/home_bloc.dart';
 
@@ -35,6 +29,6 @@ Future<void> initHomeDependencies() async {
   );
 
   // sl.registerLazySingleton<HomeLocalDataSource>(
-  //   () => HomeLocalDataSourceImpl(sl()),
+  //   () => HomeLocalDSImpl(sl()),
   // );
 }

@@ -36,45 +36,48 @@ class HomePage extends StatelessWidget {
         },
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            return Scaffold(
-              // backgroundColor: const Color(0xFFf5fcf8),
-              body: Stack(
-                children: [
-                  const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
+            if (state is HomeError) {
+              return Scaffold(body: Center(child: Text(state.message)));
+            } else if (state is HomeLoaded) {
+              return Scaffold(
+                // backgroundColor: const Color(0xFFf5fcf8),
+                body: Stack(
+                  children: [
+                    const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
 
-                  SingleChildScrollView(
-                    // padding: EdgeInsets.all(20),
-                    child: Skeletonizer(
-                      enabled: state is HomeLoading,
-                      child: Column(
-                        children: [
-                          const HeaderSection(),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 30),
+                    SingleChildScrollView(
+                      // padding: EdgeInsets.all(20),
+                      child: Skeletonizer(
+                        enabled: state is HomeLoading,
+                        child: Column(
+                          children: [
+                            const HeaderSection(),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 30),
 
-                                QuickActionsSection(
-                                  totalreports: state is HomeLoaded
-                                      ? state.homeData.totalTickets
-                                      : 0,
-                                ),
+                                  QuickActionsSection(
+                                    totalreports: state.homeData.totalTickets,
+                                  ),
 
-                                const SizedBox(height: 60),
+                                  const SizedBox(height: 60),
 
-                                const RecentActivitySection(),
-                              ],
+                                  const RecentActivitySection(),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
+                  ],
+                ),
+              );
+            }
+            return const Scaffold(body: Center(child: Text('Unknown Error')));
           },
         ),
       ),
