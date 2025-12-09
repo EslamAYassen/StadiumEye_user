@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 import '../../../../constants/app_routes.dart';
-import '../../../../core/widgets/loading/loading_dialoge.dart';
+
 import '../../../../core/widgets/loading/lottie_loading.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
