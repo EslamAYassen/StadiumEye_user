@@ -1,33 +1,83 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stadium_eye/features/report/domain/usecases/create_report.dart';
-import 'package:stadium_eye/features/report/domain/usecases/get_my_reports.dart';
-import 'package:stadium_eye/features/report/presentation/bloc/report_event.dart';
-import 'package:stadium_eye/features/report/presentation/bloc/report_state.dart';
+import '../../domain/usecases/create_report_usecase.dart';
+import '../../domain/usecases/get_my_reports_usecase.dart';
+import '../../domain/usecases/get_stadiums_usecase.dart';
+import 'report_event.dart';
+import 'report_state.dart';
 
-class ReportBloc extends Bloc<ReportEvent, ReportState> {
-  final CreateReport createReport;
-  final GetMyReports getMyReports;
+class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
+  final GetMyReportsUseCase getMyReportsUseCase;
+  final GetStadiumsUseCase getStadiumsUseCase;
+  final CreateReportUseCase createReportUseCase;
 
-  ReportBloc({required this.createReport, required this.getMyReports})
-    : super(ReportInitial()) {
-    on<CreateReportEvent>((event, emit) async {
-      emit(ReportLoading());
-      try {
-        await createReport(event.report);
-        emit(ReportCreated());
-      } catch (e) {
-        emit(ReportError(e.toString()));
-      }
-    });
+  ReportsBloc({
+    required this.getMyReportsUseCase,
+    required this.getStadiumsUseCase,
+    required this.createReportUseCase,
+  }) : super(const ReportsInitial()) {
+    on<LoadMyReportsEvent>(_onLoadMyReports);
+    on<RefreshMyReportsEvent>(_onRefreshMyReports);
+    on<LoadStadiumsEvent>(_onLoadStadiums);
+    on<CreateReportEvent>(_onCreateReport);
+  }
 
-    on<GetMyReportsEvent>((event, emit) async {
-      emit(ReportLoading());
-      try {
-        final list = await getMyReports();
-        emit(ReportLoaded(list));
-      } catch (e) {
-        emit(ReportError(e.toString()));
-      }
-    });
+  Future<void> _onLoadMyReports(
+    LoadMyReportsEvent event,
+    Emitter<ReportsState> emit,
+  ) async {
+    emit(const ReportsLoading());
+
+    final result = await getMyReportsUseCase();
+
+    result.fold(
+      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
+      (reports) => emit(ReportsLoaded(reports)),
+    );
+  }
+
+  Future<void> _onRefreshMyReports(
+    RefreshMyReportsEvent event,
+    Emitter<ReportsState> emit,
+  ) async {
+    final result = await getMyReportsUseCase();
+
+    result.fold(
+      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
+      (reports) => emit(ReportsLoaded(reports)),
+    );
+  }
+
+  Future<void> _onLoadStadiums(
+    LoadStadiumsEvent event,
+    Emitter<ReportsState> emit,
+  ) async {
+    emit(const ReportsLoading());
+
+    final result = await getStadiumsUseCase();
+
+    result.fold(
+      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
+      (stadiums) => emit(StadiumsLoaded(stadiums)),
+    );
+  }
+
+  Future<void> _onCreateReport(
+    CreateReportEvent event,
+    Emitter<ReportsState> emit,
+  ) async {
+    emit(const ReportCreating());
+
+    final result = await createReportUseCase(event.params);
+
+    result.fold(
+      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
+      (ticket) => emit(
+        ReportCreated(ticket: ticket, message: 'Report created successfully'),
+      ),
+    );
+  }
+
+  String _mapFailureToMessage(failure) {
+    return failure.toString();
   }
 }
