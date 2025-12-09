@@ -4,7 +4,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
+import 'package:stadium_eye/features/home/presentation/bloc/home_bloc.dart';
+import 'package:stadium_eye/features/home/presentation/bloc/home_event.dart';
+import 'package:stadium_eye/features/home/presentation/bloc/home_state.dart';
 import 'package:stadium_eye/features/home/presentation/widgets/header_section.dart';
 
 // import 'package:stadium_eye/features/report/presentation/widgets/recent_activity.dart';
@@ -13,51 +17,65 @@ import 'package:stadium_eye/features/home/presentation/widgets/recent_activity_s
 import '../../../../constants/app_routes.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
-import '../../../home/presentation/widgets/quick_actions_section.dart';
+import '../../home_injection.dart';
+import '../widgets/quick_actions_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is AuthUnauthenticated) {
-          Navigator.pushReplacementNamed(context, AppRoutes.login);
-        }
-      },
-      child: const Scaffold(
-        // backgroundColor: const Color(0xFFf5fcf8),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
+    return BlocProvider(
+      create: (context) =>
+          HomeBloc(getHomeDataUseCase: sl())..add(const LoadHomeDataEvent()),
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthUnauthenticated) {
+            Navigator.pushReplacementNamed(context, AppRoutes.login);
+          }
+        },
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return Scaffold(
+              // backgroundColor: const Color(0xFFf5fcf8),
+              body: Stack(
+                children: [
+                  const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
 
-              SingleChildScrollView(
-                // padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    HeaderSection(),
-                    Padding(
-                      padding: EdgeInsets.all(20.0),
+                  SingleChildScrollView(
+                    // padding: EdgeInsets.all(20),
+                    child: Skeletonizer(
+                      enabled: state is HomeLoading,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 30),
+                          const HeaderSection(),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 30),
 
-                          QuickActionsSection(),
+                                QuickActionsSection(
+                                  totalreports: state is HomeLoaded
+                                      ? state.homeData.totalTickets
+                                      : 0,
+                                ),
 
-                          SizedBox(height: 60),
+                                const SizedBox(height: 60),
 
-                          RecentActivitySection(),
+                                const RecentActivitySection(),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

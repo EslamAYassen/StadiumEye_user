@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 
 class QuickActionsSection extends StatelessWidget {
-  const QuickActionsSection({super.key});
+  const QuickActionsSection({super.key, this.totalreports = 0});
+  final int totalreports;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,7 @@ class QuickActionsSection extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 gradientColors: const [Color(0xFFE8FFF1)],
                 iconBackgroundColor: Colors.white,
-                numberOfReports: 23,
+                numberOfReports: totalreports,
               ),
               const SizedBox(height: 15),
               _ActionButton(
@@ -92,7 +93,6 @@ class QuickActionsSection extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 gradientColors: const [Color.fromARGB(255, 246, 255, 249)],
                 iconBackgroundColor: Colors.white,
-                // numberOfReports: 23,
               ),
             ],
           ),
