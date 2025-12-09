@@ -228,7 +228,7 @@ class _LoginContainerState extends State<LoginContainer>
           const SizedBox(height: 20),
 
           // Forgot Password
-          ForgetPassword(email: _emailController.text),
+          const ForgetPassword(),
 
           const SizedBox(height: 15),
 

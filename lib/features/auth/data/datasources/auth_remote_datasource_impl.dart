@@ -125,9 +125,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<String> resetPassword(String email, String newPassword) async {
     try {
-      final response = await dio.post(
+      final response = await dio.patch(
         AuthEndpoints.resetPassword,
-        data: {'email': email, 'newPassword': newPassword},
+        data: {
+          'email': email,
+          'newPassword': newPassword,
+          'confirmNewPassword': newPassword,
+        },
       );
 
       if (response.data['success'] == true) {

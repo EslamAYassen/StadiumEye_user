@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/auth/presentation/view/login_screen.dart';
-import 'package:stadium_eye/features/auth/presentation/view/otp_screen.dart';
-import 'package:stadium_eye/features/auth/presentation/view/signup_screen.dart';
-import 'package:stadium_eye/features/profile/presentation/views/profile_screen.dart';
-import 'package:stadium_eye/features/report/presentation/pages/home_page.dart';
-import 'package:stadium_eye/features/report/presentation/pages/my_reports_page.dart';
-import 'package:stadium_eye/features/report/presentation/pages/report_page.dart';
-import 'package:stadium_eye/features/splash_screen/presentaion/view/splash_screen.dart';
+import '../features/auth/presentation/view/login_screen.dart';
+import '../features/auth/presentation/view/otp_screen.dart';
+import '../features/auth/presentation/view/signup_screen.dart';
+import '../features/profile/presentation/views/profile_screen.dart';
+import '../features/report/presentation/pages/home_page.dart';
+import '../features/report/presentation/pages/my_reports_page.dart';
+import '../features/report/presentation/pages/report_page.dart';
+import '../features/splash_screen/presentaion/view/splash_screen.dart';
 import '../features/about_us/presentation/about_us_page.dart';
+import '../features/auth/presentation/view/forget_password_page.dart';
 import '../features/navigator/navigator_page.dart';
 import '../features/report/presentation/pages/add_report_page.dart';
 import '../features/settings/presentation/pages/settings_page.dart';
@@ -20,6 +21,7 @@ abstract class AppRoutes {
   static const String login = '/login';
   static const String register = '/signup';
   static const String otp = '/otp';
+  static const String forgetPasswordPage = '/forgetPassword';
   static const String reportDetails = '/reportDetails';
   static const String addReportPage = '/addTicketPage';
   static const String myReports = '/myReports';
@@ -43,6 +45,8 @@ abstract class AppRoutes {
       case otp:
         final email = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => OtpScreen(email: email));
+      case forgetPasswordPage:
+        return MaterialPageRoute(builder: (_) => const ForgetPasswordPage());
       case addReportPage:
         return MaterialPageRoute(builder: (_) => const AddReportPage());
       case myReports:
