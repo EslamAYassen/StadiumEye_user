@@ -5,10 +5,20 @@ import 'package:stadium_eye/theme/app_colors.dart';
 
 abstract class AppTheme {
   const AppTheme._();
+
   static const TextStyle _mainTextTheme = TextStyle(
     color: AppColors.blackColor,
     // fontFamily: AppThemeConsts.outfitfontFamily,
   );
+  static final ThemeData darKTheme = ThemeData(
+    scaffoldBackgroundColor: Colors.black87
+  );
+
+  static final ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: AppColors.backgroundColor
+  );
+
+
   static final ThemeData mainTheme = ThemeData(
     primaryColor: AppColors.primary,
     appBarTheme: const AppBarTheme(
