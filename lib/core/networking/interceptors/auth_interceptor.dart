@@ -14,7 +14,7 @@ class AuthInterceptor extends Interceptor {
     final token = await secureStorage.read("token");
 
     if (token != null) {
-      options.headers["Authorization"] = "Bearer $token";
+      options.headers["Authorization"] = token;
     }
 
     return handler.next(options);

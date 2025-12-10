@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
+  final UserProfile profile;
+  const ProfileHeader({super.key,required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +21,29 @@ class ProfileHeader extends StatelessWidget {
         ),
       ),
 
-      child:const Row(
+      child: Row(
         children: [
-          CircleAvatar(
+         const CircleAvatar(
             radius: 36.0,
             backgroundColor: Colors.white,
             child: Icon(Icons.person, size: 40, color: Color(0xFF2E7D32)),
           ),
 
-          SizedBox(width: 15),
+         const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'John Smith',
-                style: TextStyle(
+                profile.fullName,
+                style:const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                'Field Reporter',
-                style: TextStyle(
+                profile.role,
+                style:const TextStyle(
                   color: Colors.white70,
                   fontSize: 16,
                 ),

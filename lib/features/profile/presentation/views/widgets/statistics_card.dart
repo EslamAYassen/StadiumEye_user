@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
+import 'package:stadium_eye/features/report/domain/entities/report_entity.dart';
 
 class StatisticsCard extends StatelessWidget {
-  const StatisticsCard({super.key});
+  //final ReportEntity repot;
+  const StatisticsCard({super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +27,9 @@ class StatisticsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               //replace API data
-              buildStatColumn('24', 'Reports'),
-              buildStatColumn('18', 'Approved'),
-              buildStatColumn('3', 'Pending'),
+              buildStatColumn("12", 'total active user'),
+              buildStatColumn('2', 'total teams'),
+              buildStatColumn('1', 'total tickets'),
             ],
           ),
         ],
