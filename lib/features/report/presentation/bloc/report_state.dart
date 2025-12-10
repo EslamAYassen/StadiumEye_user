@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../domain/entities/cities_response_entity.dart';
 import '../../domain/entities/reports_response_entity.dart';
 import '../../domain/entities/stadiums_response_entity.dart';
 import '../../domain/entities/ticket_entity.dart';
@@ -34,6 +35,15 @@ class StadiumsLoaded extends ReportsState {
 
   @override
   List<Object?> get props => [stadiums];
+}
+
+class CitiesLoaded extends ReportsState {
+  final CitiesResponseEntity cities;
+
+  const CitiesLoaded(this.cities);
+
+  @override
+  List<Object?> get props => [cities];
 }
 
 class ReportCreating extends ReportsState {

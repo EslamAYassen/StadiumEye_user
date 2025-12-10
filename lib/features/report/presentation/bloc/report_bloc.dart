@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/core/error/failures.dart';
 import '../../domain/usecases/create_report_usecase.dart';
+import '../../domain/usecases/get_cities_usecase.dart';
 import '../../domain/usecases/get_my_reports_usecase.dart';
 import '../../domain/usecases/get_stadiums_usecase.dart';
 import 'report_event.dart';
@@ -9,16 +11,19 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
   final GetMyReportsUseCase getMyReportsUseCase;
   final GetStadiumsUseCase getStadiumsUseCase;
   final CreateReportUseCase createReportUseCase;
+  final GetCitiesUseCase getCitiesUseCase;
 
   ReportsBloc({
     required this.getMyReportsUseCase,
     required this.getStadiumsUseCase,
     required this.createReportUseCase,
+    required this.getCitiesUseCase,
   }) : super(const ReportsInitial()) {
     on<LoadMyReportsEvent>(_onLoadMyReports);
     on<RefreshMyReportsEvent>(_onRefreshMyReports);
     on<LoadStadiumsEvent>(_onLoadStadiums);
     on<CreateReportEvent>(_onCreateReport);
+    on<LoadCitiesEvent>(_onLoadCities);
   }
 
   Future<void> _onLoadMyReports(
@@ -44,6 +49,20 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     result.fold(
       (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
       (reports) => emit(ReportsLoaded(reports)),
+    );
+  }
+
+  Future<void> _onLoadCities(
+    LoadCitiesEvent event,
+    Emitter<ReportsState> emit,
+  ) async {
+    emit(const ReportsLoading());
+
+    final result = await getCitiesUseCase();
+
+    result.fold(
+      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
+      (cities) => emit(CitiesLoaded(cities)),
     );
   }
 
@@ -77,7 +96,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     );
   }
 
-  String _mapFailureToMessage(failure) {
-    return failure.toString();
+  String _mapFailureToMessage(Failure failure) {
+    return failure.message;
   }
 }

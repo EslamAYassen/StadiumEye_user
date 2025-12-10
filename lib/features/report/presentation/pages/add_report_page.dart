@@ -2,16 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/report_form.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 
-class AddReportPage extends StatefulWidget {
+class AddReportPage extends StatelessWidget {
   const AddReportPage({super.key});
-
-  @override
-  State<AddReportPage> createState() => _AddReportPageState();
-}
-
-class _AddReportPageState extends State<AddReportPage> {
-  final titleCtrl = TextEditingController();
-  final descCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

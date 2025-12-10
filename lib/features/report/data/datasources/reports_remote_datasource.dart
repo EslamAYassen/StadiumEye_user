@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/networking/endpoints.dart';
+import '../models/cities_response_model.dart';
 import '../models/reports_response_model.dart';
 import '../models/stadiums_response_model.dart';
 import '../models/ticket_model.dart';
@@ -8,6 +9,7 @@ import '../models/ticket_model.dart';
 abstract class ReportsRemoteDataSource {
   Future<ReportsResponseModel> getMyReports();
   Future<StadiumsResponseModel> getStadiums();
+  Future<CitiesResponseModel> getCities();
   Future<TicketModel> createReport({
     required String stadiumId,
     required String area,
@@ -139,6 +141,24 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
         return TicketModel.fromJson(response.data['data']);
       } else {
         throw Exception(response.data['message'] ?? 'Failed to create report');
+      }
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  @override
+  Future<CitiesResponseModel> getCities() async {
+    try {
+      final response = await dio.get(
+        '/cities',
+        queryParameters: {'page': 1, 'limit': 100},
+      );
+
+      if (response.statusCode == 200) {
+        return CitiesResponseModel.fromJson(response.data);
+      } else {
+        throw Exception(response.data['message'] ?? 'Failed to load cities');
       }
     } on DioException catch (e) {
       throw _handleDioError(e);

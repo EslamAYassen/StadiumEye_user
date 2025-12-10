@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/report/presentation/bloc/report_event.dart';
-import 'package:stadium_eye/features/report/presentation/widgets/custom_dropdown.dart';
+
 import 'package:stadium_eye/features/report/presentation/widgets/custom_submit_button.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/media_section.dart';
 
@@ -21,15 +21,15 @@ class _ReportFormState extends State<ReportForm> {
   final _observationsCtrl = TextEditingController();
   final _challengesCtrl = TextEditingController();
   final _lessonsCtrl = TextEditingController();
-  // String _stadiumCtrl = "King Fahd Stadium";
-  // String _areaCtrl = "North Stand";
 
   final _formKey = GlobalKey<FormState>();
   String? selectedArea;
   String? selectedStadium;
+
   @override
   void initState() {
     context.read<ReportsBloc>().add(const LoadStadiumsEvent());
+    context.read<ReportsBloc>().add(const LoadCitiesEvent());
     super.initState();
   }
 
@@ -62,14 +62,16 @@ class _ReportFormState extends State<ReportForm> {
                 ),
               ),
               const SizedBox(height: 8),
-              if (state is StadiumsLoaded) ...[
+              if (state is CitiesLoaded) ...[
                 buildForStadiumDropdown(
-                  state.stadiums.stadiums.map((e) => e.stadiumName).toList(),
+                  state.cities.cities.map((e) => e.nameEn).toList(),
                   "Stadium",
                   "Select stadium",
                 ),
               ] else if (state is ReportsLoading) ...[
-                const Center(child: LottieLoader()),
+                const Center(
+                  child: SizedBox(width: 60, height: 60, child: LottieLoader()),
+                ),
               ] else if (state is ReportsError) ...[
                 Center(child: Text(state.message)),
               ],
@@ -88,12 +90,14 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 8),
               if (state is StadiumsLoaded) ...[
                 buildForAreaDropdown(
-                  state.stadiums.stadiums.map((e) => e.cityId).toList(),
+                  state.stadiums.stadiums.map((e) => e.id).toList(),
                   "Area",
                   "Select Area",
                 ),
               ] else if (state is ReportsLoading) ...[
-                const Center(child: LottieLoader()),
+                const Center(
+                  child: SizedBox(width: 60, height: 60, child: LottieLoader()),
+                ),
               ] else if (state is ReportsError) ...[
                 Center(child: Text(state.message)),
               ],
@@ -174,15 +178,6 @@ class _ReportFormState extends State<ReportForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF022C0C),
-          ),
-        ),
-        const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
@@ -198,7 +193,7 @@ class _ReportFormState extends State<ReportForm> {
               isExpanded: true,
               hint: Row(
                 children: [
-                  const Icon(Icons.badge_outlined, color: Colors.grey),
+                  const Icon(Icons.location_on_outlined, color: Colors.grey),
                   const SizedBox(width: 10),
                   Text(hint, style: TextStyle(color: Colors.grey[400])),
                 ],
@@ -210,7 +205,7 @@ class _ReportFormState extends State<ReportForm> {
                   child: Row(
                     children: [
                       const Icon(
-                        Icons.badge,
+                        Icons.location_on_outlined,
                         color: Color(0xFF00C853),
                         size: 20,
                       ),
@@ -247,15 +242,6 @@ class _ReportFormState extends State<ReportForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF022C0C),
-          ),
-        ),
-        const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
@@ -271,7 +257,7 @@ class _ReportFormState extends State<ReportForm> {
               isExpanded: true,
               hint: Row(
                 children: [
-                  const Icon(Icons.badge_outlined, color: Colors.grey),
+                  const Icon(Icons.stadium_outlined, color: Colors.grey),
                   const SizedBox(width: 10),
                   Text(hint, style: TextStyle(color: Colors.grey[400])),
                 ],
@@ -283,7 +269,7 @@ class _ReportFormState extends State<ReportForm> {
                   child: Row(
                     children: [
                       const Icon(
-                        Icons.badge,
+                        Icons.stadium_outlined,
                         color: Color(0xFF00C853),
                         size: 20,
                       ),
