@@ -12,6 +12,10 @@ class LoadMyReportsEvent extends ReportsEvent {
   const LoadMyReportsEvent();
 }
 
+class LoadCountriesEvent extends ReportsEvent {
+  const LoadCountriesEvent();
+}
+
 class LoadCitiesEvent extends ReportsEvent {
   const LoadCitiesEvent();
 }

@@ -3,6 +3,7 @@ import '../../../../core/error/failures.dart';
 
 import '../../../../core/networking/network_info.dart';
 import '../../domain/entities/cities_response_entity.dart';
+import '../../domain/entities/countries_response_entity.dart';
 import '../../domain/entities/reports_response_entity.dart';
 import '../../domain/entities/stadiums_response_entity.dart';
 import '../../domain/entities/ticket_entity.dart';
@@ -17,6 +18,22 @@ class ReportsRepositoryImpl implements ReportsRepository {
     required this.remoteDataSource,
     required this.networkInfo,
   });
+
+  @override
+  Future<Either<Failure, CountriesResponseEntity>> getCountries() async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+
+    try {
+      final countries = await remoteDataSource.getCountries();
+      return Right(countries);
+    } on Exception catch (e) {
+      return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
+    } catch (e) {
+      return const Left(ServerFailure('An unexpected error occurred'));
+    }
+  }
 
   @override
   Future<Either<Failure, CitiesResponseEntity>> getCities() async {

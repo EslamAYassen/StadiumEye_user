@@ -1,17 +1,17 @@
-import 'country_entity.dart';
-
 class CityEntity {
   final String id;
   final String nameEn;
   final String nameAr;
-  final CountryEntity country;
+  final String countryId;
   final DateTime createdAt;
+  final DateTime updatedAt;
 
   CityEntity({
     required this.id,
     required this.nameEn,
     required this.nameAr,
-    required this.country,
+    required this.countryId,
     required this.createdAt,
+    required this.updatedAt,
   });
 }

@@ -5,6 +5,8 @@ class CountryModel extends CountryEntity {
     required super.id,
     required super.nameEn,
     required super.nameAr,
+    required super.createdAt,
+    required super.updatedAt,
   });
 
   factory CountryModel.fromJson(Map<String, dynamic> json) {
@@ -12,6 +14,8 @@ class CountryModel extends CountryEntity {
       id: json['_id'] as String,
       nameEn: json['nameEn'] as String,
       nameAr: json['nameAr'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
   }
 }

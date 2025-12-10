@@ -40,6 +40,7 @@ class StadiumEndpoints extends Endpoints {
   static const stadiums = "/stadiums";
 }
 
-class CitiesEndpoints extends Endpoints {
-  static const cities = "/cities?page=1&limit=20";
+class LocationEndpoints extends Endpoints {
+  static const countries = "/countries";
+  static const cities = "/cities";
 }
