@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_report.dart';
 
+import '../../domain/entities/ticket_entity.dart';
+
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key, required this.data});
-  final Map data;
-  // final int id;
+  final TicketEntity data;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,51 +17,42 @@ class ReportPage extends StatelessWidget {
           SliverList.list(
             children: [
               _ReportHeaderWidget(
-                stadiumName: data['stadiumName'],
-                section: data['section'],
-                createdDate: '11/15/2025',
-                authorName: 'Ahmed Al-Salem',
+                stadiumName: data.stadium.stadiumName,
+                section: data.area,
+                createdDate: data.createdAt.toIso8601String(),
+                authorName: data.createdBy!.fullName,
               ),
               // Media Gallery
-              _MediaGalleryWidget(
-                photoUrls: List.filled(
-                  data['photoCount'],
-                  'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800',
-                ),
-              ),
+              _MediaGalleryWidget(photoUrls: data.ticketImages),
 
               // Observations
               _ReportSectionWidget(
                 title: 'Observations',
-                content: data['review'],
+                content: data.observations,
                 icon: Icons.description_outlined,
                 iconColor: const Color(0xFF10B981),
               ),
 
               // Challenges
-              const _ReportSectionWidget(
+              _ReportSectionWidget(
                 title: 'Challenges',
-                content:
-                    'Some delays in entry due to high attendance. Queue management could be improved.',
+                content: data.challenges,
                 icon: Icons.error_outline,
-                iconColor: Color(0xFFF59E0B),
+                iconColor: const Color(0xFFF59E0B),
               ),
 
               // Lessons Learned
-              const _ReportSectionWidget(
+              _ReportSectionWidget(
                 title: 'Lessons Learned',
-                content:
-                    'Need to open additional entry gates 30 minutes earlier for high-profile matches.',
+                content: data.lessonsLearned,
                 icon: Icons.lightbulb_outline,
-                iconColor: Color(0xFFF59E0B),
+                iconColor: const Color(0xFFF59E0B),
               ),
 
               // Status
               _ReportStatusWidget(
-                statusText: data['isSubmitted']
-                    ? 'Submitted on November 15, 2025 at 12:00 PM'
-                    : "Draft",
-                isSubmitted: data['isSubmitted'],
+                statusText: data.status,
+                // isSubmitted: re,
               ),
             ],
           ),

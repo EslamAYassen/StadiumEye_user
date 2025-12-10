@@ -20,7 +20,7 @@ class ReportCard extends StatefulWidget {
     required this.review,
     this.photoCount = 1,
     required this.date,
-    this.isSubmitted = ReportFilter.drafts,
+    this.isSubmitted = ReportFilter.all,
     this.index = 0,
   });
 
@@ -144,21 +144,47 @@ class _ReportCardState extends State<ReportCard>
                           },
                         ),
                       ),
-                      if (widget.isSubmitted == ReportFilter.submitted) ...[
+                      if (widget.isSubmitted == ReportFilter.resolved) ...[
                         _statCard(
-                          const Color(0xFFD1FAE5),
-                          const Color(0xFF10B981),
-                          const Color(0xFF10B981),
-                          'Submitted',
-                          Icons.check_circle_rounded,
+                          const Color.fromARGB(255, 210, 250, 209),
+                          const Color.fromARGB(255, 27, 185, 16),
+                          const Color.fromARGB(255, 24, 185, 16),
+                          'Closed',
+                          Icons.check_rounded,
                         ),
-                      ] else ...[
+                      ] else if (widget.isSubmitted == ReportFilter.closed) ...[
                         _statCard(
                           const Color.fromARGB(255, 248, 250, 209),
                           const Color.fromARGB(255, 225, 215, 21),
                           const Color.fromARGB(255, 185, 176, 16),
-                          'Draft',
-                          Icons.drafts_rounded,
+                          'Closed',
+                          Icons.close_rounded,
+                        ),
+                      ] else if (widget.isSubmitted ==
+                          ReportFilter.inProgress) ...[
+                        _statCard(
+                          const Color.fromARGB(255, 209, 211, 250),
+                          const Color.fromARGB(255, 21, 55, 225),
+                          const Color.fromARGB(255, 24, 16, 185),
+                          'In Progress',
+                          Icons.timelapse_rounded,
+                        ),
+                      ] else if (widget.isSubmitted == ReportFilter.open) ...[
+                        _statCard(
+                          const Color.fromARGB(255, 209, 250, 245),
+                          const Color.fromARGB(255, 21, 225, 218),
+                          const Color.fromARGB(255, 16, 182, 185),
+                          'Open',
+                          Icons.file_open_rounded,
+                        ),
+                      ] else if (widget.isSubmitted ==
+                          ReportFilter.rejected) ...[
+                        _statCard(
+                          const Color.fromARGB(255, 250, 209, 209),
+                          const Color.fromARGB(255, 225, 21, 21),
+                          const Color.fromARGB(255, 185, 16, 16),
+                          'Rejected',
+                          Icons.close_rounded,
                         ),
                       ],
                     ],

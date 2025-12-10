@@ -27,7 +27,6 @@ class _AddReportPageState extends State<AddReportPage> {
                 child: Row(
                   children: [
                     Container(
-                      // margin: const EdgeInsets.(8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.green.shade400,

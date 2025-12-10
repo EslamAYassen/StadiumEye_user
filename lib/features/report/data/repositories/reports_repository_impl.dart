@@ -20,7 +20,7 @@ class ReportsRepositoryImpl implements ReportsRepository {
   @override
   Future<Either<Failure, ReportsResponseEntity>> getMyReports() async {
     if (!await networkInfo.isConnected) {
-      return const Left(const NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
@@ -29,14 +29,14 @@ class ReportsRepositoryImpl implements ReportsRepository {
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
     } catch (e) {
-      return const Left(const ServerFailure('An unexpected error occurred'));
+      return const Left(ServerFailure('An unexpected error occurred'));
     }
   }
 
   @override
   Future<Either<Failure, StadiumsResponseEntity>> getStadiums() async {
     if (!await networkInfo.isConnected) {
-      return const Left(const NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
@@ -45,7 +45,7 @@ class ReportsRepositoryImpl implements ReportsRepository {
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
     } catch (e) {
-      return const Left(const ServerFailure('An unexpected error occurred'));
+      return const Left(ServerFailure('An unexpected error occurred'));
     }
   }
 
@@ -64,7 +64,7 @@ class ReportsRepositoryImpl implements ReportsRepository {
     List<String>? ticketVoicesPaths,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(const NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
@@ -85,7 +85,7 @@ class ReportsRepositoryImpl implements ReportsRepository {
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
     } catch (e) {
-      return const Left(const ServerFailure('An unexpected error occurred'));
+      return const Left(ServerFailure('An unexpected error occurred'));
     }
   }
 }
