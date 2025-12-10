@@ -72,7 +72,11 @@ class QuickActionsSection extends StatelessWidget {
               const SizedBox(height: 15),
               _ActionButton(
                 textColor: Colors.black,
-                onTap: () => Navigator.pushNamed(context, AppRoutes.myReports),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  AppRoutes.myReports,
+                  arguments: totalreports,
+                ),
                 icon: Icons.description_outlined,
                 title: "My Reports",
                 subtitle: "View your submitted reports",

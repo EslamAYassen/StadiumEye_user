@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 // ignore: must_be_immutable
-class CustomTextField extends StatefulWidget {
+class CustomTextField extends StatelessWidget {
   CustomTextField({
     super.key,
     this.maxLines = 1,
     this.hint,
     required this.keyboardType,
     required this.controller,
+
     this.isPassword = false,
+    this.validator,
   });
   final TextEditingController controller;
   final TextInputType keyboardType;
   final int maxLines;
   final String? hint;
+  final String? Function(String?)? validator;
   bool isPassword;
 
-  @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
-}
+  late bool passwordVisible = isPassword;
 
-class _CustomTextFieldState extends State<CustomTextField> {
-  late bool passwordVisible = widget.isPassword;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,24 +31,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
           Radius.circular(AppThemeConsts.radius16lg),
         ),
       ),
-      child: TextField(
-        maxLines: widget.maxLines,
-        controller: widget.controller,
-        keyboardType: widget.keyboardType,
+      child: TextFormField(
+        validator: validator,
+        maxLines: maxLines,
+        controller: controller,
+        keyboardType: keyboardType,
         obscureText: passwordVisible,
         enableSuggestions: true,
         autocorrect: true,
-
         // textDirection: TextDirection.rtl,
         cursorColor: Colors.black,
         cursorWidth: 0.5,
-
         style: Theme.of(context).textTheme.bodyLarge,
         decoration: InputDecoration(
           filled: true,
-
           fillColor: const Color.fromARGB(255, 255, 255, 255),
-
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
             borderRadius: const BorderRadius.all(
@@ -85,7 +81,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           floatingLabelAlignment: FloatingLabelAlignment.start,
 
           hint: Text(
-            widget.hint ?? "",
+            hint ?? "",
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: const Color.fromARGB(255, 150, 150, 150),
             ),

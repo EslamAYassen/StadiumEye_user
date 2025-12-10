@@ -51,7 +51,10 @@ abstract class AppRoutes {
       case addReportPage:
         return MaterialPageRoute(builder: (_) => const AddReportPage());
       case myReports:
-        return MaterialPageRoute(builder: (_) => const MyReportsPage());
+        final totalReports = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => MyReportsPage(totalReports: totalReports),
+        );
       case reportDetails:
         final data = settings.arguments as TicketEntity;
         return MaterialPageRoute(builder: (_) => ReportPage(data: data));

@@ -57,53 +57,5 @@ class _AddReportPageState extends State<AddReportPage> {
         ),
       ),
     );
-    // Scaffold(
-    //   body: BlocProvider(
-    //     create: (_) => context.read<ReportBloc>(),
-    //     child: BlocConsumer<ReportBloc, ReportState>(
-    //       listener: (_, state) {
-    //         if (state is ReportCreated) {
-    //           ScaffoldMessenger.of(
-    //             context,
-    //           ).showSnackBar(const SnackBar(content: Text("Report created")));
-    //           Navigator.pop(context);
-    //         }
-    //       },
-    //       builder: (_, state) {
-    //         if (state is ReportLoading) {
-    //           return const Center(child: CircularProgressIndicator());
-    //         }
-
-    //         return Padding(
-    //           padding: const EdgeInsets.all(16),
-    //           child: Column(
-    //             children: [
-    //               const ReportForm(),
-    //               const SizedBox(height: 20),
-
-    //               ElevatedButton(
-    //                 onPressed: () {
-    //                   final report = ReportEntity(
-    //                     stadiumId: "uuid-stadium-123",
-    //                     ticketType: "Issue",
-    //                     title: titleCtrl.text,
-    //                     description: descCtrl.text,
-    //                     priority: "High",
-    //                     visibility: "Public",
-    //                     location: {"section": "A", "row": "5", "seat": "12"},
-    //                     manualEntry: {"name": "Ahmed", "email": "a@ex.com"},
-    //                   );
-
-    //                   context.read<ReportBloc>().add(CreateReportEvent(report));
-    //                 },
-    //                 child: const Text("Submit"),
-    //               ),
-    //             ],
-    //           ),
-    //         );
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 }

@@ -15,6 +15,7 @@ import 'package:stadium_eye/features/home/presentation/widgets/header_section.da
 import 'package:stadium_eye/features/home/presentation/widgets/recent_activity_section.dart';
 
 import '../../../../constants/app_routes.dart';
+import '../../../../core/widgets/loading/lottie_loading.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../home_injection.dart';
@@ -40,7 +41,6 @@ class HomePage extends StatelessWidget {
               return Scaffold(body: Center(child: Text(state.message)));
             } else if (state is HomeLoaded) {
               return Scaffold(
-                // backgroundColor: const Color(0xFFf5fcf8),
                 body: Stack(
                   children: [
                     const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
                 ),
               );
             }
-            return const Scaffold(body: Center(child: Text('Unknown Error')));
+            return const Scaffold(body: Center(child: LottieLoader()));
           },
         ),
       ),
