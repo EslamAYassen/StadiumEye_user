@@ -4,7 +4,7 @@ class CityEntity {
   final String nameAr;
   final String countryId;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  // final DateTime updatedAt;
 
   CityEntity({
     required this.id,
@@ -12,6 +12,6 @@ class CityEntity {
     required this.nameAr,
     required this.countryId,
     required this.createdAt,
-    required this.updatedAt,
+    // required this.updatedAt,
   });
 }

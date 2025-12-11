@@ -7,7 +7,7 @@ class CitiesResponseModel extends CitiesResponseEntity {
   factory CitiesResponseModel.fromJson(Map<String, dynamic> json) {
     return CitiesResponseModel(
       status: json['status'] as String,
-      cities: (json['data']['cities'] as List)
+      cities: (json['cities'] as List)
           .map((city) => CityModel.fromJson(city as Map<String, dynamic>))
           .toList(),
     );

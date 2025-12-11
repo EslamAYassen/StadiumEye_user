@@ -32,6 +32,7 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUnfocus,
         validator: validator,
         maxLines: maxLines,
         controller: controller,

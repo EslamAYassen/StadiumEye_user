@@ -31,6 +31,7 @@ class _ReportFormState extends State<ReportForm> {
   String? selectedCityId;
   String? selectedStadiumId;
   String? selectedArea;
+  String? selectedTicketType;
 
   // Stored data to prevent loss on state changes
   List<CountryEntity> _countries = [];
@@ -120,6 +121,7 @@ class _ReportFormState extends State<ReportForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<ReportsBloc, ReportsState>(
       listener: (context, state) {
+        debugPrint('State: $state');
         if (state is CountriesLoaded) {
           setState(() {
             _countries = state.countries.countries;
@@ -260,6 +262,19 @@ class _ReportFormState extends State<ReportForm> {
               _buildAreaDropdown(),
               const SizedBox(height: 26),
 
+              //! Ticket Type Dropdown
+              const Text(
+                "Ticket Type *",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 8),
+              _buildTicketTypeDropdown(),
+              const SizedBox(height: 26),
+
               //! Observations
               const Text(
                 "Observations *",
@@ -330,12 +345,21 @@ class _ReportFormState extends State<ReportForm> {
 
               //! Submit Button
               CustomSubmitButton(
+                isLoading: state is ReportsLoading,
+                isEndable:
+                    _formKey.currentState!.validate() &&
+                    selectedStadiumId != null &&
+                    selectedArea != null &&
+                    selectedTicketType != null &&
+                    _observationsCtrl.text.isNotEmpty,
                 onTap: () => context.read<ReportsBloc>().add(
                   CreateReportEvent(
                     CreateReportParams(
                       stadiumId: selectedStadiumId ?? '',
                       area: selectedArea ?? '',
-                      ticketType: 'Positive',
+                      ticketType: selectedTicketType ?? '',
+                      //TODO: change this
+                      modelType: "visualPollution",
 
                       observations: _observationsCtrl.text,
                       challenges: _challengesCtrl.text,
@@ -440,7 +464,7 @@ class _ReportFormState extends State<ReportForm> {
           ),
           items: _filteredCities.map((city) {
             return DropdownMenuItem(
-              value: city.nameEn,
+              value: city.id,
               child: Row(
                 children: [
                   const Icon(
@@ -595,6 +619,64 @@ class _ReportFormState extends State<ReportForm> {
             );
           }).toList(),
           onChanged: _onAreaSelected,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTicketTypeDropdown() {
+    final ticketType = [
+      {'value': 'positive', 'label': 'Positive'},
+      {'value': 'negative', 'label': 'Negative'},
+    ];
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF7F7F7),
+        borderRadius: BorderRadius.circular(15),
+        border: selectedTicketType == null
+            ? Border.all(color: Colors.transparent)
+            : Border.all(color: const Color(0xFF00C853), width: 2),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: selectedTicketType,
+          isExpanded: true,
+          hint: Row(
+            children: [
+              const Icon(Icons.edit_document, color: Colors.grey),
+              const SizedBox(width: 10),
+              Text(
+                'Select Ticket Type',
+                style: TextStyle(color: Colors.grey[400]),
+              ),
+            ],
+          ),
+          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+          items: ticketType.map((type) {
+            return DropdownMenuItem(
+              value: type['value'],
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.edit_document,
+                    color: Color(0xFF00C853),
+                    size: 20,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    type['label']!,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Color(0xFF022C0C),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+          onChanged: (val) => setState(() => selectedTicketType = val),
         ),
       ),
     );
