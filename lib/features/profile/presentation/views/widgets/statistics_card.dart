@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
-import 'package:stadium_eye/features/report/domain/entities/report_entity.dart';
 
 class StatisticsCard extends StatelessWidget {
   //final ReportEntity repot;
-  const StatisticsCard({super.key });
+  const StatisticsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
