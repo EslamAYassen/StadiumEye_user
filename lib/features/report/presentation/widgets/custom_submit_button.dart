@@ -23,7 +23,7 @@ class CustomSubmitButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: isLoading
-            ? const LottieLoader()
+            ? const SizedBox(height: 18, child: LottieLoader())
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

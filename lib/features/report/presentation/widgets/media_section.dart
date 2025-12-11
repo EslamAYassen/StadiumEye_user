@@ -310,7 +310,7 @@ class _MediaButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: color,
+          color: color.withAlpha(25),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: color),
         ),

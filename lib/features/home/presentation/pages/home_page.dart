@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
 import 'package:stadium_eye/features/home/presentation/bloc/home_bloc.dart';
@@ -20,6 +21,7 @@ import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../home_injection.dart';
 import '../widgets/quick_actions_section.dart';
+import '../widgets/ball_indicator.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -45,30 +47,38 @@ class HomePage extends StatelessWidget {
                   children: [
                     const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
 
-                    SingleChildScrollView(
-                      child: Skeletonizer(
-                        enabled: state is HomeLoading,
-                        child: Column(
-                          children: [
-                            const HeaderSection(),
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 30),
+                    BallIndicator(
+                      onRefresh: () async {
+                        context.read<HomeBloc>().add(
+                          const RefreshHomeDataEvent(),
+                        );
+                        await Future.delayed(const Duration(seconds: 3));
+                      },
+                      child: SingleChildScrollView(
+                        child: Skeletonizer(
+                          enabled: state is HomeLoading,
+                          child: Column(
+                            children: [
+                              const HeaderSection(),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 30),
 
-                                  QuickActionsSection(
-                                    totalreports: state.homeData.totalTickets,
-                                  ),
+                                    QuickActionsSection(
+                                      totalreports: state.homeData.totalTickets,
+                                    ),
 
-                                  const SizedBox(height: 60),
+                                    const SizedBox(height: 60),
 
-                                  const RecentActivitySection(),
-                                ],
+                                    const RecentActivitySection(),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

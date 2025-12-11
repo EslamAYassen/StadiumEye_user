@@ -32,6 +32,7 @@ class _ReportFormState extends State<ReportForm> {
   String? selectedStadiumId;
   String? selectedArea;
   String? selectedTicketType;
+  String? selectedModelType;
 
   // Stored data to prevent loss on state changes
   List<CountryEntity> _countries = [];
@@ -50,19 +51,48 @@ class _ReportFormState extends State<ReportForm> {
   List<String> _videoPaths = [];
   List<String> _voicePaths = [];
 
+  // Form completion state
+  bool _isFormComplete = false;
+
   @override
   void initState() {
     super.initState();
-    // Load countries first
+
     context.read<ReportsBloc>().add(const LoadCountriesEvent());
+    // Add listeners to text controllers
+    _observationsCtrl.addListener(_checkFormCompletion);
+    _challengesCtrl.addListener(_checkFormCompletion);
+    _lessonsCtrl.addListener(_checkFormCompletion);
   }
 
   @override
   void dispose() {
+    _observationsCtrl.removeListener(_checkFormCompletion);
+    _challengesCtrl.removeListener(_checkFormCompletion);
+    _lessonsCtrl.removeListener(_checkFormCompletion);
+
     _observationsCtrl.dispose();
     _challengesCtrl.dispose();
     _lessonsCtrl.dispose();
     super.dispose();
+  }
+
+  void _checkFormCompletion() {
+    final isComplete =
+        selectedCountryId != null &&
+        selectedCityId != null &&
+        selectedStadiumId != null &&
+        selectedArea != null &&
+        selectedTicketType != null &&
+        _observationsCtrl.text.trim().isNotEmpty &&
+        _challengesCtrl.text.trim().isNotEmpty &&
+        _lessonsCtrl.text.trim().isNotEmpty;
+
+    if (_isFormComplete != isComplete) {
+      setState(() {
+        _isFormComplete = isComplete;
+      });
+    }
   }
 
   void _handleSubmit() {
@@ -96,14 +126,23 @@ class _ReportFormState extends State<ReportForm> {
         );
         return;
       }
+      if (selectedModelType == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select a model type'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
 
       context.read<ReportsBloc>().add(
         CreateReportEvent(
           CreateReportParams(
-            stadiumId: selectedStadiumId!,
-            area: selectedArea!,
-            ticketType: selectedTicketType!,
-            modelType: "visualPollution",
+            stadiumId: selectedStadiumId ?? '',
+            area: selectedArea ?? '',
+            ticketType: selectedTicketType ?? '',
+            modelType: selectedModelType ?? '',
             observations: _observationsCtrl.text.trim(),
             challenges: _challengesCtrl.text.trim(),
             lessonsLearned: _lessonsCtrl.text.trim(),
@@ -138,6 +177,7 @@ class _ReportFormState extends State<ReportForm> {
     if (countryId != null && _cities.isEmpty) {
       context.read<ReportsBloc>().add(const LoadCitiesEvent());
     }
+    _checkFormCompletion();
   }
 
   void _onCitySelected(String? cityId) {
@@ -159,18 +199,35 @@ class _ReportFormState extends State<ReportForm> {
     if (cityId != null && _stadiums.isEmpty) {
       context.read<ReportsBloc>().add(const LoadStadiumsEvent());
     }
+    _checkFormCompletion();
   }
 
   void _onStadiumSelected(String? stadiumId) {
     setState(() {
       selectedStadiumId = stadiumId;
     });
+    _checkFormCompletion();
   }
 
   void _onAreaSelected(String? area) {
     setState(() {
       selectedArea = area;
     });
+    _checkFormCompletion();
+  }
+
+  void _onTicketTypeSelected(String? ticketType) {
+    setState(() {
+      selectedTicketType = ticketType;
+    });
+    _checkFormCompletion();
+  }
+
+  void _onModelTypeSelected(String? modelType) {
+    setState(() {
+      selectedModelType = modelType;
+    });
+    _checkFormCompletion();
   }
 
   @override
@@ -255,8 +312,8 @@ class _ReportFormState extends State<ReportForm> {
               _isLoadingCountries
                   ? const Center(
                       child: SizedBox(
-                        width: 60,
-                        height: 60,
+                        width: 40,
+                        height: 40,
                         child: LottieLoader(),
                       ),
                     )
@@ -276,8 +333,8 @@ class _ReportFormState extends State<ReportForm> {
               _isLoadingCities
                   ? const Center(
                       child: SizedBox(
-                        width: 60,
-                        height: 60,
+                        width: 40,
+                        height: 40,
                         child: LottieLoader(),
                       ),
                     )
@@ -297,8 +354,8 @@ class _ReportFormState extends State<ReportForm> {
               _isLoadingStadiums
                   ? const Center(
                       child: SizedBox(
-                        width: 60,
-                        height: 60,
+                        width: 40,
+                        height: 40,
                         child: LottieLoader(),
                       ),
                     )
@@ -329,6 +386,19 @@ class _ReportFormState extends State<ReportForm> {
               ),
               const SizedBox(height: 8),
               _buildTicketTypeDropdown(),
+              const SizedBox(height: 26),
+
+              //! Model Type Dropdown
+              const Text(
+                "Model Type *",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 8),
+              _buildModelTypeDropdown(),
               const SizedBox(height: 26),
 
               //! Observations
@@ -413,14 +483,7 @@ class _ReportFormState extends State<ReportForm> {
               //! Submit Button
               CustomSubmitButton(
                 isLoading: state is ReportCreating,
-                isEndable:
-                    (_formKey.currentState?.validate() ?? false) &&
-                    selectedStadiumId != null &&
-                    selectedArea != null &&
-                    selectedTicketType != null &&
-                    _observationsCtrl.text.isNotEmpty &&
-                    _challengesCtrl.text.isNotEmpty &&
-                    _lessonsCtrl.text.isNotEmpty,
+                isEndable: _isFormComplete,
                 onTap: _handleSubmit,
               ),
             ],
@@ -442,6 +505,7 @@ class _ReportFormState extends State<ReportForm> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
           value: selectedCountryId,
           isExpanded: true,
           hint: Row(
@@ -494,6 +558,7 @@ class _ReportFormState extends State<ReportForm> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
           value: selectedCityId,
           isExpanded: true,
           hint: Row(
@@ -562,6 +627,7 @@ class _ReportFormState extends State<ReportForm> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
           value: selectedStadiumId,
           isExpanded: true,
           hint: Row(
@@ -641,6 +707,7 @@ class _ReportFormState extends State<ReportForm> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
           value: selectedArea,
           isExpanded: true,
           hint: Row(
@@ -696,6 +763,7 @@ class _ReportFormState extends State<ReportForm> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
           value: selectedTicketType,
           isExpanded: true,
           hint: Row(
@@ -731,7 +799,66 @@ class _ReportFormState extends State<ReportForm> {
               ),
             );
           }).toList(),
-          onChanged: (val) => setState(() => selectedTicketType = val),
+          onChanged: _onTicketTypeSelected,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildModelTypeDropdown() {
+    final modelType = [
+      {'value': 'visualPollution', 'label': 'Visual Pollution'},
+      {'value': 'safety', 'label': 'Safety'},
+    ];
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF7F7F7),
+        borderRadius: BorderRadius.circular(15),
+        border: selectedTicketType == null
+            ? Border.all(color: Colors.transparent)
+            : Border.all(color: const Color(0xFF00C853), width: 2),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          borderRadius: BorderRadius.circular(15),
+          value: selectedModelType,
+          isExpanded: true,
+          hint: Row(
+            children: [
+              const Icon(Icons.model_training_rounded, color: Colors.grey),
+              const SizedBox(width: 10),
+              Text(
+                'Select Model Type',
+                style: TextStyle(color: Colors.grey[400]),
+              ),
+            ],
+          ),
+          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+          items: modelType.map((type) {
+            return DropdownMenuItem(
+              value: type['value'],
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.model_training_rounded,
+                    color: Color(0xFF00C853),
+                    size: 20,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    type['label']!,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Color(0xFF022C0C),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+          onChanged: _onModelTypeSelected,
         ),
       ),
     );
