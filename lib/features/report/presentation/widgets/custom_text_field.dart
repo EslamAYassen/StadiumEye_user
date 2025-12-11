@@ -12,12 +12,14 @@ class CustomTextField extends StatelessWidget {
 
     this.isPassword = false,
     this.validator,
+    this.onTapOutside,
   });
   final TextEditingController controller;
   final TextInputType keyboardType;
   final int maxLines;
   final String? hint;
   final String? Function(String?)? validator;
+  final void Function(PointerDownEvent)? onTapOutside;
   bool isPassword;
 
   late bool passwordVisible = isPassword;
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        onTapOutside: onTapOutside,
         autovalidateMode: AutovalidateMode.onUnfocus,
         validator: validator,
         maxLines: maxLines,

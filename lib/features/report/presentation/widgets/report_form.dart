@@ -170,13 +170,13 @@ class _ReportFormState extends State<ReportForm> {
             _isLoadingStadiums = false;
           });
         } else if (state is ReportCreated) {
+          //TODO: improve this UI
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
               backgroundColor: Colors.green,
             ),
           );
-          Navigator.pop(context);
         }
       },
       builder: (context, state) {
@@ -347,7 +347,7 @@ class _ReportFormState extends State<ReportForm> {
               CustomSubmitButton(
                 isLoading: state is ReportsLoading,
                 isEndable:
-                    _formKey.currentState!.validate() &&
+                    (_formKey.currentState?.validate() ?? false) &&
                     selectedStadiumId != null &&
                     selectedArea != null &&
                     selectedTicketType != null &&
@@ -360,7 +360,6 @@ class _ReportFormState extends State<ReportForm> {
                       ticketType: selectedTicketType ?? '',
                       //TODO: change this
                       modelType: "visualPollution",
-
                       observations: _observationsCtrl.text,
                       challenges: _challengesCtrl.text,
                       lessonsLearned: _lessonsCtrl.text,

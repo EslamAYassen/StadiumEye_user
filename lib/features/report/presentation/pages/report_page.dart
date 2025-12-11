@@ -12,14 +12,14 @@ class ReportPage extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const CustomAppBarForReport(),
+          CustomAppBarForReport(id: data.id),
 
           SliverList.list(
             children: [
               _ReportHeaderWidget(
                 stadiumName: data.stadium.stadiumName,
                 section: data.area,
-                createdDate: data.createdAt.toIso8601String(),
+                createdDate: data.createdAt.toIso8601String().substring(0, 10),
                 authorName: data.createdBy!.fullName,
               ),
               // Media Gallery
