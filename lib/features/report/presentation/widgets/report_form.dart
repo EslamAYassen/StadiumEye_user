@@ -45,6 +45,11 @@ class _ReportFormState extends State<ReportForm> {
   bool _isLoadingCities = false;
   bool _isLoadingStadiums = false;
 
+  // Media files
+  List<String> _imagePaths = [];
+  List<String> _videoPaths = [];
+  List<String> _voicePaths = [];
+
   @override
   void initState() {
     super.initState();
@@ -58,6 +63,57 @@ class _ReportFormState extends State<ReportForm> {
     _challengesCtrl.dispose();
     _lessonsCtrl.dispose();
     super.dispose();
+  }
+
+  void _handleSubmit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      if (selectedStadiumId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select a stadium'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
+      if (selectedArea == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select an area'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
+      if (selectedTicketType == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select a ticket type'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
+      context.read<ReportsBloc>().add(
+        CreateReportEvent(
+          CreateReportParams(
+            stadiumId: selectedStadiumId!,
+            area: selectedArea!,
+            ticketType: selectedTicketType!,
+            modelType: "visualPollution",
+            observations: _observationsCtrl.text.trim(),
+            challenges: _challengesCtrl.text.trim(),
+            lessonsLearned: _lessonsCtrl.text.trim(),
+            ticketImagesPaths: _imagePaths.isNotEmpty ? _imagePaths : null,
+            ticketVideosPaths: _videoPaths.isNotEmpty ? _videoPaths : null,
+            ticketVoicesPaths: _voicePaths.isNotEmpty ? _voicePaths : null,
+          ),
+        ),
+      );
+    }
   }
 
   void _onCountrySelected(String? countryId) {
@@ -335,37 +391,37 @@ class _ReportFormState extends State<ReportForm> {
               ),
               const SizedBox(height: 26),
 
-              //! Media Section
               MediaSection(
-                onPhotoUpload: () {},
-                onVideoUpload: () {},
-                onVoiceRecord: () {},
+                onImagesChanged: (paths) {
+                  setState(() {
+                    _imagePaths = paths;
+                  });
+                },
+                onVideosChanged: (paths) {
+                  setState(() {
+                    _videoPaths = paths;
+                  });
+                },
+                onVoicesChanged: (paths) {
+                  setState(() {
+                    _voicePaths = paths;
+                  });
+                },
               ),
               const SizedBox(height: 26),
 
               //! Submit Button
               CustomSubmitButton(
-                isLoading: state is ReportsLoading,
+                isLoading: state is ReportCreating,
                 isEndable:
                     (_formKey.currentState?.validate() ?? false) &&
                     selectedStadiumId != null &&
                     selectedArea != null &&
                     selectedTicketType != null &&
-                    _observationsCtrl.text.isNotEmpty,
-                onTap: () => context.read<ReportsBloc>().add(
-                  CreateReportEvent(
-                    CreateReportParams(
-                      stadiumId: selectedStadiumId ?? '',
-                      area: selectedArea ?? '',
-                      ticketType: selectedTicketType ?? '',
-                      //TODO: change this
-                      modelType: "visualPollution",
-                      observations: _observationsCtrl.text,
-                      challenges: _challengesCtrl.text,
-                      lessonsLearned: _lessonsCtrl.text,
-                    ),
-                  ),
-                ),
+                    _observationsCtrl.text.isNotEmpty &&
+                    _challengesCtrl.text.isNotEmpty &&
+                    _lessonsCtrl.text.isNotEmpty,
+                onTap: _handleSubmit,
               ),
             ],
           ),
