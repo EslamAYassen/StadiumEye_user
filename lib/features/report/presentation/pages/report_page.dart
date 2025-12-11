@@ -393,6 +393,7 @@ class _ReportStatusWidget extends StatelessWidget {
 
   const _ReportStatusWidget({
     required this.statusText,
+    // ignore: unused_element_parameter
     this.isSubmitted = true,
   });
 

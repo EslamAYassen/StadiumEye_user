@@ -310,9 +310,9 @@ class _MediaButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color),
         ),
         child: Column(
           children: [
@@ -387,7 +387,7 @@ class _ImageSourceButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: const Color(0xFFF7F7F7),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF00C853).withOpacity(0.3)),
+          border: Border.all(color: const Color(0xFF00C853)),
         ),
         child: Column(
           children: [
@@ -536,16 +536,16 @@ class _FilePreviewList extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: color.withOpacity(0.3)),
+              border: Border.all(color: color),
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.2),
+                    color: color,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(icon, color: color, size: 20),

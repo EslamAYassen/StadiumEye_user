@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+// import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_my_report.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/report_card.dart';
