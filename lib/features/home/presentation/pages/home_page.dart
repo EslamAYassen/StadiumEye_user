@@ -46,7 +46,6 @@ class HomePage extends StatelessWidget {
                     const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
 
                     SingleChildScrollView(
-                      // padding: EdgeInsets.all(20),
                       child: Skeletonizer(
                         enabled: state is HomeLoading,
                         child: Column(
