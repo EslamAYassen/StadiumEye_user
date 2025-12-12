@@ -281,7 +281,7 @@ class _ReportFormState extends State<ReportForm> {
             animType: AnimType.bottomSlide,
             title: 'ERROR',
             desc: state.message,
-          );
+          ).show();
 
           setState(() {
             _isLoadingCountries = false;
@@ -295,7 +295,7 @@ class _ReportFormState extends State<ReportForm> {
             animType: AnimType.bottomSlide,
             title: 'Report Created',
             desc: state.message,
-          );
+          ).show();
         }
       },
       builder: (context, state) {

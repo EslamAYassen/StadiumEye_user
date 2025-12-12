@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -27,12 +28,19 @@ class OtpScreen extends StatelessWidget {
         }
         if (state is AuthVerificationSuccess) {
           Navigator.pushReplacementNamed(context, AppRoutes.login);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.rightSlide,
+            title: 'Success',
+            desc: state.message,
+          ).show();
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(state.message),
+          //     backgroundColor: Colors.green,
+          //   ),
+          // );
           // Navigate to login if needed
         }
 

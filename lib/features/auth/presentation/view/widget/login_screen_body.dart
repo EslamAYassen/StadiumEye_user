@@ -104,7 +104,7 @@ class _LoginBodyState extends State<LoginBody>
                   animType: AnimType.bottomSlide,
                   title: 'ERROR',
                   desc: state.message,
-                );
+                ).show();
               }
             },
             child: const LogoIcon(),
