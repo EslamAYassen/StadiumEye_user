@@ -8,7 +8,6 @@ class LoadingDialoge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      //TODO: Improve the UI @Abdou
       backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(

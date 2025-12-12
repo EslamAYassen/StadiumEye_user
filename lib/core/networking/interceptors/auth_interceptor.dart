@@ -7,7 +7,7 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor(this.secureStorage);
 
   @override
-  void onRequest(
+  Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
@@ -17,6 +17,18 @@ class AuthInterceptor extends Interceptor {
       options.headers["Authorization"] = token;
     }
 
-    return handler.next(options);
+    handler.next(options);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    // Handle 401 Unauthorized errors (token expired or invalid)
+    if (err.response?.statusCode == 401) {
+      // Token is invalid or expired
+      // You might want to clear the token and redirect to login
+      // secureStorage.delete("token");
+    }
+
+    handler.next(err);
   }
 }

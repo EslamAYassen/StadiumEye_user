@@ -1,15 +1,16 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class CustomAppBarForReport extends StatelessWidget {
   // final Map data;
-  final int? id;
+  final String id;
   final VoidCallback? onBackPressed;
 
   const CustomAppBarForReport({
     // required this.data,
     super.key,
-    this.id = 45,
+    required this.id,
     this.onBackPressed,
   });
 
@@ -122,10 +123,7 @@ class CustomAppBarForReport extends StatelessWidget {
                                       offset: Offset(-50 * (1 - value), 0),
                                       child: Opacity(
                                         opacity: value,
-                                        child: _buildStatCard(
-                                          'Report ID',
-                                          id.toString(),
-                                        ),
+                                        child: _buildStatCard('Report ID', id),
                                       ),
                                     );
                                   },
@@ -169,20 +167,23 @@ class CustomAppBarForReport extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          TweenAnimationBuilder<int>(
-            duration: const Duration(milliseconds: 1200),
-            tween: IntTween(begin: 0, end: int.parse(value)),
-            curve: Curves.easeOutCubic,
-            builder: (context, animatedValue, child) {
-              return Text(
-                "#$animatedValue",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
+          DefaultTextStyle(
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+            ),
+            child: AnimatedTextKit(
+              repeatForever: false,
+              totalRepeatCount: 1,
+              animatedTexts: [
+                ScrambleAnimatedText(
+                  '#$id',
+                  speed: const Duration(milliseconds: 130),
                 ),
-              );
-            },
+                // ScrambleAnimatedText('Explorer'),
+              ],
+            ),
           ),
         ],
       ),

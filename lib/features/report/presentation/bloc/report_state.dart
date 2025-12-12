@@ -1,21 +1,80 @@
-import 'package:stadium_eye/features/report/domain/entities/report_entity.dart';
+import 'package:equatable/equatable.dart';
+import '../../domain/entities/cities_response_entity.dart';
+import '../../domain/entities/countries_response_entity.dart';
+import '../../domain/entities/reports_response_entity.dart';
+import '../../domain/entities/stadiums_response_entity.dart';
+import '../../domain/entities/ticket_entity.dart';
 
-abstract class ReportState {}
+abstract class ReportsState extends Equatable {
+  const ReportsState();
 
-class ReportInitial extends ReportState {}
-
-class ReportLoading extends ReportState {}
-
-class ReportLoaded extends ReportState {
-  final List<ReportEntity> reports;
-
-  ReportLoaded(this.reports);
+  @override
+  List<Object?> get props => [];
 }
 
-class ReportCreated extends ReportState {}
+class ReportsInitial extends ReportsState {
+  const ReportsInitial();
+}
 
-class ReportError extends ReportState {
+class ReportsLoading extends ReportsState {
+  const ReportsLoading();
+}
+
+class ReportsLoaded extends ReportsState {
+  final ReportsResponseEntity reports;
+
+  const ReportsLoaded(this.reports);
+
+  @override
+  List<Object?> get props => [reports];
+}
+
+class StadiumsLoaded extends ReportsState {
+  final StadiumsResponseEntity stadiums;
+
+  const StadiumsLoaded(this.stadiums);
+
+  @override
+  List<Object?> get props => [stadiums];
+}
+
+class CitiesLoaded extends ReportsState {
+  final CitiesResponseEntity cities;
+
+  const CitiesLoaded(this.cities);
+
+  @override
+  List<Object?> get props => [cities];
+}
+
+class CountriesLoaded extends ReportsState {
+  final CountriesResponseEntity countries;
+
+  const CountriesLoaded(this.countries);
+
+  @override
+  List<Object?> get props => [countries];
+}
+
+class ReportCreating extends ReportsState {
+  const ReportCreating();
+}
+
+class ReportCreated extends ReportsState {
+  final TicketEntity ticket;
   final String message;
 
-  ReportError(this.message);
+  const ReportCreated({required this.ticket, required this.message});
+
+  @override
+  List<Object?> get props => [ticket, message];
+}
+
+class ReportsError extends ReportsState {
+  final String message;
+
+  const ReportsError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

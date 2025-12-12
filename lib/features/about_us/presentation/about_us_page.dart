@@ -74,33 +74,28 @@ class _AboutUsPageState extends State<AboutUsPage>
     // Initialize video
     //TODO: remove this in prodaction
     _videoController =
-        VideoPlayerController.asset("assets/videos/motion4.1.mp4")
-          // VideoPlayerController.networkUrl(
-          //     Uri.parse(
-          //       'https://drive.google.com/uc?export=download&id=16AEnoi1uxez70TzluIvCCCQmQ66uk2Ls',
-          //     ),
-          //   )
+        "assets/videos/motion4.1.mp4".isNotEmpty
+              ? VideoPlayerController.asset("assets/videos/motion4.1.mp4")
+              : VideoPlayerController.networkUrl(
+                  Uri.parse(
+                    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+                  ),
+                )
           ..initialize().then((_) {
             setState(() {
               _isVideoInitialized = true;
             });
           });
 
-    _initvideoController =
-        VideoPlayerController.asset(
-            AppConsts.initVideo,
-            // Uri.parse(
-            //   'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-            // ),
-          )
-          ..initialize().then((_) {
-            setState(() {
-              _isInitVideoInitialized = true;
-              _initvideoController.play();
-              _initvideoController.setLooping(true);
-              _initvideoController.setVolume(0);
-            });
-          });
+    _initvideoController = VideoPlayerController.asset(AppConsts.initVideo)
+      ..initialize().then((_) {
+        setState(() {
+          _isInitVideoInitialized = true;
+          _initvideoController.play();
+          _initvideoController.setLooping(true);
+          _initvideoController.setVolume(0);
+        });
+      });
   }
 
   void _onScroll() {
@@ -199,57 +194,6 @@ class _AboutUsPageState extends State<AboutUsPage>
                                       _logoOpacity * _logoFadeAnimation.value,
                                   child: const Center(
                                     child: LogoSplash(textColor: Colors.green),
-                                    // child: Column(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.center,
-                                    //   children: [
-                                    //     Container(
-                                    //       width: 140,
-                                    //       height: 140,
-                                    //       decoration: const BoxDecoration(
-                                    //         color: Color(0xFF00D856),
-                                    //         shape: BoxShape.circle,
-                                    //         boxShadow: [
-                                    //           BoxShadow(
-                                    //             color: Color.fromRGBO(
-                                    //               0,
-                                    //               216,
-                                    //               86,
-                                    //               0.3,
-                                    //             ),
-                                    //             blurRadius: 30,
-                                    //             spreadRadius: 5,
-                                    //             offset: Offset(0, 10),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //       child: const Icon(
-                                    //         Icons.stadium,
-                                    //         size: 70,
-                                    //         color: Colors.white,
-                                    //       ),
-                                    //     ),
-                                    //     const SizedBox(height: 25),
-                                    //     const Text(
-                                    //       'Stadium Reports',
-                                    //       style: TextStyle(
-                                    //         fontSize: 32,
-                                    //         fontWeight: FontWeight.bold,
-                                    //         color: Color(0xFF00D856),
-                                    //         letterSpacing: 1,
-                                    //       ),
-                                    //     ),
-                                    //     const SizedBox(height: 8),
-                                    //     Text(
-                                    //       'Excellence in Stadium Management',
-                                    //       style: TextStyle(
-                                    //         fontSize: 14,
-                                    //         color: Colors.grey[600],
-                                    //         letterSpacing: 0.5,
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
                                   ),
                                 );
                               },

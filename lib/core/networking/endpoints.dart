@@ -39,3 +39,8 @@ class ReportEndpoints extends Endpoints {
 class StadiumEndpoints extends Endpoints {
   static const stadiums = "/stadiums";
 }
+
+class LocationEndpoints extends Endpoints {
+  static const countries = "/countries";
+  static const cities = "/cities";
+}

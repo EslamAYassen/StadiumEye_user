@@ -2,7 +2,7 @@ abstract class AppConsts {
   const AppConsts._();
   static const String appName = 'Stadium Eye App';
 
-  static const int apiTimeout = 30000; // in milliseconds
+  // static const int apiTimeout = 30000; // in milliseconds
   static const String dateFormat = 'yyyy-MM-dd';
   static const String dateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
   static const int itemsPerPage = 20;
@@ -10,6 +10,9 @@ abstract class AppConsts {
   static const String stadiumDark = 'assets/images/stadium_night.jpeg';
   static const String initVideo = 'assets/videos/initVideo.mp4';
   static const String lottieLoading = 'assets/lottie/RollingFootbll.json';
+  static const String noDataImage = 'assets/images/no-data.png';
+  static const String errorImage = 'assets/images/error.png';
+
   // static const String logoImagesPathNobackGround = 'assets/images/logo.png';
   // static const String logoImagesPathWithBackGround =
   //     'assets/images/logo design.png';
