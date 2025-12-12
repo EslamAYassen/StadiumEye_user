@@ -1,34 +1,61 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../constants/app_routes.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.settingsPage);
       },
-      borderRadius: BorderRadius.circular(16.0),
+      borderRadius: BorderRadius.circular(AppThemeConsts.radius16md),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20.0),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16.0),
+        margin: const EdgeInsets.symmetric(
+          horizontal: AppThemeConsts.padding16md,
         ),
-        child: const Row(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppThemeConsts.padding16md,
+          vertical: 16.0,
+        ),
+        decoration: BoxDecoration(
+          color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius16md),
+          boxShadow: [
+            BoxShadow(
+              color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
           children: [
-            Icon(Icons.settings, color: Color(0xFF2E7D32)),
-            SizedBox(width: 20),
+            const Icon(Icons.settings, color: AppColors.primary),
+            const SizedBox(width: 20),
             Text(
               'Settings',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
             ),
-            Spacer(),
-            Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+            const Spacer(),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : AppColors.mediumGray,
+            ),
           ],
         ),
       ),

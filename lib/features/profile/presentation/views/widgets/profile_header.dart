@@ -1,58 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
+
 class ProfileHeader extends StatelessWidget {
   final UserProfile profile;
-  const ProfileHeader({super.key,required this.profile});
+  const ProfileHeader({super.key, required this.profile});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      margin:const EdgeInsets.symmetric(horizontal: 20),
-      padding:const EdgeInsets.all(20),
-      decoration:const BoxDecoration(
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF2E7D32), Color(0xFF43A047)],
+          colors: isDarkMode
+              ? [AppColors.primaryDark, AppColors.primary]
+              : [AppColors.primary, AppColors.primaryLight],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24.0),
           topRight: Radius.circular(24.0),
         ),
-      ),
-
-      child: Row(
-        children: [
-         const CircleAvatar(
-            radius: 36.0,
-            backgroundColor: Colors.white,
-            child: Icon(Icons.person, size: 40, color: Color(0xFF2E7D32)),
-          ),
-
-         const SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                profile.fullName,
-                style:const TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                profile.role,
-                style:const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 16,
-                ),
-              ),
-            ],
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-    )
-    ;
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 36.0,
+            backgroundColor: isDarkMode
+                ? AppColors.cardDark
+                : AppColors.whiteColor,
+            child: const Icon(Icons.person, size: 40, color: AppColors.primary),
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  profile.fullName,
+                  style: const TextStyle(
+                    color: AppColors.whiteColor,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  profile.role,
+                  style: const TextStyle(color: Colors.white70, fontSize: 16),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
