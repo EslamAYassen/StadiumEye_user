@@ -35,18 +35,8 @@ class OtpScreen extends StatelessWidget {
             title: 'Success',
             desc: state.message,
           ).show();
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text(state.message),
-          //     backgroundColor: Colors.green,
-          //   ),
-          // );
-          // Navigate to login if needed
         }
 
-        // if (state is AuthUnauthenticated) {
-        //   if (Navigator.canPop(context)) Navigator.pop(context);
-        // }
         if (state is AuthAuthenticated) {
           Navigator.pushReplacementNamed(context, AppRoutes.home);
         }

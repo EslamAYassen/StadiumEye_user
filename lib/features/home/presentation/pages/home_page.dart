@@ -42,10 +42,10 @@ class HomePage extends StatelessWidget {
             if (state is HomeError) {
               return Scaffold(
                 body: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .center,
                   children: [
-                    Image.asset(AppConsts.errorImage),
+                    Image.asset(width: 100, height: 100, AppConsts.errorImage),
                     const SizedBox(height: 20),
                     Text(state.message),
                   ],

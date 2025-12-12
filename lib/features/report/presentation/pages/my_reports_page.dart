@@ -120,10 +120,15 @@ class _MyReportsPageState extends State<MyReportsPage> {
                           .toList();
                 if (filterdTickets.isEmpty) {
                   return SliverToBoxAdapter(
-                    //TODO: add NO data
                     child: Column(
+                      mainAxisAlignment: .center,
+                      crossAxisAlignment: .center,
                       children: [
-                        Image.asset(AppConsts.noDataImage),
+                        Image.asset(
+                          width: 100,
+                          height: 100,
+                          AppConsts.noDataImage,
+                        ),
                         const SizedBox(height: 20),
                         const Text("No Data"),
                       ],
@@ -153,11 +158,13 @@ class _MyReportsPageState extends State<MyReportsPage> {
                   }, childCount: filterdTickets.length),
                 );
               }
-              //TODO: add NO data
+
               return SliverToBoxAdapter(
                 child: Column(
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .center,
                   children: [
-                    Image.asset(AppConsts.noDataImage),
+                    Image.asset(height: 100, width: 100, AppConsts.noDataImage),
                     const SizedBox(height: 20),
                     const Text("No Data"),
                   ],
