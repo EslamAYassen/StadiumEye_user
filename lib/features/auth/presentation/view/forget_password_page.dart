@@ -55,13 +55,13 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           ).show();
         } else if (state is AuthPasswordResetSuccess) {
           Navigator.pushReplacementNamed(context, AppRoutes.login);
-          //TODO: improve this
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.bottomSlide,
+            title: 'Success',
+            desc: state.message,
+          ).show();
         }
       },
       builder: (context, state) {

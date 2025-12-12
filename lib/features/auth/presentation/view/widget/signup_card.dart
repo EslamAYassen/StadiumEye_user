@@ -548,13 +548,12 @@ class _SignupCardState extends State<SignupCard> {
           lastName: _lastNameController.text,
           email: _emailController.text,
           phone: _phoneNumberController.text,
-          genderEn: selectedGender ?? 'male',
-
+          genderEn: selectedGender ?? '',
           //TODO: Add this
           dateOfBirth: "2000-01-01",
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,
-          //TODO:change those if u can
+          //TODO: Change those
           city: '691cfbe9aad9af7504b0f29c',
           country: '691cfbe9aad9af7504b0f29c',
         ),
