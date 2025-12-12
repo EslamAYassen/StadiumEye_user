@@ -1,5 +1,5 @@
 // ignore_for_file: unused_element_parameter
-
+//TODO: add (reload again) when an error occurs
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -19,6 +19,7 @@ import '../../../../constants/app_routes.dart';
 import '../../../../core/widgets/loading/lottie_loading.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
+import '../../../settings/presentation/bloc/settings_cubit.dart';
 import '../../home_injection.dart';
 import '../widgets/quick_actions_section.dart';
 import '../widgets/ball_indicator.dart';
@@ -55,7 +56,17 @@ class HomePage extends StatelessWidget {
               return Scaffold(
                 body: Stack(
                   children: [
-                    const _GlassmorphicImage(imagePath: AppConsts.stadiumDark),
+                    BlocBuilder<SettingsCubit, SettingsState>(
+                      builder: (context, state) {
+                        final bool isDarkMode =
+                            state is SettingsLoaded && state.isDarkMode == true;
+                        return _GlassmorphicImage(
+                          imagePath: isDarkMode == false
+                              ? AppConsts.stadiumLight
+                              : AppConsts.stadiumDark,
+                        );
+                      },
+                    ),
 
                     BallIndicator(
                       onRefresh: () async {

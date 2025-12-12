@@ -8,7 +8,7 @@ class AddReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundLight,
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: SingleChildScrollView(

@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key, this.totalreports = 0});
@@ -8,33 +10,49 @@ class QuickActionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 10.0),
-
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppThemeConsts.padding16md),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(26, 255, 255, 255),
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(50, 255, 255, 255),
-                Color.fromARGB(26, 255, 255, 255),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(24),
+            color: isDarkMode
+                ? AppColors.cardDark.withAlpha(76)
+                : const Color.fromARGB(26, 255, 255, 255),
+            gradient: isDarkMode
+                ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColors.cardDark.withAlpha(122),
+                      AppColors.cardDark.withAlpha(76),
+                    ],
+                  )
+                : const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(50, 255, 255, 255),
+                      Color.fromARGB(26, 255, 255, 255),
+                    ],
+                  ),
+            borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
             border: Border.all(
-              color: const Color.fromARGB(75, 255, 255, 255),
+              color: isDarkMode
+                  ? AppColors.borderDark.withAlpha(122)
+                  : const Color.fromARGB(75, 255, 255, 255),
               width: 1.5,
             ),
             boxShadow: [
-              const BoxShadow(
-                color: Color.fromARGB(26, 255, 255, 255),
+              BoxShadow(
+                color: isDarkMode
+                    ? AppColors.shadowDark
+                    : const Color.fromARGB(26, 255, 255, 255),
                 blurRadius: 20,
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
@@ -42,36 +60,52 @@ class QuickActionsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(230, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(16),
+                  color: isDarkMode
+                      ? AppColors.cardElevatedDark
+                      : AppColors.whiteColor,
+                  borderRadius: BorderRadius.circular(
+                    AppThemeConsts.radius16md,
+                  ),
                   boxShadow: [
-                    const BoxShadow(
-                      color: Color.fromARGB(13, 0, 0, 0),
+                    BoxShadow(
+                      color: isDarkMode
+                          ? AppColors.shadowDark.withAlpha(76)
+                          : const Color.fromARGB(13, 0, 0, 0),
                       blurRadius: 8,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
-                child: const Text(
+                child: Text(
                   "Quick Actions",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w600,
+                    color: isDarkMode
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
               _ActionButton(
                 onTap: () =>
                     Navigator.pushNamed(context, AppRoutes.addReportPage),
-                textColor: Colors.white,
+                textColor: AppColors.whiteColor,
                 icon: Icons.add_circle_outline,
-                gradientColors: const [Color(0xFF00c951), Color(0xFF00bd7e)],
+                gradientColors: isDarkMode
+                    ? [AppColors.primaryDark, AppColors.primary]
+                    : [AppColors.gradientStart, AppColors.gradientEnd],
                 title: "Create Report",
                 subtitle: "Report an issue quickly",
               ),
               const SizedBox(height: 15),
               _ActionButton(
-                textColor: Colors.black,
+                textColor: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
                 onTap: () => Navigator.pushNamed(
                   context,
                   AppRoutes.myReports,
@@ -80,23 +114,33 @@ class QuickActionsSection extends StatelessWidget {
                 icon: Icons.description_outlined,
                 title: "My Reports",
                 subtitle: "View your submitted reports",
-                iconColor: Colors.green,
+                iconColor: AppColors.primary,
                 fontWeight: FontWeight.w400,
-                gradientColors: const [Color(0xFFE8FFF1)],
-                iconBackgroundColor: Colors.white,
+                gradientColors: isDarkMode
+                    ? [AppColors.cardElevatedDark]
+                    : [AppColors.lightGreen],
+                iconBackgroundColor: isDarkMode
+                    ? AppColors.cardDark
+                    : AppColors.whiteColor,
                 numberOfReports: totalreports,
               ),
               const SizedBox(height: 15),
               _ActionButton(
-                textColor: Colors.black,
+                textColor: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
                 onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
                 icon: Icons.person_outlined,
                 title: "My profile",
                 subtitle: "View personal data & settings",
-                iconColor: Colors.green,
+                iconColor: AppColors.primary,
                 fontWeight: FontWeight.w400,
-                gradientColors: const [Color.fromARGB(255, 246, 255, 249)],
-                iconBackgroundColor: Colors.white,
+                gradientColors: isDarkMode
+                    ? [AppColors.cardElevatedDark]
+                    : [AppColors.veryLightGreen],
+                iconBackgroundColor: isDarkMode
+                    ? AppColors.cardDark
+                    : AppColors.whiteColor,
               ),
             ],
           ),
@@ -120,7 +164,7 @@ class _ActionButton extends StatefulWidget {
 
   const _ActionButton({
     required this.icon,
-    this.iconColor = Colors.white,
+    this.iconColor = AppColors.whiteColor,
     this.iconBackgroundColor = Colors.white24,
     required this.title,
     required this.subtitle,
@@ -128,7 +172,10 @@ class _ActionButton extends StatefulWidget {
     this.fontWeight = FontWeight.bold,
     this.numberOfReports,
     this.onTap,
-    this.gradientColors = const [Color(0xFF00C16E), Color(0xFF4BE596)],
+    this.gradientColors = const [
+      AppColors.gradientStart,
+      AppColors.gradientEnd,
+    ],
   });
 
   @override
@@ -173,8 +220,11 @@ class _ActionButtonState extends State<_ActionButton>
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: widget.onTap,
+      borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
       child: FadeTransition(
         opacity: _fade,
         child: SlideTransition(
@@ -182,22 +232,24 @@ class _ActionButtonState extends State<_ActionButton>
           child: ScaleTransition(
             scale: _scale,
             child: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(AppThemeConsts.padding16md),
               decoration: BoxDecoration(
                 color: widget.gradientColors.length != 1
                     ? null
                     : widget.gradientColors[0],
                 boxShadow: [
-                  const BoxShadow(
-                    color: Color.fromARGB(20, 0, 0, 0),
+                  BoxShadow(
+                    color: isDarkMode
+                        ? AppColors.shadowDark.withAlpha(76)
+                        : const Color.fromARGB(20, 0, 0, 0),
                     blurRadius: 12,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
                 gradient: widget.gradientColors.length == 1
                     ? null
                     : LinearGradient(colors: widget.gradientColors),
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
               ),
               child: Row(
                 children: [
@@ -222,7 +274,7 @@ class _ActionButtonState extends State<_ActionButton>
                         Text(
                           widget.subtitle,
                           style: TextStyle(
-                            color: widget.textColor,
+                            color: widget.textColor.withAlpha(178),
                             fontSize: 14,
                           ),
                         ),
@@ -236,14 +288,18 @@ class _ActionButtonState extends State<_ActionButton>
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(18),
+                        color: isDarkMode
+                            ? AppColors.cardDark
+                            : AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(
+                          AppThemeConsts.radius16md,
+                        ),
                       ),
                       child: Text(
                         widget.numberOfReports.toString(),
                         style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.green,
+                          color: AppColors.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

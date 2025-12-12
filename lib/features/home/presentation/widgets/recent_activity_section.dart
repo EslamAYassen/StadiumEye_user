@@ -2,38 +2,57 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class RecentActivitySection extends StatelessWidget {
   const RecentActivitySection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 10.0),
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppThemeConsts.padding16md),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(26, 255, 255, 255),
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(50, 255, 255, 255),
-                Color.fromARGB(26, 255, 255, 255),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(24),
+            color: isDarkMode
+                ? AppColors.cardDark.withAlpha(76)
+                : const Color.fromARGB(26, 255, 255, 255),
+            gradient: isDarkMode
+                ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColors.cardDark.withAlpha(122),
+                      AppColors.cardDark.withAlpha(76),
+                    ],
+                  )
+                : const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(50, 255, 255, 255),
+                      Color.fromARGB(26, 255, 255, 255),
+                    ],
+                  ),
+            borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
             border: Border.all(
-              color: const Color.fromARGB(75, 255, 255, 255),
+              color: isDarkMode
+                  ? AppColors.borderDark.withAlpha(76)
+                  : const Color.fromARGB(75, 255, 255, 255),
               width: 1.5,
             ),
             boxShadow: [
-              const BoxShadow(
-                color: Color.fromARGB(26, 0, 0, 0),
+              BoxShadow(
+                color: isDarkMode
+                    ? AppColors.shadowDark
+                    : const Color.fromARGB(26, 0, 0, 0),
                 blurRadius: 20,
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
@@ -41,21 +60,33 @@ class RecentActivitySection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: const [
+                  color: isDarkMode
+                      ? AppColors.cardElevatedDark
+                      : AppColors.whiteColor,
+                  borderRadius: BorderRadius.circular(
+                    AppThemeConsts.radius16md,
+                  ),
+                  boxShadow: [
                     BoxShadow(
-                      color: Colors.black12,
+                      color: isDarkMode
+                          ? AppColors.shadowDark.withAlpha(76)
+                          : Colors.black12,
                       blurRadius: 12,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
-                child: const Text(
+                child: Text(
                   "Recent Activity",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w600,
+                    color: isDarkMode
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
@@ -90,7 +121,6 @@ class _RecentActivityItem extends StatelessWidget {
   final IconData icon;
 
   const _RecentActivityItem({
-    // super.key,
     required this.title,
     required this.subtitle,
     required this.timeAgo,
@@ -99,57 +129,67 @@ class _RecentActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: const [
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
+        boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: isDarkMode
+                ? AppColors.shadowDark.withAlpha(76)
+                : Colors.black12,
             blurRadius: 12,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppThemeConsts.padding12sm),
             decoration: BoxDecoration(
-              color: const Color(0xFFE6FFF2),
-              borderRadius: BorderRadius.circular(14),
+              color: isDarkMode
+                  ? AppColors.primaryDark.withAlpha(76)
+                  : AppColors.lightGreen,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
             ),
-            child: Icon(icon, color: const Color(0xFF00C16E), size: 28),
+            child: Icon(icon, color: AppColors.primary, size: 28),
           ),
-
-          const SizedBox(width: 16),
-
-          // Texts
+          const SizedBox(width: AppThemeConsts.padding16md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black87,
+                    color: isDarkMode
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 14, color: Colors.black45),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: isDarkMode
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   timeAgo,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF00C16E),
+                    color: AppColors.primary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
