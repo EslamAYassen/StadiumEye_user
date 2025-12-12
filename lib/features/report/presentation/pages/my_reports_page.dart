@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/constants/app_consts.dart';
 // import 'package:skeletonizer/skeletonizer.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_my_report.dart';
@@ -118,9 +119,15 @@ class _MyReportsPageState extends State<MyReportsPage> {
                           )
                           .toList();
                 if (filterdTickets.isEmpty) {
-                  return const SliverToBoxAdapter(
+                  return SliverToBoxAdapter(
                     //TODO: add NO data
-                    child: Center(child: Text("NO Data")),
+                    child: Column(
+                      children: [
+                        Image.asset(AppConsts.noDataImage),
+                        const SizedBox(height: 20),
+                        const Text("No Data"),
+                      ],
+                    ),
                   );
                 }
                 return SliverList(
@@ -147,8 +154,14 @@ class _MyReportsPageState extends State<MyReportsPage> {
                 );
               }
               //TODO: add NO data
-              return const SliverToBoxAdapter(
-                child: Center(child: Text("NO Data")),
+              return SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Image.asset(AppConsts.noDataImage),
+                    const SizedBox(height: 20),
+                    const Text("No Data"),
+                  ],
+                ),
               );
             },
           ),

@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
@@ -274,21 +275,26 @@ class _ReportFormState extends State<ReportForm> {
             setState(() => _isLoadingStadiums = true);
           }
         } else if (state is ReportsError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.bottomSlide,
+            title: 'ERROR',
+            desc: state.message,
           );
+
           setState(() {
             _isLoadingCountries = false;
             _isLoadingCities = false;
             _isLoadingStadiums = false;
           });
         } else if (state is ReportCreated) {
-          //TODO: improve this UI
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.green,
-            ),
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.bottomSlide,
+            title: 'Report Created',
+            desc: state.message,
           );
         }
       },

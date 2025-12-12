@@ -40,7 +40,17 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeError) {
-              return Scaffold(body: Center(child: Text(state.message)));
+              return Scaffold(
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(AppConsts.errorImage),
+                    const SizedBox(height: 20),
+                    Text(state.message),
+                  ],
+                ),
+              );
             } else if (state is HomeLoaded) {
               return Scaffold(
                 body: Stack(
