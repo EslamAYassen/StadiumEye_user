@@ -1,41 +1,43 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class CustomAppBarForReport extends StatelessWidget {
-  // final Map data;
-  final int? id;
+  final String id;
   final VoidCallback? onBackPressed;
 
   const CustomAppBarForReport({
-    // required this.data,
     super.key,
-    this.id = 45,
+    required this.id,
     this.onBackPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SliverAppBar(
       expandedHeight: 280,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(16),
-          bottomRight: Radius.circular(16),
+          bottomLeft: Radius.circular(AppThemeConsts.radius16lg),
+          bottomRight: Radius.circular(AppThemeConsts.radius16lg),
         ),
       ),
       pinned: true,
-      backgroundColor: const Color(0xFF00c267),
+      backgroundColor: isDarkMode ? AppColors.surfaceDark : AppColors.primary,
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-            color: const Color.fromARGB(61, 255, 255, 255),
+            color: Colors.white.withAlpha(61),
             borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
           ),
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: Colors.white,
+              color: AppColors.whiteColor,
             ),
             onPressed: onBackPressed ?? () => Navigator.pop(context),
           ),
@@ -62,27 +64,31 @@ class CustomAppBarForReport extends StatelessWidget {
               child: const Text(
                 'Report Details',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.whiteColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
             background: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xFF00c951), Color(0xFF00bd7e)],
+                  colors: isDarkMode
+                      ? [AppColors.primaryDark, AppColors.primary]
+                      : [AppColors.gradientStart, AppColors.gradientEnd],
                 ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(AppThemeConsts.radius16lg),
+                  bottomRight: Radius.circular(AppThemeConsts.radius16lg),
                 ),
               ),
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppThemeConsts.padding16md,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -94,9 +100,9 @@ class CustomAppBarForReport extends StatelessWidget {
                           duration: const Duration(milliseconds: 300),
                           offset: Offset(0, shrinkPercentage * 0.2),
                           child: const Text(
-                            'My Reports',
+                            'Report Details',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.whiteColor,
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                             ),
@@ -122,10 +128,7 @@ class CustomAppBarForReport extends StatelessWidget {
                                       offset: Offset(-50 * (1 - value), 0),
                                       child: Opacity(
                                         opacity: value,
-                                        child: _buildStatCard(
-                                          'Report ID',
-                                          id.toString(),
-                                        ),
+                                        child: _buildStatCard('Report ID', id),
                                       ),
                                     );
                                   },
@@ -148,41 +151,40 @@ class CustomAppBarForReport extends StatelessWidget {
 
   Widget _buildStatCard(String title, String value) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(38, 255, 255, 255),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: const Color.fromARGB(51, 255, 255, 255),
-          width: 1,
-        ),
+        color: Colors.white.withAlpha(38),
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
+        border: Border.all(color: Colors.white.withAlpha(51), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: const TextStyle(
-              color: Color.fromARGB(230, 255, 255, 255),
+            style: TextStyle(
+              color: AppColors.whiteColor.withAlpha(230),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 8),
-          TweenAnimationBuilder<int>(
-            duration: const Duration(milliseconds: 1200),
-            tween: IntTween(begin: 0, end: int.parse(value)),
-            curve: Curves.easeOutCubic,
-            builder: (context, animatedValue, child) {
-              return Text(
-                "#$animatedValue",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.w700,
+          DefaultTextStyle(
+            style: const TextStyle(
+              color: AppColors.whiteColor,
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+            ),
+            child: AnimatedTextKit(
+              repeatForever: false,
+              totalRepeatCount: 1,
+              animatedTexts: [
+                ScrambleAnimatedText(
+                  '#$value',
+                  speed: const Duration(milliseconds: 130),
                 ),
-              );
-            },
+              ],
+            ),
           ),
         ],
       ),

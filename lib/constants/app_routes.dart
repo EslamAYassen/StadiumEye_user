@@ -3,7 +3,8 @@ import '../features/auth/presentation/view/login_screen.dart';
 import '../features/auth/presentation/view/otp_screen.dart';
 import '../features/auth/presentation/view/signup_screen.dart';
 import '../features/profile/presentation/views/profile_screen.dart';
-import '../features/report/presentation/pages/home_page.dart';
+import '../features/home/presentation/pages/home_page.dart';
+import '../features/report/domain/entities/ticket_entity.dart';
 import '../features/report/presentation/pages/my_reports_page.dart';
 import '../features/report/presentation/pages/report_page.dart';
 import '../features/splash_screen/presentaion/view/splash_screen.dart';
@@ -50,9 +51,12 @@ abstract class AppRoutes {
       case addReportPage:
         return MaterialPageRoute(builder: (_) => const AddReportPage());
       case myReports:
-        return MaterialPageRoute(builder: (_) => const MyReportsPage());
+        final totalReports = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => MyReportsPage(totalReports: totalReports),
+        );
       case reportDetails:
-        final data = settings.arguments as Map;
+        final data = settings.arguments as TicketEntity;
         return MaterialPageRoute(builder: (_) => ReportPage(data: data));
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());

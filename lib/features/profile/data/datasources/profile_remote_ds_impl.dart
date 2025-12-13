@@ -1,19 +1,18 @@
-import 'package:dio/dio.dart';
 import 'package:stadium_eye/core/networking/dio_client.dart';
 import 'package:stadium_eye/features/profile/data/datasources/profile_remote_ds.dart';
 import 'package:stadium_eye/features/profile/data/models/userprofile_model.dart';
 import 'package:stadium_eye/core/networking/endpoints.dart';
+
 class ProfileRemoteDsImpl implements ProfileRemoteDs {
- // final String baseUrl;
- // final String? token;
+  // final String baseUrl;
+  // final String? token;
 
- // ProfileRemoteDsImpl();
-
+  // ProfileRemoteDsImpl();
 
   @override
   Future<void> createUserProfile(UserProfileModel userprofile) async {
-   // final url = "$baseUrl/users"; // ??????????????????????????????????????????????? us؟
-    final url =   UserEndpoints.myProfile;
+    // final url = "$baseUrl/users"; // ??????????????????????????????????????????????? us؟
+    final url = UserEndpoints.myProfile;
     final dio = DioClient.create();
 
     final response = await dio.get(url);
@@ -25,15 +24,13 @@ class ProfileRemoteDsImpl implements ProfileRemoteDs {
     }
   }
 
-   @override
+  @override
   Future<UserProfileModel> getMyUserProfile() async {
-  //  final url = "$baseUrl/users/me";
-     final url = Endpoints.baseUrl + UserEndpoints.myProfile;
-     final dio = DioClient.create();
+    //  final url = "$baseUrl/users/me";
+    final url = Endpoints.baseUrl + UserEndpoints.myProfile;
+    final dio = DioClient.create();
 
-    final response = await dio.get(
-      url
-    );
+    final response = await dio.get(url);
 
     if (response.statusCode != 200) {
       throw Exception(
@@ -41,8 +38,6 @@ class ProfileRemoteDsImpl implements ProfileRemoteDs {
       );
     }
 
-     return UserProfileModel.fromJson(
-      response.data as Map<String, dynamic>,
-    );
+    return UserProfileModel.fromJson(response.data as Map<String, dynamic>);
   }
 }

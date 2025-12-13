@@ -1,52 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
-import 'package:stadium_eye/features/report/domain/entities/report_entity.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class StatisticsCard extends StatelessWidget {
   //final ReportEntity repot;
-  const StatisticsCard({super.key });
+  const StatisticsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
         borderRadius: BorderRadius.circular(26),
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Statistics',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: isDarkMode
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
           ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               //replace API data
-              buildStatColumn("12", 'total active user'),
-              buildStatColumn('2', 'total teams'),
-              buildStatColumn('1', 'total tickets'),
+              buildStatColumn(context, "12", 'Total Active\nUsers'),
+              buildStatColumn(context, '2', 'Total\nTeams'),
+              buildStatColumn(context, '1', 'Total\nTickets'),
             ],
           ),
         ],
       ),
     );
   }
-}
 
-Widget buildStatColumn(String value, String label) {
-  return Column(
-    children: [
-      Text(
-        value,
-        style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 5),
-      Text(label, style: TextStyle(color: Colors.grey[600], fontSize: 14)),
-    ],
-  );
+  Widget buildStatColumn(BuildContext context, String value, String label) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          label,
+          style: TextStyle(
+            color: isDarkMode
+                ? AppColors.textSecondaryDark
+                : AppColors.mediumGray,
+            fontSize: 14,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
 }

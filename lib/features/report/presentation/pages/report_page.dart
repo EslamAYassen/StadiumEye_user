@@ -1,66 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_report.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
+
+import '../../domain/entities/ticket_entity.dart';
 
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key, required this.data});
-  final Map data;
-  // final int id;
+  final TicketEntity data;
+
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDarkMode
+          ? AppColors.backgroundDark
+          : AppColors.backgroundLight,
       body: CustomScrollView(
         slivers: [
-          const CustomAppBarForReport(),
-
+          CustomAppBarForReport(id: data.id),
           SliverList.list(
             children: [
               _ReportHeaderWidget(
-                stadiumName: data['stadiumName'],
-                section: data['section'],
-                createdDate: '11/15/2025',
-                authorName: 'Ahmed Al-Salem',
+                stadiumName: data.stadium.stadiumName,
+                section: data.area,
+                createdDate: data.createdAt.toIso8601String().substring(0, 10),
+                authorName: data.createdBy!.fullName,
               ),
               // Media Gallery
-              _MediaGalleryWidget(
-                photoUrls: List.filled(
-                  data['photoCount'],
-                  'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800',
-                ),
-              ),
+              _MediaGalleryWidget(photoUrls: data.ticketImages),
 
               // Observations
               _ReportSectionWidget(
                 title: 'Observations',
-                content: data['review'],
+                content: data.observations,
                 icon: Icons.description_outlined,
-                iconColor: const Color(0xFF10B981),
+                iconColor: AppColors.primary,
               ),
 
               // Challenges
-              const _ReportSectionWidget(
+              _ReportSectionWidget(
                 title: 'Challenges',
-                content:
-                    'Some delays in entry due to high attendance. Queue management could be improved.',
+                content: data.challenges,
                 icon: Icons.error_outline,
-                iconColor: Color(0xFFF59E0B),
+                iconColor: AppColors.warning,
               ),
 
               // Lessons Learned
-              const _ReportSectionWidget(
+              _ReportSectionWidget(
                 title: 'Lessons Learned',
-                content:
-                    'Need to open additional entry gates 30 minutes earlier for high-profile matches.',
+                content: data.lessonsLearned,
                 icon: Icons.lightbulb_outline,
-                iconColor: Color(0xFFF59E0B),
+                iconColor: AppColors.warning,
               ),
 
               // Status
-              _ReportStatusWidget(
-                statusText: data['isSubmitted']
-                    ? 'Submitted on November 15, 2025 at 12:00 PM'
-                    : "Draft",
-                isSubmitted: data['isSubmitted'],
-              ),
+              _ReportStatusWidget(statusText: data.status),
             ],
           ),
         ],
@@ -84,18 +80,20 @@ class _ReportHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(AppThemeConsts.padding16md),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
         boxShadow: [
-          const BoxShadow(
-            color: Color.fromARGB(13, 0, 0, 0),
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
             blurRadius: 10,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -109,12 +107,16 @@ class _ReportHeaderWidget extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(26, 16, 185, 129),
-                  borderRadius: BorderRadius.circular(12),
+                  color: isDarkMode
+                      ? AppColors.primaryDark.withAlpha(76)
+                      : AppColors.lightGreen,
+                  borderRadius: BorderRadius.circular(
+                    AppThemeConsts.radius12md,
+                  ),
                 ),
                 child: const Icon(
                   Icons.location_on,
-                  color: Color(0xFF10B981),
+                  color: AppColors.primary,
                   size: 24,
                 ),
               ),
@@ -125,18 +127,22 @@ class _ReportHeaderWidget extends StatelessWidget {
                   children: [
                     Text(
                       stadiumName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF1F2937),
+                        color: isDarkMode
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       section,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xFF6B7280),
+                        color: isDarkMode
+                            ? AppColors.textSecondaryDark
+                            : AppColors.mediumGray,
                       ),
                     ),
                   ],
@@ -150,29 +156,35 @@ class _ReportHeaderWidget extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.calendar_today_outlined,
                       size: 18,
-                      color: Color(0xFF9CA3AF),
+                      color: isDarkMode
+                          ? AppColors.textSecondaryDark
+                          : AppColors.mediumGray,
                     ),
                     const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Created',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF9CA3AF),
+                            color: isDarkMode
+                                ? AppColors.textSecondaryDark
+                                : AppColors.mediumGray,
                           ),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           createdDate,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF1F2937),
+                            color: isDarkMode
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight,
                           ),
                         ),
                       ],
@@ -183,30 +195,36 @@ class _ReportHeaderWidget extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.person_outline,
                       size: 18,
-                      color: Color(0xFF9CA3AF),
+                      color: isDarkMode
+                          ? AppColors.textSecondaryDark
+                          : AppColors.mediumGray,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Author',
                             style: TextStyle(
                               fontSize: 12,
-                              color: Color(0xFF9CA3AF),
+                              color: isDarkMode
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.mediumGray,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             authorName,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xFF1F2937),
+                              color: isDarkMode
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimaryLight,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -224,7 +242,6 @@ class _ReportHeaderWidget extends StatelessWidget {
   }
 }
 
-// 2. Media Gallery Widget
 class _MediaGalleryWidget extends StatelessWidget {
   final List<String> photoUrls;
 
@@ -232,38 +249,42 @@ class _MediaGalleryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(AppThemeConsts.padding16md),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
         boxShadow: [
-          const BoxShadow(
-            color: Color.fromARGB(13, 0, 0, 0),
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
             blurRadius: 10,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.photo_library_outlined,
-                color: Color(0xFF10B981),
+                color: AppColors.primary,
                 size: 24,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 'Media Gallery',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1F2937),
+                  color: isDarkMode
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
                 ),
               ),
             ],
@@ -271,9 +292,11 @@ class _MediaGalleryWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Photos (${photoUrls.length})',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: Color(0xFF6B7280),
+              color: isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : AppColors.mediumGray,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -288,7 +311,9 @@ class _MediaGalleryWidget extends StatelessWidget {
                   width: 240,
                   margin: const EdgeInsets.only(right: 12),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(
+                      AppThemeConsts.radius12md,
+                    ),
                     image: DecorationImage(
                       image: NetworkImage(photoUrls[index]),
                       fit: BoxFit.cover,
@@ -305,13 +330,15 @@ class _MediaGalleryWidget extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(153, 0, 0, 0),
-                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.black.withAlpha(153),
+                            borderRadius: BorderRadius.circular(
+                              AppThemeConsts.radius8sm,
+                            ),
                           ),
                           child: Text(
                             'Photo ${index + 1}',
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: AppColors.whiteColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
@@ -346,18 +373,20 @@ class _ReportSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(AppThemeConsts.padding16md),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
         boxShadow: [
-          const BoxShadow(
-            color: Color.fromARGB(13, 0, 0, 0),
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
             blurRadius: 10,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -370,10 +399,12 @@ class _ReportSectionWidget extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1F2937),
+                  color: isDarkMode
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
                 ),
               ),
             ],
@@ -381,9 +412,11 @@ class _ReportSectionWidget extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             content,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15,
-              color: Color(0xFF4B5563),
+              color: isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : AppColors.mediumGray,
               height: 1.6,
             ),
           ),
@@ -396,26 +429,31 @@ class _ReportSectionWidget extends StatelessWidget {
 // 4. Status Widget
 class _ReportStatusWidget extends StatelessWidget {
   final String statusText;
-  final bool isSubmitted;
+  // final bool isSubmitted;
 
   const _ReportStatusWidget({
     required this.statusText,
-    this.isSubmitted = true,
+    // this.isSubmitted = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      margin: const EdgeInsets.all(AppThemeConsts.padding16md),
+      padding: const EdgeInsets.symmetric(
+        vertical: 24,
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: isSubmitted
-              ? [const Color(0xFF10B981), const Color(0xFF059669)]
-              : [const Color(0xFFF59E0B), const Color(0xFFD97706)],
+          colors: (isDarkMode
+              ? [AppColors.primaryDark, AppColors.primary]
+              : [AppColors.success, AppColors.successDark]),
         ),
         borderRadius: BorderRadius.circular(20),
       ),
@@ -425,14 +463,12 @@ class _ReportStatusWidget extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              color: AppColors.whiteColor,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius16md),
             ),
-            child: Icon(
-              isSubmitted ? Icons.description : Icons.edit_document,
-              color: isSubmitted
-                  ? const Color(0xFF10B981)
-                  : const Color(0xFFF59E0B),
+            child: const Icon(
+              Icons.description,
+              color: AppColors.success,
               size: 28,
             ),
           ),
@@ -442,14 +478,14 @@ class _ReportStatusWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Colors.white,
+              color: AppColors.whiteColor,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             statusText,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14, color: Colors.white),
+            style: const TextStyle(fontSize: 14, color: AppColors.whiteColor),
           ),
         ],
       ),

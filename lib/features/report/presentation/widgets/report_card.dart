@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../pages/my_reports_page.dart';
 
@@ -20,7 +22,7 @@ class ReportCard extends StatefulWidget {
     required this.review,
     this.photoCount = 1,
     required this.date,
-    this.isSubmitted = ReportFilter.drafts,
+    this.isSubmitted = ReportFilter.all,
     this.index = 0,
   });
 
@@ -76,6 +78,8 @@ class _ReportCardState extends State<ReportCard>
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SlideTransition(
       position: _slideAnimation,
       child: FadeTransition(
@@ -84,20 +88,22 @@ class _ReportCardState extends State<ReportCard>
           scale: _scaleAnimation,
           child: Container(
             width: double.infinity,
-            margin: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(AppThemeConsts.padding16md),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
               boxShadow: [
-                const BoxShadow(
-                  color: Color.fromARGB(20, 0, 0, 0),
+                BoxShadow(
+                  color: isDarkMode
+                      ? AppColors.shadowDark
+                      : AppColors.shadowLight,
                   blurRadius: 10,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(AppThemeConsts.padding16md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -114,7 +120,7 @@ class _ReportCardState extends State<ReportCard>
                             scale: value,
                             child: const Icon(
                               Icons.location_on_outlined,
-                              color: Color(0xFF10B981),
+                              color: AppColors.primary,
                               size: 24,
                             ),
                           );
@@ -133,10 +139,12 @@ class _ReportCardState extends State<ReportCard>
                                 offset: Offset(-20 * (1 - value), 0),
                                 child: Text(
                                   widget.stadiumName,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xFF1F2937),
+                                    color: isDarkMode
+                                        ? AppColors.textPrimaryDark
+                                        : AppColors.textPrimaryLight,
                                   ),
                                 ),
                               ),
@@ -144,21 +152,47 @@ class _ReportCardState extends State<ReportCard>
                           },
                         ),
                       ),
-                      if (widget.isSubmitted == ReportFilter.submitted) ...[
+                      if (widget.isSubmitted == ReportFilter.resolved) ...[
                         _statCard(
-                          const Color(0xFFD1FAE5),
-                          const Color(0xFF10B981),
-                          const Color(0xFF10B981),
-                          'Submitted',
-                          Icons.check_circle_rounded,
+                          AppColors.successLight,
+                          AppColors.success,
+                          AppColors.successDark,
+                          'Resolved',
+                          Icons.check_rounded,
                         ),
-                      ] else ...[
+                      ] else if (widget.isSubmitted == ReportFilter.closed) ...[
                         _statCard(
-                          const Color.fromARGB(255, 248, 250, 209),
-                          const Color.fromARGB(255, 225, 215, 21),
-                          const Color.fromARGB(255, 185, 176, 16),
-                          'Draft',
-                          Icons.drafts_rounded,
+                          AppColors.warningLight,
+                          AppColors.warning,
+                          AppColors.warningDark,
+                          'Closed',
+                          Icons.close_rounded,
+                        ),
+                      ] else if (widget.isSubmitted ==
+                          ReportFilter.inProgress) ...[
+                        _statCard(
+                          AppColors.infoLight,
+                          AppColors.info,
+                          AppColors.infoDark,
+                          'In Progress',
+                          Icons.timelapse_rounded,
+                        ),
+                      ] else if (widget.isSubmitted == ReportFilter.open) ...[
+                        _statCard(
+                          AppColors.successLight,
+                          AppColors.success,
+                          AppColors.primary,
+                          'Open',
+                          Icons.file_open_rounded,
+                        ),
+                      ] else if (widget.isSubmitted ==
+                          ReportFilter.rejected) ...[
+                        _statCard(
+                          AppColors.errorLight,
+                          AppColors.error,
+                          AppColors.errorDark,
+                          'Rejected',
+                          Icons.close_rounded,
                         ),
                       ],
                     ],
@@ -179,10 +213,12 @@ class _ReportCardState extends State<ReportCard>
                             offset: Offset(0, 10 * (1 - value)),
                             child: Text(
                               widget.section,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF6B7280),
+                                color: isDarkMode
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.mediumGray,
                               ),
                             ),
                           ),
@@ -206,9 +242,11 @@ class _ReportCardState extends State<ReportCard>
                             offset: Offset(0, 10 * (1 - value)),
                             child: Text(
                               widget.review,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xFF4B5563),
+                                color: isDarkMode
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.mediumGray,
                                 height: 1.5,
                               ),
                             ),
@@ -236,21 +274,27 @@ class _ReportCardState extends State<ReportCard>
                                 width: 32,
                                 height: 32,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFE5E7EB),
+                                  color: isDarkMode
+                                      ? AppColors.cardElevatedDark
+                                      : AppColors.lightGray,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.image,
                                   size: 18,
-                                  color: Color(0xFF9CA3AF),
+                                  color: isDarkMode
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.mediumGray,
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Text(
                                 '+${widget.photoCount}',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFF6B7280),
+                                  color: isDarkMode
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.mediumGray,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -270,9 +314,11 @@ class _ReportCardState extends State<ReportCard>
                     builder: (context, value, child) {
                       return Opacity(
                         opacity: value,
-                        child: const Divider(
+                        child: Divider(
                           thickness: 0.8,
-                          color: Color.fromARGB(150, 229, 231, 235),
+                          color: isDarkMode
+                              ? AppColors.borderDark
+                              : AppColors.borderLight,
                         ),
                       );
                     },
@@ -296,17 +342,21 @@ class _ReportCardState extends State<ReportCard>
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.calendar_today_outlined,
                                       size: 16,
-                                      color: Color(0xFF9CA3AF),
+                                      color: isDarkMode
+                                          ? AppColors.textSecondaryDark
+                                          : AppColors.mediumGray,
                                     ),
                                     const SizedBox(width: 6),
                                     Text(
                                       widget.date,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 14,
-                                        color: Color(0xFF9CA3AF),
+                                        color: isDarkMode
+                                            ? AppColors.textSecondaryDark
+                                            : AppColors.mediumGray,
                                       ),
                                     ),
                                   ],
@@ -319,7 +369,7 @@ class _ReportCardState extends State<ReportCard>
                                         'View Details',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Color(0xFF10B981),
+                                          color: AppColors.primary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -327,7 +377,7 @@ class _ReportCardState extends State<ReportCard>
                                       Icon(
                                         Icons.arrow_forward,
                                         size: 16,
-                                        color: Color(0xFF10B981),
+                                        color: AppColors.primary,
                                       ),
                                     ],
                                   ),

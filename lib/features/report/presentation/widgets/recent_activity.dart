@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class RecentActivityItem extends StatelessWidget {
   final String title;
@@ -16,57 +18,65 @@ class RecentActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: const [
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
+        boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
             blurRadius: 12,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppThemeConsts.padding12sm),
             decoration: BoxDecoration(
-              color: const Color(0xFFE6FFF2),
-              borderRadius: BorderRadius.circular(14),
+              color: isDarkMode
+                  ? AppColors.primaryDark.withAlpha(76)
+                  : AppColors.lightGreen,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
             ),
-            child: Icon(icon, color: const Color(0xFF00C16E), size: 28),
+            child: Icon(icon, color: AppColors.primary, size: 28),
           ),
-
-          const SizedBox(width: 16),
-
-          // Texts
+          const SizedBox(width: AppThemeConsts.padding16md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black87,
+                    color: isDarkMode
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 14, color: Colors.black45),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: isDarkMode
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   timeAgo,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF00C16E),
+                    color: AppColors.primary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

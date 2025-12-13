@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -56,12 +57,12 @@ class _SignupCardState extends State<SignupCard> {
             arguments: state.user.email,
           );
           // Show success message
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            title: 'Success',
+            desc: state.message,
+          ).show();
         }
       },
       child: Container(
@@ -547,13 +548,12 @@ class _SignupCardState extends State<SignupCard> {
           lastName: _lastNameController.text,
           email: _emailController.text,
           phone: _phoneNumberController.text,
-          genderEn: selectedGender ?? 'male',
-
-          //TODO: change this
+          genderEn: selectedGender ?? '',
+          //TODO: Add this
           dateOfBirth: "2000-01-01",
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,
-          //TODO:change those if u can
+          //TODO: Change those
           city: '691cfbe9aad9af7504b0f29c',
           country: '691cfbe9aad9af7504b0f29c',
         ),
