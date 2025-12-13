@@ -144,8 +144,6 @@
    "pushNotifications": "الإشعارات الفورية",
    "receiveUpdates": "استلام التحديثات والتنبيهات",
    "notificationsDisabled": "تم تعطيل الإشعارات",
-   "unknownState": "حالة غير معروفة",
-   "selectLanguage": "اختر اللغة",
-   "english": "الإنجليزية",
-   "arabic": "العربية"
+   "unknownState": "حالة غير معروفة"
+
  }

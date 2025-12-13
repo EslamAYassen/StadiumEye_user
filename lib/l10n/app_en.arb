@@ -145,7 +145,6 @@
   "receiveUpdates": "Receive updates and alerts",
   "notificationsDisabled": "Notifications disabled",
   "unknownState": "Unknown state",
-  "selectLanguage": "Select Language",
-  "english": "English",
-  "arabic": "Arabic"
+  "selectLanguage": "Select Language"
+
 }
