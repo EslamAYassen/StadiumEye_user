@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          // Light Theme
+
           theme: AppTheme.lightTheme,
-          // Dark Theme
+
           darkTheme: AppTheme.darkTheme,
-          // Theme Mode based on settings
+
           themeMode: state is SettingsLoaded && state.isDarkMode == true
               ? ThemeMode.dark
               : ThemeMode.light,

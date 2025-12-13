@@ -4,6 +4,8 @@ import 'package:stadium_eye/theme/app_colors.dart';
 
 abstract class AppTheme {
   const AppTheme._();
+  // Add theme transition duration constant
+  static const Duration themeTransitionDuration = Duration(milliseconds: 200);
 
   // ==================== Text Styles ====================
 
@@ -18,6 +20,14 @@ abstract class AppTheme {
   // ==================== Light Theme ====================
 
   static final ThemeData lightTheme = ThemeData(
+    // Page Transition
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        .android: FadeUpwardsPageTransitionsBuilder(),
+        .iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
     primaryColorLight: AppColors.primaryLight,
@@ -161,6 +171,14 @@ abstract class AppTheme {
   // ==================== Dark Theme ====================
 
   static final ThemeData darkTheme = ThemeData(
+    // Page Transition
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        .android: FadeUpwardsPageTransitionsBuilder(),
+        .iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+
     brightness: Brightness.dark,
     primaryColor: AppColors.primary,
     primaryColorLight: AppColors.primaryLight,
