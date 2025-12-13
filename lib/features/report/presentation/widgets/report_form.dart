@@ -6,6 +6,8 @@ import 'package:stadium_eye/features/report/presentation/bloc/report_event.dart'
 
 import 'package:stadium_eye/features/report/presentation/widgets/custom_submit_button.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/media_section.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_theme_consts.dart';
 import '../../domain/entities/city_entity.dart';
 import '../../domain/entities/country_entity.dart';
 import '../../domain/entities/stadium_list_entity.dart';
@@ -306,14 +308,7 @@ class _ReportFormState extends State<ReportForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //! Country Dropdown
-              const Text(
-                "Country *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Country"),
               const SizedBox(height: 8),
               _isLoadingCountries
                   ? const Center(
@@ -327,14 +322,7 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! City Dropdown
-              const Text(
-                "City *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("City"),
               const SizedBox(height: 8),
               _isLoadingCities
                   ? const Center(
@@ -348,14 +336,7 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Stadium Dropdown
-              const Text(
-                "Stadium *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Stadium"),
               const SizedBox(height: 8),
               _isLoadingStadiums
                   ? const Center(
@@ -369,53 +350,25 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Area Dropdown
-              const Text(
-                "Area *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Area"),
               const SizedBox(height: 8),
               _buildAreaDropdown(),
               const SizedBox(height: 26),
 
               //! Ticket Type Dropdown
-              const Text(
-                "Ticket Type *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Ticket Type"),
               const SizedBox(height: 8),
               _buildTicketTypeDropdown(),
               const SizedBox(height: 26),
 
               //! Model Type Dropdown
-              const Text(
-                "Model Type *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Model Type"),
               const SizedBox(height: 8),
               _buildModelTypeDropdown(),
               const SizedBox(height: 26),
 
               //! Observations
-              const Text(
-                "Observations *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Observations"),
               const SizedBox(height: 8),
               CustomTextField(
                 validator: (value) =>
@@ -428,14 +381,8 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Challenges
-              const Text(
-                "Challenges *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Challenges"),
+
               const SizedBox(height: 8),
               CustomTextField(
                 validator: (value) =>
@@ -448,14 +395,8 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Lessons Learned
-              const Text(
-                "Lessons Learned *",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
+              _buildLabel("Lessons Learned"),
+
               const SizedBox(height: 8),
               CustomTextField(
                 validator: (value) =>
@@ -500,28 +441,45 @@ class _ReportFormState extends State<ReportForm> {
   }
 
   Widget _buildCountryDropdown() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F7F7),
-        borderRadius: BorderRadius.circular(15),
+        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
         border: selectedCountryId == null
             ? Border.all(color: Colors.transparent)
-            : Border.all(color: const Color(0xFF00C853), width: 2),
+            : Border.all(color: AppColors.primary, width: 2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           value: selectedCountryId,
           isExpanded: true,
+          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           hint: Row(
             children: [
-              const Icon(Icons.public_outlined, color: Colors.grey),
+              Icon(
+                Icons.public_outlined,
+                color: isDarkMode
+                    ? AppColors.textSecondaryDark
+                    : AppColors.mediumGray,
+              ),
               const SizedBox(width: 10),
-              Text('Select Country', style: TextStyle(color: Colors.grey[400])),
+              Text(
+                'Select Country',
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : AppColors.mediumGray,
+                ),
+              ),
             ],
           ),
-          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
           items: _countries.map((country) {
             return DropdownMenuItem(
               value: country.id,
@@ -529,15 +487,17 @@ class _ReportFormState extends State<ReportForm> {
                 children: [
                   const Icon(
                     Icons.public_outlined,
-                    color: Color(0xFF00C853),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
                   Text(
                     country.nameEn,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
-                      color: Color(0xFF022C0C),
+                      color: isDarkMode
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                     ),
                   ),
                 ],
@@ -551,27 +511,39 @@ class _ReportFormState extends State<ReportForm> {
   }
 
   Widget _buildCityDropdown() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final isDisabled = selectedCountryId == null || _filteredCities.isEmpty;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
-        color: isDisabled ? Colors.grey[200] : const Color(0xFFF7F7F7),
-        borderRadius: BorderRadius.circular(15),
+        color: isDisabled
+            ? (isDarkMode ? AppColors.cardElevatedDark : AppColors.borderLight)
+            : (isDarkMode ? AppColors.cardDark : AppColors.lightGray),
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
         border: selectedCityId == null
             ? Border.all(color: Colors.transparent)
-            : Border.all(color: const Color(0xFF00C853), width: 2),
+            : Border.all(color: AppColors.primary, width: 2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           value: selectedCityId,
           isExpanded: true,
+          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           hint: Row(
             children: [
               Icon(
                 Icons.location_city_outlined,
-                color: isDisabled ? Colors.grey[400] : Colors.grey,
+                color: isDisabled
+                    ? (isDarkMode
+                          ? AppColors.textSecondaryDark.withOpacity(0.5)
+                          : Colors.grey[400])
+                    : (isDarkMode
+                          ? AppColors.textSecondaryDark
+                          : AppColors.mediumGray),
               ),
               const SizedBox(width: 10),
               Text(
@@ -580,13 +552,21 @@ class _ReportFormState extends State<ReportForm> {
                     : _filteredCities.isEmpty
                     ? 'No cities available'
                     : 'Select City',
-                style: TextStyle(color: Colors.grey[400]),
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : AppColors.mediumGray,
+                ),
               ),
             ],
           ),
           icon: Icon(
             Icons.arrow_drop_down,
-            color: isDisabled ? Colors.grey[400] : const Color(0xFF00C853),
+            color: isDisabled
+                ? (isDarkMode
+                      ? AppColors.textSecondaryDark.withOpacity(0.5)
+                      : Colors.grey[400])
+                : AppColors.primary,
           ),
           items: _filteredCities.map((city) {
             return DropdownMenuItem(
@@ -595,16 +575,18 @@ class _ReportFormState extends State<ReportForm> {
                 children: [
                   const Icon(
                     Icons.location_city_outlined,
-                    color: Color(0xFF00C853),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       city.nameEn,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
-                        color: Color(0xFF022C0C),
+                        color: isDarkMode
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -620,27 +602,39 @@ class _ReportFormState extends State<ReportForm> {
   }
 
   Widget _buildStadiumDropdown() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final isDisabled = selectedCityId == null || _filteredStadiums.isEmpty;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
-        color: isDisabled ? Colors.grey[200] : const Color(0xFFF7F7F7),
-        borderRadius: BorderRadius.circular(15),
+        color: isDisabled
+            ? (isDarkMode ? AppColors.cardElevatedDark : AppColors.borderLight)
+            : (isDarkMode ? AppColors.cardDark : AppColors.lightGray),
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
         border: selectedStadiumId == null
             ? Border.all(color: Colors.transparent)
-            : Border.all(color: const Color(0xFF00C853), width: 2),
+            : Border.all(color: AppColors.primary, width: 2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           value: selectedStadiumId,
           isExpanded: true,
+          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           hint: Row(
             children: [
               Icon(
                 Icons.stadium_outlined,
-                color: isDisabled ? Colors.grey[400] : Colors.grey,
+                color: isDisabled
+                    ? (isDarkMode
+                          ? AppColors.textSecondaryDark.withOpacity(0.5)
+                          : Colors.grey[400])
+                    : (isDarkMode
+                          ? AppColors.textSecondaryDark
+                          : AppColors.mediumGray),
               ),
               const SizedBox(width: 10),
               Text(
@@ -649,13 +643,21 @@ class _ReportFormState extends State<ReportForm> {
                     : _filteredStadiums.isEmpty
                     ? 'No stadiums available'
                     : 'Select Stadium',
-                style: TextStyle(color: Colors.grey[400]),
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : AppColors.mediumGray,
+                ),
               ),
             ],
           ),
           icon: Icon(
             Icons.arrow_drop_down,
-            color: isDisabled ? Colors.grey[400] : const Color(0xFF00C853),
+            color: isDisabled
+                ? (isDarkMode
+                      ? AppColors.textSecondaryDark.withOpacity(0.5)
+                      : Colors.grey[400])
+                : AppColors.primary,
           ),
           items: _filteredStadiums.map((stadium) {
             return DropdownMenuItem(
@@ -664,16 +666,18 @@ class _ReportFormState extends State<ReportForm> {
                 children: [
                   const Icon(
                     Icons.stadium_outlined,
-                    color: Color(0xFF00C853),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       stadium.stadiumName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
-                        color: Color(0xFF022C0C),
+                        color: isDarkMode
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -689,6 +693,7 @@ class _ReportFormState extends State<ReportForm> {
   }
 
   Widget _buildAreaDropdown() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final areas = [
       {'value': 'westStand', 'label': 'West Stand'},
       {'value': 'eastStand', 'label': 'East Stand'},
@@ -703,27 +708,42 @@ class _ReportFormState extends State<ReportForm> {
     ];
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F7F7),
-        borderRadius: BorderRadius.circular(15),
+        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
         border: selectedArea == null
             ? Border.all(color: Colors.transparent)
-            : Border.all(color: const Color(0xFF00C853), width: 2),
+            : Border.all(color: AppColors.primary, width: 2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           value: selectedArea,
           isExpanded: true,
+          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           hint: Row(
             children: [
-              const Icon(Icons.location_on_outlined, color: Colors.grey),
+              Icon(
+                Icons.location_on_outlined,
+                color: isDarkMode
+                    ? AppColors.textSecondaryDark
+                    : AppColors.mediumGray,
+              ),
               const SizedBox(width: 10),
-              Text('Select Area', style: TextStyle(color: Colors.grey[400])),
+              Text(
+                'Select Area',
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : AppColors.mediumGray,
+                ),
+              ),
             ],
           ),
-          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
           items: areas.map((area) {
             return DropdownMenuItem(
               value: area['value'],
@@ -731,15 +751,17 @@ class _ReportFormState extends State<ReportForm> {
                 children: [
                   const Icon(
                     Icons.location_on_outlined,
-                    color: Color(0xFF00C853),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
                   Text(
                     area['label']!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
-                      color: Color(0xFF022C0C),
+                      color: isDarkMode
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                     ),
                   ),
                 ],
@@ -753,36 +775,49 @@ class _ReportFormState extends State<ReportForm> {
   }
 
   Widget _buildTicketTypeDropdown() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final ticketType = [
       {'value': 'positive', 'label': 'Positive'},
       {'value': 'negative', 'label': 'Negative'},
     ];
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F7F7),
-        borderRadius: BorderRadius.circular(15),
+        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
         border: selectedTicketType == null
             ? Border.all(color: Colors.transparent)
-            : Border.all(color: const Color(0xFF00C853), width: 2),
+            : Border.all(color: AppColors.primary, width: 2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           value: selectedTicketType,
           isExpanded: true,
+          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           hint: Row(
             children: [
-              const Icon(Icons.edit_document, color: Colors.grey),
+              Icon(
+                Icons.edit_document,
+                color: isDarkMode
+                    ? AppColors.textSecondaryDark
+                    : AppColors.mediumGray,
+              ),
               const SizedBox(width: 10),
               Text(
                 'Select Ticket Type',
-                style: TextStyle(color: Colors.grey[400]),
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : AppColors.mediumGray,
+                ),
               ),
             ],
           ),
-          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
           items: ticketType.map((type) {
             return DropdownMenuItem(
               value: type['value'],
@@ -790,15 +825,17 @@ class _ReportFormState extends State<ReportForm> {
                 children: [
                   const Icon(
                     Icons.edit_document,
-                    color: Color(0xFF00C853),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
                   Text(
                     type['label']!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
-                      color: Color(0xFF022C0C),
+                      color: isDarkMode
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                     ),
                   ),
                 ],
@@ -812,36 +849,49 @@ class _ReportFormState extends State<ReportForm> {
   }
 
   Widget _buildModelTypeDropdown() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final modelType = [
       {'value': 'visualPollution', 'label': 'Visual Pollution'},
       {'value': 'safety', 'label': 'Safety'},
     ];
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppThemeConsts.padding16md,
+      ),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F7F7),
-        borderRadius: BorderRadius.circular(15),
-        border: selectedTicketType == null
+        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+        border: selectedModelType == null
             ? Border.all(color: Colors.transparent)
-            : Border.all(color: const Color(0xFF00C853), width: 2),
+            : Border.all(color: AppColors.primary, width: 2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           value: selectedModelType,
           isExpanded: true,
+          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           hint: Row(
             children: [
-              const Icon(Icons.model_training_rounded, color: Colors.grey),
+              Icon(
+                Icons.model_training_rounded,
+                color: isDarkMode
+                    ? AppColors.textSecondaryDark
+                    : AppColors.mediumGray,
+              ),
               const SizedBox(width: 10),
               Text(
                 'Select Model Type',
-                style: TextStyle(color: Colors.grey[400]),
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : AppColors.mediumGray,
+                ),
               ),
             ],
           ),
-          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
           items: modelType.map((type) {
             return DropdownMenuItem(
               value: type['value'],
@@ -849,15 +899,17 @@ class _ReportFormState extends State<ReportForm> {
                 children: [
                   const Icon(
                     Icons.model_training_rounded,
-                    color: Color(0xFF00C853),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
                   Text(
                     type['label']!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
-                      color: Color(0xFF022C0C),
+                      color: isDarkMode
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
                     ),
                   ),
                 ],
@@ -866,6 +918,20 @@ class _ReportFormState extends State<ReportForm> {
           }).toList(),
           onChanged: _onModelTypeSelected,
         ),
+      ),
+    );
+  }
+
+  Widget _buildLabel(String text) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: isDarkMode
+            ? AppColors.textPrimaryDark
+            : AppColors.textPrimaryLight,
       ),
     );
   }

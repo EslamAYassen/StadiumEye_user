@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../../../auth/presentation/bloc/auth_state.dart';
@@ -14,15 +16,21 @@ class HeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      padding: const EdgeInsets.all(30),
-      decoration: const BoxDecoration(
+      padding: const EdgeInsets.all(AppThemeConsts.padding24lg),
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF00c951), Color(0xFF00bd7e)],
+          colors: isDarkMode
+              ? [AppColors.primaryDark, AppColors.primary]
+              : [AppColors.gradientStart, AppColors.gradientEnd],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+        borderRadius: const BorderRadius.vertical(
+          bottom: Radius.circular(AppThemeConsts.radius24xl),
+        ),
       ),
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
@@ -35,24 +43,28 @@ class HeaderSection extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(
+                          AppThemeConsts.padding8xs,
+                        ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
+                          color: AppColors.whiteColor,
+                          borderRadius: BorderRadius.circular(
+                            AppThemeConsts.radius12md,
+                          ),
                         ),
                         child: const Icon(
                           Icons.remove_red_eye,
-                          color: Color(0xFF02c952),
+                          color: AppColors.primary,
                           size: 32,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Text(
                         state is! HomeLoaded
-                            ? 'unknown'
+                            ? 'Welcome back'
                             : "Welcome back,\n${state.homeData.user.fullName}",
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.whiteColor,
                           fontSize: 18,
                           height: 1.3,
                           fontWeight: FontWeight.w600,
@@ -63,13 +75,20 @@ class HeaderSection extends StatelessWidget {
                   InkWell(
                     onTap: () =>
                         context.read<AuthBloc>().add(const LogoutEvent()),
+                    borderRadius: BorderRadius.circular(
+                      AppThemeConsts.radius12md,
+                    ),
                     child: BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
                         return Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(
+                            AppThemeConsts.padding8xs,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white12,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(
+                              AppThemeConsts.radius12md,
+                            ),
                           ),
                           child: state is AuthLoading
                               ? const Padding(
@@ -82,7 +101,7 @@ class HeaderSection extends StatelessWidget {
                                 )
                               : const Icon(
                                   Iconsax.logout_1_copy,
-                                  color: Colors.white,
+                                  color: AppColors.whiteColor,
                                   size: 32,
                                 ),
                         );
@@ -92,7 +111,6 @@ class HeaderSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 25),
-
               Flex(
                 direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +124,7 @@ class HeaderSection extends StatelessWidget {
                       icon: Iconsax.document_copy,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: AppThemeConsts.padding16md),
                   Expanded(
                     child: StatCard(
                       title: "Active",
@@ -116,7 +134,7 @@ class HeaderSection extends StatelessWidget {
                       icon: Iconsax.activity_copy,
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: AppThemeConsts.padding16md),
                   Expanded(
                     child: StatCard(
                       title: "Teams",
@@ -203,15 +221,14 @@ class _StatCardState extends State<StatCard>
             onTapDown: _onTapDown,
             onTapUp: _onTapUp,
             child: Container(
-              // width: 130,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: Colors.white12,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
               ),
               child: Column(
                 children: [
-                  Icon(widget.icon, color: Colors.white, size: 26),
+                  Icon(widget.icon, color: AppColors.whiteColor, size: 26),
                   const SizedBox(height: 8),
                   Text(
                     widget.title,
@@ -220,7 +237,7 @@ class _StatCardState extends State<StatCard>
                   Text(
                     widget.value,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.whiteColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

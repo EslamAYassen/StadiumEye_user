@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_bloc.dart';
 import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_event.dart';
 import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_state.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 import 'conect_information_card.dart';
 import 'help_support.dart';
 import 'logout.dart';
@@ -26,17 +29,26 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0xFF1B5E20),
-            Color(0xFF2E7D32),
-            Color(0xFF43A047),
-            Color(0xFF66BB6A),
-          ],
+          colors: isDarkMode
+              ? [
+                  AppColors.backgroundDark,
+                  AppColors.surfaceDark,
+                  AppColors.cardDark,
+                  AppColors.cardElevatedDark,
+                ]
+              : [
+                  AppColors.primaryDark,
+                  AppColors.primary,
+                  AppColors.primaryLight,
+                  AppColors.gradientStart,
+                ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -44,32 +56,29 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
       child: SafeArea(
         child: BlocBuilder<UserprofileBloc, UserprofileState>(
           builder: (context, state) {
-             if (state is UserProfileLoading) {
+            if (state is UserProfileLoading) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 3,
-                ),
+                child: SizedBox(height: 100, width: 100, child: LottieLoader()),
               );
             }
 
-             if (state is UserProfileError) {
+            if (state is UserProfileError) {
               return Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(AppThemeConsts.padding16md),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.error_outline,
-                        color: Colors.white,
+                        color: AppColors.whiteColor,
                         size: 70,
                       ),
                       const SizedBox(height: 20),
                       const Text(
                         'An error occurred in loading data',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.whiteColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -86,19 +95,23 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                       const SizedBox(height: 30),
                       ElevatedButton.icon(
                         onPressed: () {
-                          context.read<UserprofileBloc>().add(GetMyUserProfileEvent());
+                          context.read<UserprofileBloc>().add(
+                            GetMyUserProfileEvent(),
+                          );
                         },
                         icon: const Icon(Icons.refresh),
                         label: const Text('Try Again'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: const Color(0xFF2E7D32),
+                          backgroundColor: AppColors.whiteColor,
+                          foregroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 30,
                             vertical: 15,
                           ),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(
+                              AppThemeConsts.radius12md,
+                            ),
                           ),
                         ),
                       ),
@@ -107,7 +120,8 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                 ),
               );
             }
-             if (state is UserProfileLoaded) {
+
+            if (state is UserProfileLoaded) {
               final profile = state.profile;
 
               return SingleChildScrollView(
@@ -116,23 +130,30 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                   children: [
                     // Back button at top
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 16),
+                      padding: const EdgeInsets.only(
+                        top: AppThemeConsts.padding16md,
+                        left: AppThemeConsts.padding16md,
+                      ),
                       child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: isDarkMode
+                              ? AppColors.cardDark
+                              : AppColors.whiteColor,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Color.fromRGBO(158, 158, 158, 0.3),
+                              color: isDarkMode
+                                  ? AppColors.shadowDark
+                                  : const Color.fromRGBO(158, 158, 158, 0.3),
                               blurRadius: 10,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
                         child: IconButton(
                           icon: const Icon(
                             Icons.arrow_back_ios_rounded,
-                            color: Color(0xFF00D856),
+                            color: AppColors.primary,
                             size: 26,
                           ),
                           onPressed: () {
@@ -158,9 +179,9 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
               );
             }
 
-             return const Center(
+            return const Center(
               child: CircularProgressIndicator(
-                color: Colors.white,
+                color: AppColors.whiteColor,
                 strokeWidth: 3,
               ),
             );

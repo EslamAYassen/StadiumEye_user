@@ -26,9 +26,14 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          theme: state is SettingsLoaded && state.isDarkMode == true
-              ? AppTheme.mainTheme
-              : null,
+
+          theme: AppTheme.lightTheme,
+
+          darkTheme: AppTheme.darkTheme,
+
+          themeMode: state is SettingsLoaded && state.isDarkMode == true
+              ? ThemeMode.dark
+              : ThemeMode.light,
           locale: Locale(state is SettingsLoaded ? state.locale.code : 'en'),
           title: 'Stadium Eye',
         );

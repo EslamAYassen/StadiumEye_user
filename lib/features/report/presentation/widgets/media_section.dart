@@ -1,9 +1,10 @@
-// lib/features/report/presentation/widgets/media_section.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 class MediaSection extends StatefulWidget {
   final Function(List<String> imagePaths) onImagesChanged;
@@ -142,23 +143,25 @@ class _MediaSectionState extends State<MediaSection> {
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.red),
+      SnackBar(content: Text(message), backgroundColor: AppColors.error),
     );
   }
 
   void _showImagePicker() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+        decoration: BoxDecoration(
+          color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(AppThemeConsts.radius16lg),
+            topRight: Radius.circular(AppThemeConsts.radius16lg),
           ),
         ),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(AppThemeConsts.padding16md),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -166,14 +169,20 @@ class _MediaSectionState extends State<MediaSection> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: isDarkMode ? AppColors.borderDark : AppColors.lightGray,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'Choose Image Source',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -206,13 +215,21 @@ class _MediaSectionState extends State<MediaSection> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Title
-        const Text(
+        Text(
           'Media Attachments',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
         ),
         const SizedBox(height: 16),
 
@@ -224,7 +241,7 @@ class _MediaSectionState extends State<MediaSection> {
                 icon: Icons.photo_camera,
                 label: 'Photos',
                 count: _selectedImages.length,
-                color: const Color(0xFF00C853),
+                color: AppColors.primary,
                 onTap: _showImagePicker,
               ),
             ),
@@ -234,7 +251,7 @@ class _MediaSectionState extends State<MediaSection> {
                 icon: Icons.videocam,
                 label: 'Videos',
                 count: _selectedVideos.length,
-                color: Colors.blue,
+                color: AppColors.info,
                 onTap: _pickVideos,
               ),
             ),
@@ -244,7 +261,7 @@ class _MediaSectionState extends State<MediaSection> {
                 icon: Icons.mic,
                 label: 'Voice',
                 count: _selectedVoices.length,
-                color: Colors.orange,
+                color: AppColors.warning,
                 onTap: _pickVoices,
               ),
             ),
@@ -265,7 +282,7 @@ class _MediaSectionState extends State<MediaSection> {
             title: 'Videos',
             files: _selectedVideos,
             icon: Icons.videocam,
-            color: Colors.blue,
+            color: AppColors.info,
             onRemove: _removeVideo,
           ),
         ],
@@ -277,7 +294,7 @@ class _MediaSectionState extends State<MediaSection> {
             title: 'Voice Recordings',
             files: _selectedVoices,
             icon: Icons.mic,
-            color: Colors.orange,
+            color: AppColors.warning,
             onRemove: _removeVoice,
           ),
         ],
@@ -306,12 +323,12 @@ class _MediaButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(12),
+          color: color.withAlpha((255 * 0.1).toInt()),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           border: Border.all(color: color),
         ),
         child: Column(
@@ -326,9 +343,12 @@ class _MediaButton extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: AppColors.error,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(
+                          color: AppColors.whiteColor,
+                          width: 2,
+                        ),
                       ),
                       constraints: const BoxConstraints(
                         minWidth: 20,
@@ -338,7 +358,7 @@ class _MediaButton extends StatelessWidget {
                         child: Text(
                           '$count',
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColors.whiteColor,
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
@@ -378,24 +398,32 @@ class _ImageSourceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
       child: Container(
         width: 120,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(AppThemeConsts.padding16md),
         decoration: BoxDecoration(
-          color: const Color(0xFFF7F7F7),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF00C853)),
+          color: isDarkMode ? AppColors.cardElevatedDark : AppColors.lightGray,
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+          border: Border.all(color: AppColors.primary),
         ),
         child: Column(
           children: [
-            Icon(icon, color: const Color(0xFF00C853), size: 40),
+            Icon(icon, color: AppColors.primary, size: 40),
             const SizedBox(height: 8),
             Text(
               label,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
             ),
           ],
         ),
@@ -403,6 +431,7 @@ class _ImageSourceButton extends StatelessWidget {
     );
   }
 }
+// Add these to media_section.dart
 
 // Image Preview Grid
 class _ImagePreviewGrid extends StatelessWidget {
@@ -413,16 +442,24 @@ class _ImagePreviewGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const Icon(Icons.photo, size: 20, color: Color(0xFF00C853)),
+            const Icon(Icons.photo, size: 20, color: AppColors.primary),
             const SizedBox(width: 8),
             Text(
               'Images (${images.length})',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
             ),
           ],
         ),
@@ -460,7 +497,7 @@ class _ImagePreviewCard extends StatelessWidget {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
           child: Image.file(
             image,
             width: double.infinity,
@@ -476,10 +513,14 @@ class _ImagePreviewCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: const BoxDecoration(
-                color: Colors.red,
+                color: AppColors.error,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.close, color: Colors.white, size: 16),
+              child: const Icon(
+                Icons.close,
+                color: AppColors.whiteColor,
+                size: 16,
+              ),
             ),
           ),
         ),
@@ -512,6 +553,8 @@ class _FilePreviewList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -521,7 +564,13 @@ class _FilePreviewList extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               '$title (${files.length})',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
             ),
           ],
         ),
@@ -534,18 +583,22 @@ class _FilePreviewList extends StatelessWidget {
 
           return Container(
             margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(AppThemeConsts.padding12sm),
             decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: color),
+              color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+              border: Border.all(
+                color: isDarkMode
+                    ? AppColors.borderDark
+                    : color.withAlpha((0.3 * 255).toInt()),
+              ),
             ),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
                   decoration: BoxDecoration(
-                    color: color,
+                    color: color.withAlpha((0.1 * 255).toInt()),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(icon, color: color, size: 20),
@@ -557,9 +610,12 @@ class _FilePreviewList extends StatelessWidget {
                     children: [
                       Text(
                         fileName,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
+                          color: isDarkMode
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -567,13 +623,18 @@ class _FilePreviewList extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         _formatFileSize(fileSize),
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isDarkMode
+                              ? AppColors.textSecondaryDark
+                              : AppColors.mediumGray,
+                        ),
                       ),
                     ],
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.close, color: Colors.red),
+                  icon: const Icon(Icons.close, color: AppColors.error),
                   onPressed: () => onRemove(index),
                 ),
               ],
