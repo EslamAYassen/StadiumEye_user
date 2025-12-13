@@ -6,6 +6,8 @@ import 'package:stadium_eye/features/settings/presentation/bloc/settings_cubit.d
 import 'package:stadium_eye/theme/app_theme.dart';
 import 'package:stadium_eye/utils/language.dart';
 
+import 'l10n/app_localizations.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
               .map((lang) => Locale(lang.code))
               .toList(),
           localizationsDelegates: const [
-            // AppLocalizations.delegate,
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/report_form.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
@@ -45,7 +46,7 @@ class AddReportPage extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "Add Report",
+                      AppLocalizations.of(context)!.addReport,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],

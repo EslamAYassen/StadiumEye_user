@@ -3,6 +3,8 @@ import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../../l10n/app_localizations.dart';
+
 class Settings extends StatelessWidget {
   const Settings({super.key});
 
@@ -39,7 +41,7 @@ class Settings extends StatelessWidget {
             const Icon(Icons.settings, color: AppColors.primary),
             const SizedBox(width: 20),
             Text(
-              'Settings',
+              AppLocalizations.of(context)!.settings,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

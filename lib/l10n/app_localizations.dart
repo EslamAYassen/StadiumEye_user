@@ -509,6 +509,24 @@ abstract class AppLocalizations {
   /// **'Photo count'**
   String get photoCount;
 
+  /// No description provided for @videos.
+  ///
+  /// In en, this message translates to:
+  /// **'Videos'**
+  String get videos;
+
+  /// No description provided for @voice.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice'**
+  String get voice;
+
+  /// No description provided for @voiceRecordings.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice Recordings'**
+  String get voiceRecordings;
+
   /// No description provided for @status.
   ///
   /// In en, this message translates to:
@@ -538,6 +556,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Created'**
   String get created;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @stadium.
+  ///
+  /// In en, this message translates to:
+  /// **'Stadium'**
+  String get stadium;
+
+  /// No description provided for @area.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get area;
+
+  /// No description provided for @ticketType.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket Type'**
+  String get ticketType;
+
+  /// No description provided for @modelType.
+  ///
+  /// In en, this message translates to:
+  /// **'Model Type'**
+  String get modelType;
 
   /// No description provided for @submittedOn.
   ///
@@ -742,6 +796,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All Reports'**
   String get allReports;
+
+  /// No description provided for @createReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Report'**
+  String get createReport;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My profile'**
+  String get myProfile;
+
+  /// No description provided for @camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// No description provided for @gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// No description provided for @mediaAttachments.
+  ///
+  /// In en, this message translates to:
+  /// **'Media Attachments'**
+  String get mediaAttachments;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get inProgress;
+
+  /// No description provided for @open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get open;
+
+  /// No description provided for @rejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get rejected;
+
+  /// No description provided for @resolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get resolved;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No Data'**
+  String get noData;
+
+  /// No description provided for @chooseImageSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Image Source'**
+  String get chooseImageSource;
+
+  /// No description provided for @myReports.
+  ///
+  /// In en, this message translates to:
+  /// **'My Reports'**
+  String get myReports;
 
   /// No description provided for @submitted.
   ///

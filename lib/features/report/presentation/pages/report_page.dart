@@ -3,6 +3,7 @@ import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/ticket_entity.dart';
 
 class ReportPage extends StatelessWidget {
@@ -12,7 +13,7 @@ class ReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: isDarkMode
           ? AppColors.backgroundDark
@@ -33,7 +34,7 @@ class ReportPage extends StatelessWidget {
 
               // Observations
               _ReportSectionWidget(
-                title: 'Observations',
+                title: locale.observations,
                 content: data.observations,
                 icon: Icons.description_outlined,
                 iconColor: AppColors.primary,
@@ -41,7 +42,7 @@ class ReportPage extends StatelessWidget {
 
               // Challenges
               _ReportSectionWidget(
-                title: 'Challenges',
+                title: locale.challenges,
                 content: data.challenges,
                 icon: Icons.error_outline,
                 iconColor: AppColors.warning,
@@ -49,7 +50,7 @@ class ReportPage extends StatelessWidget {
 
               // Lessons Learned
               _ReportSectionWidget(
-                title: 'Lessons Learned',
+                title: locale.lessonsLearned,
                 content: data.lessonsLearned,
                 icon: Icons.lightbulb_outline,
                 iconColor: AppColors.warning,
@@ -81,6 +82,7 @@ class _ReportHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return Container(
       width: double.infinity,
@@ -168,7 +170,7 @@ class _ReportHeaderWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Created',
+                          locale.created,
                           style: TextStyle(
                             fontSize: 12,
                             color: isDarkMode
@@ -208,7 +210,7 @@ class _ReportHeaderWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Author',
+                            locale.author,
                             style: TextStyle(
                               fontSize: 12,
                               color: isDarkMode
@@ -250,6 +252,7 @@ class _MediaGalleryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return Container(
       width: double.infinity,
@@ -278,7 +281,7 @@ class _MediaGalleryWidget extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'Media Gallery',
+                locale.mediaGallery,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -291,7 +294,7 @@ class _MediaGalleryWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Photos (${photoUrls.length})',
+            '${locale.photos} (${photoUrls.length})',
             style: TextStyle(
               fontSize: 14,
               color: isDarkMode
@@ -439,6 +442,7 @@ class _ReportStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return Container(
       width: double.infinity,
@@ -473,9 +477,9 @@ class _ReportStatusWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Status',
-            style: TextStyle(
+          Text(
+            locale.status,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
               color: AppColors.whiteColor,

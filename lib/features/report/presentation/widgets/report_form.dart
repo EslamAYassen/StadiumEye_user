@@ -6,6 +6,7 @@ import 'package:stadium_eye/features/report/presentation/bloc/report_event.dart'
 
 import 'package:stadium_eye/features/report/presentation/widgets/custom_submit_button.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/media_section.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_theme_consts.dart';
 import '../../domain/entities/city_entity.dart';
@@ -235,6 +236,7 @@ class _ReportFormState extends State<ReportForm> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
     return BlocConsumer<ReportsBloc, ReportsState>(
       listener: (context, state) {
         debugPrint('State: $state');
@@ -281,7 +283,7 @@ class _ReportFormState extends State<ReportForm> {
             context: context,
             dialogType: DialogType.error,
             animType: AnimType.bottomSlide,
-            title: 'ERROR',
+            title: locale.error,
             desc: state.message,
           ).show();
 
@@ -295,7 +297,7 @@ class _ReportFormState extends State<ReportForm> {
             context: context,
             dialogType: DialogType.success,
             animType: AnimType.bottomSlide,
-            title: 'Report Created',
+            title: locale.submitted,
             desc: state.message,
           ).show();
         }
@@ -308,7 +310,7 @@ class _ReportFormState extends State<ReportForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //! Country Dropdown
-              _buildLabel("Country"),
+              _buildLabel(locale.country),
               const SizedBox(height: 8),
               _isLoadingCountries
                   ? const Center(
@@ -322,7 +324,7 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! City Dropdown
-              _buildLabel("City"),
+              _buildLabel(locale.city),
               const SizedBox(height: 8),
               _isLoadingCities
                   ? const Center(
@@ -336,7 +338,7 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Stadium Dropdown
-              _buildLabel("Stadium"),
+              _buildLabel(locale.stadium),
               const SizedBox(height: 8),
               _isLoadingStadiums
                   ? const Center(
@@ -350,59 +352,59 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Area Dropdown
-              _buildLabel("Area"),
+              _buildLabel(locale.area),
               const SizedBox(height: 8),
               _buildAreaDropdown(),
               const SizedBox(height: 26),
 
               //! Ticket Type Dropdown
-              _buildLabel("Ticket Type"),
+              _buildLabel(locale.ticketType),
               const SizedBox(height: 8),
               _buildTicketTypeDropdown(),
               const SizedBox(height: 26),
 
               //! Model Type Dropdown
-              _buildLabel("Model Type"),
+              _buildLabel(locale.modelType),
               const SizedBox(height: 8),
               _buildModelTypeDropdown(),
               const SizedBox(height: 26),
 
               //! Observations
-              _buildLabel("Observations"),
+              _buildLabel(locale.observations),
               const SizedBox(height: 8),
               CustomTextField(
                 validator: (value) =>
                     value == null || value.isEmpty ? "Required" : null,
                 keyboardType: TextInputType.text,
                 controller: _observationsCtrl,
-                hint: "Describe your observations here...",
+                hint: locale.describeObservations,
                 maxLines: 5,
               ),
               const SizedBox(height: 26),
 
               //! Challenges
-              _buildLabel("Challenges"),
+              _buildLabel(locale.challenges),
 
               const SizedBox(height: 8),
               CustomTextField(
                 validator: (value) =>
                     value == null || value.isEmpty ? "Required" : null,
                 keyboardType: TextInputType.text,
-                hint: "Any challenges faced...",
+                hint: locale.anyChallengesFaced,
                 controller: _challengesCtrl,
                 maxLines: 4,
               ),
               const SizedBox(height: 26),
 
               //! Lessons Learned
-              _buildLabel("Lessons Learned"),
+              _buildLabel(locale.lessonsLearned),
 
               const SizedBox(height: 8),
               CustomTextField(
                 validator: (value) =>
                     value == null || value.isEmpty ? "Required" : null,
                 keyboardType: TextInputType.text,
-                hint: "Key takeaways...",
+                hint: locale.lessonsLearned,
                 controller: _lessonsCtrl,
                 maxLines: 4,
               ),

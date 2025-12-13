@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 
 class MissionStatement extends StatelessWidget {
   const MissionStatement({super.key, required this.missionOpacity});
@@ -23,22 +24,27 @@ class MissionStatement extends StatelessWidget {
             ),
           ],
         ),
-        child: const Column(
+        child: Column(
           children: [
-            Icon(Icons.emoji_events, color: Colors.white, size: 50),
-            SizedBox(height: 15),
+            const Icon(Icons.emoji_events, color: Colors.white, size: 50),
+            const SizedBox(height: 15),
             Text(
-              'Our Mission',
-              style: TextStyle(
+              AppLocalizations.of(context)!.ourMission,
+              style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
-              'To revolutionize stadium management through innovative reporting and real-time insights for a better experience.',
-              style: TextStyle(fontSize: 15, color: Colors.white, height: 1.6),
+              AppLocalizations.of(context)!.ourMissionDescription,
+              //   'To revolutionize stadium management through innovative reporting and real-time insights for a better experience.',
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+                height: 1.6,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

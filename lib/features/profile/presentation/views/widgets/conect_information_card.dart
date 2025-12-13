@@ -3,6 +3,8 @@ import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../../l10n/app_localizations.dart';
+
 class ContactInformationCard extends StatelessWidget {
   final UserProfile profile;
   const ContactInformationCard({super.key, required this.profile});
@@ -10,7 +12,7 @@ class ContactInformationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppThemeConsts.padding16md,
@@ -34,7 +36,7 @@ class ContactInformationCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Contact Information',
+            locale.contactInformation,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -47,14 +49,14 @@ class ContactInformationCard extends StatelessWidget {
           buildContactItem(
             context,
             Icons.email_outlined,
-            'Email',
+            locale.email,
             profile.email,
           ),
           const SizedBox(height: 12),
           buildContactItem(
             context,
             Icons.phone_outlined,
-            'Phone',
+            locale.phone,
             profile.phone,
           ),
           const SizedBox(height: 12),

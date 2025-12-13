@@ -10,6 +10,7 @@ import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../../constants/app_routes.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/ticket_entity.dart';
 import '../bloc/report_bloc.dart';
 import '../bloc/report_event.dart';
@@ -38,6 +39,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: isDarkMode
@@ -61,29 +63,32 @@ class _MyReportsPageState extends State<MyReportsPage> {
                 child: Row(
                   children: [
                     _buildFilterChip(
-                      label: 'All Reports',
+                      label: locale.allReports,
                       filter: ReportFilter.all,
                     ),
                     const SizedBox(width: 12),
                     _buildFilterChip(
-                      label: 'Closed',
+                      label: locale.closed,
                       filter: ReportFilter.closed,
                     ),
                     const SizedBox(width: 12),
                     _buildFilterChip(
-                      label: 'In Progress',
+                      label: locale.inProgress,
                       filter: ReportFilter.inProgress,
                     ),
                     const SizedBox(width: 12),
-                    _buildFilterChip(label: 'Open', filter: ReportFilter.open),
+                    _buildFilterChip(
+                      label: locale.open,
+                      filter: ReportFilter.open,
+                    ),
                     const SizedBox(width: 12),
                     _buildFilterChip(
-                      label: 'Rejected',
+                      label: locale.rejected,
                       filter: ReportFilter.rejected,
                     ),
                     const SizedBox(width: 12),
                     _buildFilterChip(
-                      label: 'Resolved',
+                      label: locale.resolved,
                       filter: ReportFilter.resolved,
                     ),
                   ],
@@ -130,7 +135,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          "No Data",
+                          locale.noData,
                           style: TextStyle(
                             color: isDarkMode
                                 ? AppColors.textPrimaryDark
@@ -173,7 +178,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
                     Image.asset(height: 100, width: 100, AppConsts.noDataImage),
                     const SizedBox(height: 20),
                     Text(
-                      "No Data",
+                      locale.noData,
                       style: TextStyle(
                         color: isDarkMode
                             ? AppColors.textPrimaryDark

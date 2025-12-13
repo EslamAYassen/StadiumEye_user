@@ -4,6 +4,7 @@ import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_bloc.dart';
 import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_event.dart';
 import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_state.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 import 'conect_information_card.dart';
@@ -75,9 +76,9 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                         size: 70,
                       ),
                       const SizedBox(height: 20),
-                      const Text(
-                        'An error occurred in loading data',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.loadingDataError,
+                        style: const TextStyle(
                           color: AppColors.whiteColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -100,7 +101,7 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                           );
                         },
                         icon: const Icon(Icons.refresh),
-                        label: const Text('Try Again'),
+                        label: Text(AppLocalizations.of(context)!.retry),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.whiteColor,
                           foregroundColor: AppColors.primary,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
@@ -17,6 +18,7 @@ class HeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return Container(
       padding: const EdgeInsets.all(AppThemeConsts.padding24lg),
@@ -61,8 +63,8 @@ class HeaderSection extends StatelessWidget {
                       const SizedBox(width: 12),
                       Text(
                         state is! HomeLoaded
-                            ? 'Welcome back'
-                            : "Welcome back,\n${state.homeData.user.fullName}",
+                            ? locale.welcomeBack
+                            : "${locale.welcomeBack},\n${state.homeData.user.fullName}",
                         style: const TextStyle(
                           color: AppColors.whiteColor,
                           fontSize: 18,
@@ -117,7 +119,7 @@ class HeaderSection extends StatelessWidget {
                 children: [
                   Expanded(
                     child: StatCard(
-                      title: "Reports",
+                      title: locale.allReports,
                       value: state is! HomeLoaded
                           ? '0'
                           : "${state.homeData.totalTickets}",
@@ -127,7 +129,7 @@ class HeaderSection extends StatelessWidget {
                   const SizedBox(width: AppThemeConsts.padding16md),
                   Expanded(
                     child: StatCard(
-                      title: "Active",
+                      title: locale.active,
                       value: state is! HomeLoaded
                           ? '0'
                           : "${state.homeData.totalActiveUsers}",
@@ -137,7 +139,7 @@ class HeaderSection extends StatelessWidget {
                   const SizedBox(width: AppThemeConsts.padding16md),
                   Expanded(
                     child: StatCard(
-                      title: "Teams",
+                      title: locale.team,
                       value: state is! HomeLoaded
                           ? '0'
                           : "${state.homeData.totalTeams}",

@@ -4,6 +4,8 @@ import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key, this.totalreports = 0});
   final int totalreports;
@@ -11,6 +13,7 @@ class QuickActionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
@@ -79,7 +82,7 @@ class QuickActionsSection extends StatelessWidget {
                   ],
                 ),
                 child: Text(
-                  "Quick Actions",
+                  locale.quickActions,
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.w600,
@@ -98,8 +101,8 @@ class QuickActionsSection extends StatelessWidget {
                 gradientColors: isDarkMode
                     ? [AppColors.primaryDark, AppColors.primary]
                     : [AppColors.gradientStart, AppColors.gradientEnd],
-                title: "Create Report",
-                subtitle: "Report an issue quickly",
+                title: locale.addReport,
+                subtitle: locale.reportAnIssueQuickly,
               ),
               const SizedBox(height: 15),
               _ActionButton(
@@ -112,8 +115,8 @@ class QuickActionsSection extends StatelessWidget {
                   arguments: totalreports,
                 ),
                 icon: Icons.description_outlined,
-                title: "My Reports",
-                subtitle: "View your submitted reports",
+                title: locale.myReports,
+                subtitle: locale.viewSubmittedReports,
                 iconColor: AppColors.primary,
                 fontWeight: FontWeight.w400,
                 gradientColors: isDarkMode
@@ -131,8 +134,8 @@ class QuickActionsSection extends StatelessWidget {
                     : AppColors.textPrimaryLight,
                 onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
                 icon: Icons.person_outlined,
-                title: "My profile",
-                subtitle: "View personal data & settings",
+                title: locale.myProfile,
+                subtitle: locale.viewPersonalDataSettings,
                 iconColor: AppColors.primary,
                 fontWeight: FontWeight.w400,
                 gradientColors: isDarkMode

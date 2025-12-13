@@ -216,6 +216,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get photoCount => 'عدد الصور';
 
   @override
+  String get videos => 'الفيديوهات';
+
+  @override
+  String get voice => 'Voice';
+
+  @override
+  String get voiceRecordings => 'التسجيلات الصوتيه';
+
+  @override
   String get status => 'الحالة';
 
   @override
@@ -229,6 +238,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get created => 'تم الإنشاء';
+
+  @override
+  String get country => 'بلد';
+
+  @override
+  String get city => 'المدينه';
+
+  @override
+  String get stadium => 'الاستاد';
+
+  @override
+  String get area => 'المنطقه';
+
+  @override
+  String get ticketType => 'نوع البلاغ';
+
+  @override
+  String get modelType => 'نوع النموذج';
 
   @override
   String get submittedOn => 'تم الإرسال ';
@@ -331,6 +358,48 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get allReports => 'جميع التقارير';
+
+  @override
+  String get createReport => 'أنشاء بلاغ';
+
+  @override
+  String get myProfile => 'ملفي الشخصي';
+
+  @override
+  String get camera => 'الكاميرة';
+
+  @override
+  String get gallery => 'المعرض';
+
+  @override
+  String get mediaAttachments => 'ملفات الوسائط';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
+  String get closed => 'مغلق';
+
+  @override
+  String get inProgress => 'In Progress';
+
+  @override
+  String get open => 'مفتوح';
+
+  @override
+  String get rejected => 'مرفوض';
+
+  @override
+  String get resolved => 'محلول';
+
+  @override
+  String get noData => 'لا يوجد بيانات';
+
+  @override
+  String get chooseImageSource => 'أختار مصدر الصوره';
+
+  @override
+  String get myReports => 'تقاريري';
 
   @override
   String get submitted => 'تم الإرسال';

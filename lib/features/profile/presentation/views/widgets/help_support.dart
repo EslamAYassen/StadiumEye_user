@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../../l10n/app_localizations.dart';
+
 class HelpSupport extends StatelessWidget {
   const HelpSupport({super.key});
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return InkWell(
       onTap: () {},
       borderRadius: BorderRadius.circular(AppThemeConsts.radius16md),
@@ -36,7 +38,7 @@ class HelpSupport extends StatelessWidget {
             const Icon(Icons.help_outline, color: AppColors.primary),
             const SizedBox(width: 15),
             Text(
-              'Help & Support',
+              locale.helpAndSupport,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

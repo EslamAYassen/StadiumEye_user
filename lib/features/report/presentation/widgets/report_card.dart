@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import '../pages/my_reports_page.dart';
 
 class ReportCard extends StatefulWidget {
@@ -79,7 +80,7 @@ class _ReportCardState extends State<ReportCard>
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return SlideTransition(
       position: _slideAnimation,
       child: FadeTransition(
@@ -157,7 +158,7 @@ class _ReportCardState extends State<ReportCard>
                           AppColors.successLight,
                           AppColors.success,
                           AppColors.successDark,
-                          'Resolved',
+                          locale.resolved,
                           Icons.check_rounded,
                         ),
                       ] else if (widget.isSubmitted == ReportFilter.closed) ...[
@@ -165,7 +166,7 @@ class _ReportCardState extends State<ReportCard>
                           AppColors.warningLight,
                           AppColors.warning,
                           AppColors.warningDark,
-                          'Closed',
+                          locale.closed,
                           Icons.close_rounded,
                         ),
                       ] else if (widget.isSubmitted ==
@@ -174,7 +175,7 @@ class _ReportCardState extends State<ReportCard>
                           AppColors.infoLight,
                           AppColors.info,
                           AppColors.infoDark,
-                          'In Progress',
+                          locale.inProgress,
                           Icons.timelapse_rounded,
                         ),
                       ] else if (widget.isSubmitted == ReportFilter.open) ...[
@@ -182,7 +183,7 @@ class _ReportCardState extends State<ReportCard>
                           AppColors.successLight,
                           AppColors.success,
                           AppColors.primary,
-                          'Open',
+                          locale.open,
                           Icons.file_open_rounded,
                         ),
                       ] else if (widget.isSubmitted ==
@@ -191,7 +192,7 @@ class _ReportCardState extends State<ReportCard>
                           AppColors.errorLight,
                           AppColors.error,
                           AppColors.errorDark,
-                          'Rejected',
+                          locale.rejected,
                           Icons.close_rounded,
                         ),
                       ],
@@ -363,18 +364,18 @@ class _ReportCardState extends State<ReportCard>
                                 ),
                                 InkWell(
                                   onTap: widget.onTap,
-                                  child: const Row(
+                                  child: Row(
                                     children: [
                                       Text(
-                                        'View Details',
-                                        style: TextStyle(
+                                        locale.viewDetails,
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: AppColors.primary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      SizedBox(width: 4),
-                                      Icon(
+                                      const SizedBox(width: 4),
+                                      const Icon(
                                         Icons.arrow_forward,
                                         size: 16,
                                         color: AppColors.primary,

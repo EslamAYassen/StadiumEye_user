@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class CustomAppBarForReport extends StatelessWidget {
   final String id;
   final VoidCallback? onBackPressed;
@@ -16,6 +18,7 @@ class CustomAppBarForReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return SliverAppBar(
       expandedHeight: 280,
@@ -61,9 +64,9 @@ class CustomAppBarForReport extends StatelessWidget {
             title: AnimatedOpacity(
               duration: const Duration(milliseconds: 300),
               opacity: shrinkPercentage > 0.5 ? 1.0 : 0.0,
-              child: const Text(
-                'Report Details',
-                style: TextStyle(
+              child: Text(
+                locale.reportDetails,
+                style: const TextStyle(
                   color: AppColors.whiteColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -99,9 +102,9 @@ class CustomAppBarForReport extends StatelessWidget {
                         child: AnimatedSlide(
                           duration: const Duration(milliseconds: 300),
                           offset: Offset(0, shrinkPercentage * 0.2),
-                          child: const Text(
-                            'Report Details',
-                            style: TextStyle(
+                          child: Text(
+                            locale.reportDetails,
+                            style: const TextStyle(
                               color: AppColors.whiteColor,
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
@@ -128,7 +131,10 @@ class CustomAppBarForReport extends StatelessWidget {
                                       offset: Offset(-50 * (1 - value), 0),
                                       child: Opacity(
                                         opacity: value,
-                                        child: _buildStatCard('Report ID', id),
+                                        child: _buildStatCard(
+                                          locale.reportID,
+                                          id,
+                                        ),
                                       ),
                                     );
                                   },

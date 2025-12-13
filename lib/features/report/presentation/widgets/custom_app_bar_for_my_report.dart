@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class CustomAppBarForMyReport extends StatelessWidget {
   final int totalReports;
   final int monthReports;
@@ -17,6 +19,7 @@ class CustomAppBarForMyReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     return SliverAppBar(
       expandedHeight: 280,
@@ -62,9 +65,9 @@ class CustomAppBarForMyReport extends StatelessWidget {
             title: AnimatedOpacity(
               duration: const Duration(milliseconds: 300),
               opacity: shrinkPercentage > 0.5 ? 1.0 : 0.0,
-              child: const Text(
-                'My Reports',
-                style: TextStyle(
+              child: Text(
+                locale.myReports,
+                style: const TextStyle(
                   color: AppColors.whiteColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -100,9 +103,9 @@ class CustomAppBarForMyReport extends StatelessWidget {
                         child: AnimatedSlide(
                           duration: const Duration(milliseconds: 300),
                           offset: Offset(0, shrinkPercentage * 0.2),
-                          child: const Text(
-                            'My Reports',
-                            style: TextStyle(
+                          child: Text(
+                            locale.myReports,
+                            style: const TextStyle(
                               color: AppColors.whiteColor,
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
@@ -130,7 +133,7 @@ class CustomAppBarForMyReport extends StatelessWidget {
                                       child: Opacity(
                                         opacity: value,
                                         child: _buildStatCard(
-                                          'Total Reports',
+                                          locale.totalReports,
                                           totalReports.toString(),
                                         ),
                                       ),
@@ -150,7 +153,7 @@ class CustomAppBarForMyReport extends StatelessWidget {
                                       child: Opacity(
                                         opacity: value,
                                         child: _buildStatCard(
-                                          'This Month',
+                                          locale.thisMonth,
                                           monthReports.toString(),
                                         ),
                                       ),

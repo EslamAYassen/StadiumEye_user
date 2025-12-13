@@ -7,6 +7,8 @@ import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 import 'package:stadium_eye/utils/language.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -22,7 +24,7 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: isDarkMode
           ? AppColors.backgroundDark
@@ -73,11 +75,11 @@ class SettingsView extends StatelessWidget {
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Center(
                         child: Text(
-                          'Settings',
-                          style: TextStyle(
+                          locale.settings,
+                          style: const TextStyle(
                             color: AppColors.whiteColor,
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
@@ -127,7 +129,7 @@ class SettingsView extends StatelessWidget {
                             onPressed: () {
                               context.read<SettingsCubit>().loadSettings();
                             },
-                            child: const Text('Retry'),
+                            child: Text(locale.tryAgain),
                           ),
                         ],
                       ),
@@ -144,7 +146,7 @@ class SettingsView extends StatelessWidget {
 
                           // Appearance Section
                           Text(
-                            'Appearance',
+                            locale.appearance,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -158,8 +160,8 @@ class SettingsView extends StatelessWidget {
                           // Dark Mode Card
                           SettingCard(
                             icon: Icons.dark_mode_outlined,
-                            title: 'Dark Mode',
-                            subtitle: 'Switch between light and dark theme',
+                            title: locale.darkMode,
+                            subtitle: locale.switchTheme,
                             trailing: Switch(
                               value: state.isDarkMode,
                               onChanged: (value) {
@@ -175,7 +177,7 @@ class SettingsView extends StatelessWidget {
 
                           // Language Section
                           Text(
-                            'Language & Region',
+                            locale.language,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -189,7 +191,7 @@ class SettingsView extends StatelessWidget {
                           // Locale Card
                           SettingCard(
                             icon: Icons.language_outlined,
-                            title: 'Language',
+                            title: locale.language,
                             subtitle: state.locale.displayName,
                             trailing: Icon(
                               Icons.arrow_forward_ios,
@@ -206,7 +208,7 @@ class SettingsView extends StatelessWidget {
 
                           // Notifications Section
                           Text(
-                            'Notifications',
+                            locale.notifications,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -220,10 +222,10 @@ class SettingsView extends StatelessWidget {
                           // Notifications Card
                           SettingCard(
                             icon: Icons.notifications_outlined,
-                            title: 'Push Notifications',
+                            title: locale.pushNotifications,
                             subtitle: state.notificationsEnabled
-                                ? 'Receive updates and alerts'
-                                : 'Notifications disabled',
+                                ? locale.receiveUpdates
+                                : locale.notificationsDisabled,
                             trailing: Switch(
                               value: state.notificationsEnabled,
                               onChanged: (value) {

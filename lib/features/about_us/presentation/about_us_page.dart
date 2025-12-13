@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
 import 'package:stadium_eye/core/widgets/glowing_logo/logo_splash.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/animated_arrow.dart';
@@ -128,6 +129,7 @@ class _AboutUsPageState extends State<AboutUsPage>
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -254,9 +256,9 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  const Text(
-                                                    'Watch Our Story',
-                                                    style: TextStyle(
+                                                  Text(
+                                                    locale.watchOurStory,
+                                                    style: const TextStyle(
                                                       fontSize: 22,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -264,7 +266,8 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                     ),
                                                   ),
                                                   Text(
-                                                    'See how we transform stadiums',
+                                                    locale
+                                                        .seeHowWeTransformStadiums,
                                                     style: TextStyle(
                                                       fontSize: 13,
                                                       color: Colors.grey[600],
@@ -389,21 +392,21 @@ class _AboutUsPageState extends State<AboutUsPage>
                               // Features Grid - Fades in on scroll
                               Opacity(
                                 opacity: _featuresOpacity,
-                                child: const Row(
+                                child: Row(
                                   children: [
                                     Expanded(
                                       child: FeatureCard(
                                         icon: Icons.security,
-                                        title: 'Secure',
-                                        subtitle: 'Top-level security',
+                                        title: locale.secure,
+                                        subtitle: locale.topLevelSecurity,
                                       ),
                                     ),
-                                    SizedBox(width: 15),
+                                    const SizedBox(width: 15),
                                     Expanded(
                                       child: FeatureCard(
                                         icon: Icons.speed,
-                                        title: 'Fast',
-                                        subtitle: 'Real-time reports',
+                                        title: locale.fast,
+                                        subtitle: locale.realTimeReports,
                                       ),
                                     ),
                                   ],
@@ -413,21 +416,21 @@ class _AboutUsPageState extends State<AboutUsPage>
 
                               Opacity(
                                 opacity: _featuresOpacity,
-                                child: const Row(
+                                child: Row(
                                   children: [
                                     Expanded(
                                       child: FeatureCard(
                                         icon: Icons.verified_user,
-                                        title: 'Reliable',
+                                        title: locale.reliable,
                                         subtitle: 'Always available',
                                       ),
                                     ),
-                                    SizedBox(width: 15),
+                                    const SizedBox(width: 15),
                                     Expanded(
                                       child: FeatureCard(
                                         icon: Icons.analytics,
-                                        title: 'Smart',
-                                        subtitle: 'AI-powered insights',
+                                        title: locale.smart,
+                                        subtitle: locale.aiPoweredInsights,
                                       ),
                                     ),
                                   ],

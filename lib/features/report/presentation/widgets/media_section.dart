@@ -6,6 +6,8 @@ import 'package:path/path.dart' as path;
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 class MediaSection extends StatefulWidget {
   final Function(List<String> imagePaths) onImagesChanged;
   final Function(List<String> videoPaths) onVideosChanged;
@@ -149,6 +151,7 @@ class _MediaSectionState extends State<MediaSection> {
 
   void _showImagePicker() {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
     showModalBottomSheet(
       context: context,
@@ -175,7 +178,7 @@ class _MediaSectionState extends State<MediaSection> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Choose Image Source',
+              locale.chooseImageSource,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -190,7 +193,7 @@ class _MediaSectionState extends State<MediaSection> {
               children: [
                 _ImageSourceButton(
                   icon: Icons.camera_alt,
-                  label: 'Camera',
+                  label: locale.camera,
                   onTap: () {
                     Navigator.pop(context);
                     _takePhoto();
@@ -198,7 +201,7 @@ class _MediaSectionState extends State<MediaSection> {
                 ),
                 _ImageSourceButton(
                   icon: Icons.photo_library,
-                  label: 'Gallery',
+                  label: locale.gallery,
                   onTap: () {
                     Navigator.pop(context);
                     _pickImages();
@@ -216,13 +219,13 @@ class _MediaSectionState extends State<MediaSection> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Title
         Text(
-          'Media Attachments',
+          locale.mediaAttachments,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -239,7 +242,7 @@ class _MediaSectionState extends State<MediaSection> {
             Expanded(
               child: _MediaButton(
                 icon: Icons.photo_camera,
-                label: 'Photos',
+                label: locale.photos,
                 count: _selectedImages.length,
                 color: AppColors.primary,
                 onTap: _showImagePicker,
@@ -249,7 +252,7 @@ class _MediaSectionState extends State<MediaSection> {
             Expanded(
               child: _MediaButton(
                 icon: Icons.videocam,
-                label: 'Videos',
+                label: locale.videos,
                 count: _selectedVideos.length,
                 color: AppColors.info,
                 onTap: _pickVideos,
@@ -259,7 +262,7 @@ class _MediaSectionState extends State<MediaSection> {
             Expanded(
               child: _MediaButton(
                 icon: Icons.mic,
-                label: 'Voice',
+                label: locale.voice,
                 count: _selectedVoices.length,
                 color: AppColors.warning,
                 onTap: _pickVoices,
@@ -279,7 +282,7 @@ class _MediaSectionState extends State<MediaSection> {
         if (_selectedVideos.isNotEmpty) ...[
           const SizedBox(height: 16),
           _FilePreviewList(
-            title: 'Videos',
+            title: locale.videos,
             files: _selectedVideos,
             icon: Icons.videocam,
             color: AppColors.info,
@@ -291,7 +294,7 @@ class _MediaSectionState extends State<MediaSection> {
         if (_selectedVoices.isNotEmpty) ...[
           const SizedBox(height: 16),
           _FilePreviewList(
-            title: 'Voice Recordings',
+            title: locale.voiceRecordings,
             files: _selectedVoices,
             icon: Icons.mic,
             color: AppColors.warning,
@@ -443,7 +446,7 @@ class _ImagePreviewGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -452,7 +455,7 @@ class _ImagePreviewGrid extends StatelessWidget {
             const Icon(Icons.photo, size: 20, color: AppColors.primary),
             const SizedBox(width: 8),
             Text(
-              'Images (${images.length})',
+              '${locale.photos} (${images.length})',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

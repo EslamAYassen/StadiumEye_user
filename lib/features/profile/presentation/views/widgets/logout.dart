@@ -4,6 +4,7 @@ import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../../l10n/app_localizations.dart';
 import '../../../../auth/presentation/bloc/auth_event.dart';
 
 class LogoutButton extends StatelessWidget {
@@ -12,7 +13,7 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppThemeConsts.padding16md,
@@ -21,9 +22,9 @@ class LogoutButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: () => context.read<AuthBloc>().add(const LogoutEvent()),
         icon: const Icon(Icons.logout, color: AppColors.primary),
-        label: const Text(
-          'Logout',
-          style: TextStyle(
+        label: Text(
+          locale.logout,
+          style: const TextStyle(
             color: AppColors.primary,
             fontSize: 16,
             fontWeight: FontWeight.bold,

@@ -216,6 +216,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photoCount => 'Photo count';
 
   @override
+  String get videos => 'Videos';
+
+  @override
+  String get voice => 'Voice';
+
+  @override
+  String get voiceRecordings => 'Voice Recordings';
+
+  @override
   String get status => 'Status';
 
   @override
@@ -229,6 +238,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get created => 'Created';
+
+  @override
+  String get country => 'Country';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get stadium => 'Stadium';
+
+  @override
+  String get area => 'Area';
+
+  @override
+  String get ticketType => 'Ticket Type';
+
+  @override
+  String get modelType => 'Model Type';
 
   @override
   String get submittedOn => 'Submitted on ';
@@ -331,6 +358,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get allReports => 'All Reports';
+
+  @override
+  String get createReport => 'Create Report';
+
+  @override
+  String get myProfile => 'My profile';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get mediaAttachments => 'Media Attachments';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get closed => 'Closed';
+
+  @override
+  String get inProgress => 'In Progress';
+
+  @override
+  String get open => 'Open';
+
+  @override
+  String get rejected => 'Rejected';
+
+  @override
+  String get resolved => 'Resolved';
+
+  @override
+  String get noData => 'No Data';
+
+  @override
+  String get chooseImageSource => 'Choose Image Source';
+
+  @override
+  String get myReports => 'My Reports';
 
   @override
   String get submitted => 'Submitted';

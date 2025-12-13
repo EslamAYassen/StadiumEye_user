@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
+import '../../../../../l10n/app_localizations.dart';
+
 class StatisticsCard extends StatelessWidget {
   //final ReportEntity repot;
   const StatisticsCard({super.key});
@@ -30,7 +32,7 @@ class StatisticsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Statistics',
+            AppLocalizations.of(context)!.statistics,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -44,9 +46,21 @@ class StatisticsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               //replace API data
-              buildStatColumn(context, "12", 'Total Active\nUsers'),
-              buildStatColumn(context, '2', 'Total\nTeams'),
-              buildStatColumn(context, '1', 'Total\nTickets'),
+              buildStatColumn(
+                context,
+                "12",
+                AppLocalizations.of(context)!.totalActiveUsers,
+              ),
+              buildStatColumn(
+                context,
+                '2',
+                AppLocalizations.of(context)!.totalTeams,
+              ),
+              buildStatColumn(
+                context,
+                '1',
+                AppLocalizations.of(context)!.totalTickets,
+              ),
             ],
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
@@ -55,7 +56,7 @@ class CustomSubmitButton extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    "Submit Report",
+                    AppLocalizations.of(context)!.submitReport,
                     style: TextStyle(
                       fontSize: 15,
                       color: isEndable

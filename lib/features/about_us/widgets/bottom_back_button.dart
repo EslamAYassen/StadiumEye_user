@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 
 class BottomBackButton extends StatelessWidget {
   const BottomBackButton({super.key});
@@ -30,19 +31,19 @@ class BottomBackButton extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Go to Sign In',
-              style: TextStyle(
+              AppLocalizations.of(context)!.goToSignIn,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
               ),
             ),
-            SizedBox(width: 12),
-            Icon(Icons.arrow_forward_ios_rounded, size: 26),
+            const SizedBox(width: 12),
+            const Icon(Icons.arrow_forward_ios_rounded, size: 26),
           ],
         ),
       ),
