@@ -1,0 +1,448 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Arabic (`ar`).
+class AppLocalizationsAr extends AppLocalizations {
+  AppLocalizationsAr([String locale = 'ar']) : super(locale);
+
+  @override
+  String get addReport => 'إضافة تقرير';
+
+  @override
+  String get watchOurStory => 'شاهد قصتنا';
+
+  @override
+  String get seeHowWeTransformStadiums => 'شاهد كيف نحول الملاعب';
+
+  @override
+  String get secure => 'آمن';
+
+  @override
+  String get topLevelSecurity => 'أمن على أعلى مستوى';
+
+  @override
+  String get fast => 'سريع';
+
+  @override
+  String get realTimeReports => 'تقارير فورية';
+
+  @override
+  String get reliable => 'موثوق';
+
+  @override
+  String get alwaysAvailable => 'متاح دائمًا';
+
+  @override
+  String get smart => 'ذكي';
+
+  @override
+  String get aiPoweredInsights => 'تحليلات مدعومة بالذكاء الاصطناعي';
+
+  @override
+  String get goToSignIn => 'اذهب لتسجيل الدخول';
+
+  @override
+  String get ourMission => 'مهمتنا';
+
+  @override
+  String get ourMissionDescription => 'لإحداث ثورة في إدارة الملاعب من خلال تقارير مبتكرة وتحليلات فورية لتجربة أفضل.';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get pleaseEnterYourEmail => 'الرجاء إدخال البريد الإلكتروني';
+
+  @override
+  String get send => 'إرسال';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get pleaseEnterPassword => 'الرجاء إدخال كلمة المرور';
+
+  @override
+  String get passwordMinLength => 'يجب أن تكون كلمة المرور 6 أحرف على الأقل';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get pleaseConfirmPassword => 'الرجاء تأكيد كلمة المرور';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمات المرور غير متطابقة';
+
+  @override
+  String get restPassword => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get stadiumEye => 'ستاديوم آي';
+
+  @override
+  String get eventMonitoringSystem => 'نظام مراقبة الفعاليات';
+
+  @override
+  String get forgotPasswordQuestion => 'هل نسيت كلمة المرور؟';
+
+  @override
+  String get welcomeBack => 'مرحبًا بعودتك';
+
+  @override
+  String get signInToContinueMonitoring => 'سجّل الدخول لمتابعة المراقبة';
+
+  @override
+  String get dontHaveAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get signUp => 'إنشاء حساب';
+
+  @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get male => 'ذكر';
+
+  @override
+  String get female => 'أنثى';
+
+  @override
+  String get firstName => 'الاسم الأول';
+
+  @override
+  String get ahmed => 'أحمد';
+
+  @override
+  String get pleaseEnterFirstName => 'الرجاء إدخال الاسم الأول';
+
+  @override
+  String get lastName => 'اسم العائلة';
+
+  @override
+  String get alSalem => 'آل سالم';
+
+  @override
+  String get pleaseEnterLastName => 'الرجاء إدخال اسم العائلة';
+
+  @override
+  String get phone => 'الهاتف';
+
+  @override
+  String get phoneExample => '01xxx';
+
+  @override
+  String get pleaseEnterPhone => 'الرجاء إدخال رقم الهاتف';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get alreadyHaveUnverifiedAccount => 'هل لديك حساب غير مفعل؟';
+
+  @override
+  String get verify => 'تحقق';
+
+  @override
+  String get gender => 'الجنس';
+
+  @override
+  String get selectGender => 'اختر الجنس';
+
+  @override
+  String get pleaseSelectGender => 'الرجاء اختيار الجنس';
+
+  @override
+  String get joinStadiumEye => 'انضم إلى ستاديوم آي';
+
+  @override
+  String get contactInformation => 'معلومات الاتصال';
+
+  @override
+  String get helpAndSupport => 'المساعدة والدعم';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get loadingDataError => 'حدث خطأ أثناء تحميل البيانات';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get statistics => 'الإحصاءات';
+
+  @override
+  String get totalActiveUsers => 'إجمالي المستخدمين النشطين';
+
+  @override
+  String get totalTeams => 'إجمالي الفرق';
+
+  @override
+  String get totalTickets => 'إجمالي التذاكر';
+
+  @override
+  String get stadiumName => 'اسم الملعب';
+
+  @override
+  String get kingFahdInternationalStadium => 'استاد الملك فهد الدولي';
+
+  @override
+  String get section => 'القطاع';
+
+  @override
+  String get northStand => 'المنصة الشمالية';
+
+  @override
+  String get reviewMessage => ' مراجعة الرسائل';
+
+  @override
+  String get review => 'مراجعة';
+
+  @override
+  String get date => ' التاريخ';
+
+  @override
+  String get photoCount => 'عدد الصور';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get photos => 'الصور';
+
+  @override
+  String get mediaGallery => 'معرض الوسائط';
+
+  @override
+  String get author => 'المؤلف';
+
+  @override
+  String get created => 'تم الإنشاء';
+
+  @override
+  String get submittedOn => 'تم الإرسال ';
+
+  @override
+  String get draft => 'مسودة';
+
+  @override
+  String get lessonsLearned => 'الدروس المستفادة';
+
+  @override
+  String get lesson1 => 'ضرورة فتح بوابات إضافية قبل 30 دقيقة من المباريات الهامة.';
+
+  @override
+  String get lesson2 => 'حدوث بعض التأخير في الدخول بسبب الإقبال الكبير. يمكن تحسين إدارة الطوابير.';
+
+  @override
+  String get challenges => 'التحديات';
+
+  @override
+  String get observations => 'الملاحظات';
+
+  @override
+  String get reportAuthor => ' مؤلف التقرير';
+
+  @override
+  String get princeFaisalBinFahdStadium => 'استاد الأمير فيصل بن فهد';
+
+  @override
+  String get eastStand => 'المنصة الشرقية';
+
+  @override
+  String get eastStandReview => 'رؤية ممتازة من هذا القسم.';
+
+  @override
+  String get eastStandDate => ' تاريخ المنصة الشرقية';
+
+  @override
+  String get kingAbdullahSportsCity => 'مدينة الملك عبدالله الرياضية';
+
+  @override
+  String get westStand => 'المنصة الغربية';
+
+  @override
+  String get westStandReview => 'كان أفراد الأمن في أماكنهم بشكل جيد.';
+
+  @override
+  String get westStandDate => ' تاريخ المنصة الغربية';
+
+  @override
+  String get alAwwalPark => 'منتزه الأول';
+
+  @override
+  String get southStand => 'المنصة الجنوبية';
+
+  @override
+  String get southStandReview => 'تقرير مسودة جاري العمل عليه.';
+
+  @override
+  String get southStandDate => ' تاريخ المنصة الجنوبية';
+
+  @override
+  String get reportDate1 => ' تاريخ التقرير';
+
+  @override
+  String get stadium1Name => 'استاد الملك فهد الدولي';
+
+  @override
+  String get stadium1Section => 'المنصة الشمالية';
+
+  @override
+  String get stadium1Review => 'إدارة جماهير ممتازة أثناء المباراة.';
+
+  @override
+  String get stadium2Name => 'استاد الأمير فيصل بن فهد';
+
+  @override
+  String get stadium2Section => 'المنصة الشرقية';
+
+  @override
+  String get stadium2Review => 'رؤية ممتازة من هذا القسم.';
+
+  @override
+  String get stadium3Name => 'مدينة الملك عبدالله الرياضية';
+
+  @override
+  String get stadium3Section => 'المنصة الغربية';
+
+  @override
+  String get stadium3Review => 'كان أفراد الأمن في أماكنهم بشكل جيد.';
+
+  @override
+  String get stadium4Name => 'منتزه الأول';
+
+  @override
+  String get stadium4Section => 'المنصة الجنوبية';
+
+  @override
+  String get stadium4Review => 'تقرير مسودة جاري العمل عليه.';
+
+  @override
+  String get allReports => 'جميع التقارير';
+
+  @override
+  String get submitted => 'تم الإرسال';
+
+  @override
+  String get totalReports => 'إجمالي التقارير';
+
+  @override
+  String get thisMonth => 'هذا الشهر';
+
+  @override
+  String get reportDetails => 'تفاصيل التقرير';
+
+  @override
+  String get reportID => 'معرف التقرير';
+
+  @override
+  String get submitReport => 'إرسال التقرير';
+
+  @override
+  String get active => 'نشط';
+
+  @override
+  String get team => 'الفريق';
+
+  @override
+  String get uploadPhoto => 'تحميل صورة';
+
+  @override
+  String get uploadVideo => 'تحميل فيديو';
+
+  @override
+  String get recordVoiceNote => 'تسجيل مذكرة صوتية';
+
+  @override
+  String get quickActions => 'إجراءات سريعة';
+
+  @override
+  String get reportAnIssueQuickly => 'أبلغ عن مشكلة بسرعة';
+
+  @override
+  String get viewSubmittedReports => 'عرض تقاريرك المرسلة';
+
+  @override
+  String get viewPersonalDataSettings => 'عرض البيانات الشخصية والإعدادات';
+
+  @override
+  String get recentActivity => 'النشاط الأخير';
+
+  @override
+  String get photoCaptured => 'تم التقاط الصورة';
+
+  @override
+  String get hoursAgo => 'منذ 5 ساعات';
+
+  @override
+  String get dayAgo => 'منذ يوم واحد';
+
+  @override
+  String get viewDetails => 'عرض التفاصيل';
+
+  @override
+  String get keyTakeaways => 'أهم النقاط...';
+
+  @override
+  String get anyChallengesFaced => 'أي تحديات واجهتها...';
+
+  @override
+  String get describeObservations => 'صف ملاحظاتك هنا...';
+
+  @override
+  String get selectArea => 'اختر المنطقة';
+
+  @override
+  String get selectStadium => 'اختر الملعب';
+
+  @override
+  String get location => 'الموقع *';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get appearance => 'المظهر';
+
+  @override
+  String get darkMode => 'الوضع الداكن';
+
+  @override
+  String get switchTheme => 'التبديل بين الوضع الفاتح والداكن';
+
+  @override
+  String get languageAndRegion => 'اللغة والمنطقة';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get pushNotifications => 'الإشعارات الفورية';
+
+  @override
+  String get receiveUpdates => 'استلام التحديثات والتنبيهات';
+
+  @override
+  String get notificationsDisabled => 'تم تعطيل الإشعارات';
+
+  @override
+  String get unknownState => 'حالة غير معروفة';
+
+  @override
+  String get selectLanguage => 'Select Language';
+}
