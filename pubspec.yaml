@@ -48,6 +48,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  generate: true
   uses-material-design: true
   assets:
     - assets/images/stadium_light.jpeg
@@ -68,3 +69,5 @@ flutter_intl:
   arb_dir: lib/l10n
   template_arbs: [app_en.arb]
   output_dir: lib/l10n/generated
+
+
