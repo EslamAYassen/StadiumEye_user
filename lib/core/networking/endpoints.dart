@@ -1,5 +1,5 @@
 class Endpoints {
-  static const baseUrl = "https://stadiumeye-backend-b6fq.onrender.com/api/v1";
+  static const baseUrl = "http://168.231.125.210:3030/api/v1";
 }
 
 class AuthEndpoints extends Endpoints {
