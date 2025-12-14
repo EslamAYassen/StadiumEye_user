@@ -6,8 +6,11 @@ import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_text.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../core/widgets/loading/lottie_loading.dart';
+import '../../../../../theme/app_colors.dart';
+import '../../../../../theme/app_theme_consts.dart';
 import '../../../domain/usecases/register_usecase.dart';
 import '../../bloc/auth_state.dart';
 
@@ -20,6 +23,8 @@ class SignupCard extends StatefulWidget {
 
 class _SignupCardState extends State<SignupCard> {
   String? selectedGender;
+  DateTime? selectedDate;
+
   bool hidePassword = true;
   bool hideConfirmPassword = true;
 
@@ -44,6 +49,12 @@ class _SignupCardState extends State<SignupCard> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      selectedDate = args.value;
+    });
   }
 
   @override
@@ -174,6 +185,18 @@ class _SignupCardState extends State<SignupCard> {
                   const SizedBox(height: 20),
 
                   buildGenderDropdown(),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    "Date of Birth",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF022C0C),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  _buildDateOfBirth(),
                   const SizedBox(height: 20),
 
                   // Password
@@ -549,14 +572,37 @@ class _SignupCardState extends State<SignupCard> {
           email: _emailController.text,
           phone: _phoneNumberController.text,
           genderEn: selectedGender ?? '',
-          //TODO: Add this
-          dateOfBirth: "2000-01-01",
+          dateOfBirth: selectedDate!.toIso8601String(),
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,
           //TODO: Change those
           city: '691cfbe9aad9af7504b0f29c',
           country: '691cfbe9aad9af7504b0f29c',
         ),
+      ),
+    );
+  }
+
+  Widget _buildDateOfBirth() {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha((0.5 * 255).toInt()),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+      ),
+      child: SfDateRangePicker(
+        headerStyle: const DateRangePickerHeaderStyle(
+          backgroundColor: AppColors.whiteColor,
+        ),
+        backgroundColor: AppColors.whiteColor,
+        onSelectionChanged: _onSelectionChanged,
+        selectionMode: DateRangePickerSelectionMode.single,
       ),
     );
   }
