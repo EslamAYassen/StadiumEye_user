@@ -126,21 +126,23 @@ class RecentActivitySection extends StatelessWidget {
                       timeAgo:
                           "${state.reports.tickets[0].createdAt.hour} hrs ago",
                     ),
-                    _RecentActivityItem(
-                      title: state.reports.tickets[1].status,
-                      subtitle:
-                          "${state.reports.tickets[1].stadium.stadiumName} - ${state.reports.tickets[0].area}",
-                      timeAgo:
-                          "${state.reports.tickets[1].createdAt.hour} hrs ago",
-                      // icon: Iconsax.camera,
-                    ),
-                    _RecentActivityItem(
-                      title: state.reports.tickets[2].status,
-                      subtitle:
-                          "${state.reports.tickets[2].stadium.stadiumName} - ${state.reports.tickets[0].area}",
-                      timeAgo:
-                          "${state.reports.tickets[2].createdAt.hour} hrs ago",
-                    ),
+                    if (state.reports.tickets.length > 1)
+                      _RecentActivityItem(
+                        title: state.reports.tickets[1].status,
+                        subtitle:
+                            "${state.reports.tickets[1].stadium.stadiumName} - ${state.reports.tickets[0].area}",
+                        timeAgo:
+                            "${state.reports.tickets[1].createdAt.hour} hrs ago",
+                        // icon: Iconsax.camera,
+                      ),
+                    if (state.reports.tickets.length >= 2)
+                      _RecentActivityItem(
+                        title: state.reports.tickets[2].status,
+                        subtitle:
+                            "${state.reports.tickets[2].stadium.stadiumName} - ${state.reports.tickets[0].area}",
+                        timeAgo:
+                            "${state.reports.tickets[2].createdAt.hour} hrs ago",
+                      ),
                   ],
                 );
               }
