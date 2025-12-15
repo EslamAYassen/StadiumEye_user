@@ -1,5 +1,6 @@
 import 'package:stadium_eye/core/networking/dio_client.dart';
 import 'package:stadium_eye/features/profile/data/datasources/profile_remote_ds.dart';
+import 'package:stadium_eye/features/profile/data/models/user_data_model.dart';
 import 'package:stadium_eye/features/profile/data/models/userprofile_model.dart';
 import 'package:stadium_eye/core/networking/endpoints.dart';
 
@@ -11,7 +12,6 @@ class ProfileRemoteDsImpl implements ProfileRemoteDs {
 
   @override
   Future<void> createUserProfile(UserProfileModel userprofile) async {
-    // final url = "$baseUrl/users"; // ??????????????????????????????????????????????? us؟
     final url = UserEndpoints.myProfile;
     final dio = DioClient.create();
 
@@ -25,9 +25,9 @@ class ProfileRemoteDsImpl implements ProfileRemoteDs {
   }
 
   @override
-  Future<UserProfileModel> getMyUserProfile() async {
+  Future<UserDataModel> getMyUserProfile() async {
     //  final url = "$baseUrl/users/me";
-    final url = Endpoints.baseUrl + UserEndpoints.myProfile;
+    final url = UserEndpoints.myProfile;
     final dio = DioClient.create();
 
     final response = await dio.get(url);
@@ -38,6 +38,6 @@ class ProfileRemoteDsImpl implements ProfileRemoteDs {
       );
     }
 
-    return UserProfileModel.fromJson(response.data as Map<String, dynamic>);
+    return UserDataModel.fromJson(response.data as Map<String, dynamic>);
   }
 }

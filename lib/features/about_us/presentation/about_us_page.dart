@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
 import 'package:stadium_eye/core/widgets/glowing_logo/logo_splash.dart';
 import 'package:stadium_eye/l10n/app_localizations.dart';
@@ -245,7 +246,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                     BorderRadius.circular(15),
                                               ),
                                               child: const Icon(
-                                                Icons.play_circle_filled,
+                                                Iconsax.play_circle_copy,
                                                 color: Colors.white,
                                                 size: 28,
                                               ),
@@ -368,7 +369,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                               ],
                                                             ),
                                                             child: const Icon(
-                                                              Icons.play_arrow,
+                                                              Iconsax.play_copy,
                                                               size: 20,
                                                               color:
                                                                   Colors.white,
@@ -396,7 +397,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                   children: [
                                     Expanded(
                                       child: FeatureCard(
-                                        icon: Icons.security,
+                                        icon: Iconsax.security_copy,
                                         title: locale.secure,
                                         subtitle: locale.topLevelSecurity,
                                       ),
@@ -404,7 +405,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                     const SizedBox(width: 15),
                                     Expanded(
                                       child: FeatureCard(
-                                        icon: Icons.speed,
+                                        icon: Iconsax.speedometer_copy,
                                         title: locale.fast,
                                         subtitle: locale.realTimeReports,
                                       ),
@@ -420,7 +421,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                   children: [
                                     Expanded(
                                       child: FeatureCard(
-                                        icon: Icons.verified_user,
+                                        icon: Iconsax.verify_copy,
                                         title: locale.reliable,
                                         subtitle: 'Always available',
                                       ),
@@ -428,7 +429,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                     const SizedBox(width: 15),
                                     Expanded(
                                       child: FeatureCard(
-                                        icon: Icons.analytics,
+                                        icon: Iconsax.chart_1_copy,
                                         title: locale.smart,
                                         subtitle: locale.aiPoweredInsights,
                                       ),

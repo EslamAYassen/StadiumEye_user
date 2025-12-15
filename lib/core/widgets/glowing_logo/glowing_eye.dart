@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
+
 class GlowingEye extends StatelessWidget {
   const GlowingEye({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       width: 120,
       height: 120,
-      decoration:const BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: [
-            Color(0xFF76FF03),
-            Color(0xFF2E7D32),
-          ],
+          colors: [Color(0xFF76FF03), Color(0xFF2E7D32)],
         ),
         boxShadow: [
           BoxShadow(
@@ -23,11 +22,7 @@ class GlowingEye extends StatelessWidget {
           ),
         ],
       ),
-      child:const Icon(
-        Icons.visibility,
-        size: 60,
-        color: Colors.white,
-      ),
+      child: const Icon(Iconsax.eye_copy, size: 60, color: Colors.white),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
@@ -91,7 +92,7 @@ class CustomDropdown extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(
-                    Icons.location_on_outlined,
+                    Iconsax.location_copy,
                     size: 20,
                     color: AppColors.primary,
                   ),

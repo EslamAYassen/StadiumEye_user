@@ -1,4 +1,4 @@
-import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
+import 'package:stadium_eye/features/profile/domain/entities/user_profile_res.dart';
 import 'package:stadium_eye/features/profile/domain/repositories/userprofile_repo.dart';
 
 class GetUserProfileUseCase {
@@ -6,7 +6,7 @@ class GetUserProfileUseCase {
 
   GetUserProfileUseCase(this.repository);
 
-  Future<UserProfile> call() async {
+  Future<UserProfileResponseEntity> call() async {
     return await repository.getMyUserProfile();
   }
 }

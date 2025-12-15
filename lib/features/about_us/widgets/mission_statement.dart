@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/l10n/app_localizations.dart';
 
 class MissionStatement extends StatelessWidget {
@@ -26,7 +27,7 @@ class MissionStatement extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const Icon(Icons.emoji_events, color: Colors.white, size: 50),
+            const Icon(Iconsax.award_copy, color: Colors.white, size: 50),
             const SizedBox(height: 15),
             Text(
               AppLocalizations.of(context)!.ourMission,

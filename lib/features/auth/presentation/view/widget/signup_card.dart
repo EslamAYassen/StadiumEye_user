@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
@@ -127,7 +128,7 @@ class _SignupCardState extends State<SignupCard> {
                     controller: _firstNameController,
                     label: "First Name",
                     hint: "Ahmed",
-                    icon: Icons.person_outline,
+                    icon: Iconsax.user_copy,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your First name';
@@ -142,7 +143,7 @@ class _SignupCardState extends State<SignupCard> {
                     controller: _lastNameController,
                     label: "Last Name",
                     hint: "Al-Salem",
-                    icon: Icons.person_outline,
+                    icon: Iconsax.user_copy,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your last name';
@@ -157,7 +158,7 @@ class _SignupCardState extends State<SignupCard> {
                     controller: _emailController,
                     label: "Email",
                     hint: "your.email@example.com",
-                    icon: Icons.email_outlined,
+                    icon: Iconsax.user_copy,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -173,7 +174,7 @@ class _SignupCardState extends State<SignupCard> {
                     controller: _phoneNumberController,
                     label: "Phone",
                     hint: "01xxx",
-                    icon: Icons.email_outlined,
+                    icon: Iconsax.call_copy,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -465,9 +466,7 @@ class _SignupCardState extends State<SignupCard> {
             ),
             suffixIcon: IconButton(
               icon: Icon(
-                isHidden
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
+                isHidden ? Iconsax.eye_copy : Iconsax.eye_slash_copy,
                 color: Colors.grey[600],
               ),
               onPressed: toggle,
@@ -507,7 +506,7 @@ class _SignupCardState extends State<SignupCard> {
               isExpanded: true,
               hint: Row(
                 children: [
-                  const Icon(Icons.badge_outlined, color: Colors.grey),
+                  const Icon(Iconsax.woman_copy, color: Colors.grey),
                   const SizedBox(width: 10),
                   Text(
                     "Select Gender",
@@ -521,9 +520,11 @@ class _SignupCardState extends State<SignupCard> {
                   value: role,
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.badge,
-                        color: Color(0xFF00C853),
+                      Icon(
+                        role == "Male"
+                            ? Icons.male_rounded
+                            : Icons.female_rounded,
+                        color: const Color(0xFF00C853),
                         size: 20,
                       ),
                       const SizedBox(width: 10),

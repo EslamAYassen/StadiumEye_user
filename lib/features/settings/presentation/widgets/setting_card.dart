@@ -41,6 +41,7 @@ class SettingCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
+
           borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
           child: Padding(
             padding: const EdgeInsets.all(AppThemeConsts.padding16md),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -48,14 +49,14 @@ class ContactInformationCard extends StatelessWidget {
           const SizedBox(height: 15),
           buildContactItem(
             context,
-            Icons.email_outlined,
+            Iconsax.user_copy,
             locale.email,
             profile.email,
           ),
           const SizedBox(height: 12),
           buildContactItem(
             context,
-            Icons.phone_outlined,
+            Iconsax.call_copy,
             locale.phone,
             profile.phone,
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -21,7 +22,7 @@ class LogoutButton extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton.icon(
         onPressed: () => context.read<AuthBloc>().add(const LogoutEvent()),
-        icon: const Icon(Icons.logout, color: AppColors.primary),
+        icon: const Icon(Iconsax.logout_1_copy, color: AppColors.primary),
         label: Text(
           locale.logout,
           style: const TextStyle(

@@ -8,7 +8,7 @@ import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 import 'conect_information_card.dart';
-import 'help_support.dart';
+
 import 'logout.dart';
 import 'profile_header.dart';
 import 'settings.dart';
@@ -164,15 +164,15 @@ class _ProfileScreenBodyState extends State<ProfileScreenBody> {
                       ),
                     ),
                     const SizedBox(height: 46),
-                    ProfileHeader(profile: profile),
-                    ContactInformationCard(profile: profile),
+                    ProfileHeader(profile: profile.user),
+                    ContactInformationCard(profile: profile.user),
                     const SizedBox(height: 25),
-                    const StatisticsCard(),
+                    StatisticsCard(data: profile),
                     const SizedBox(height: 25),
                     const Settings(),
                     const SizedBox(height: 14),
-                    const HelpSupport(),
-                    const SizedBox(height: 26),
+                    // const HelpSupport(),
+                    // const SizedBox(height: 26),
                     const LogoutButton(),
                     const SizedBox(height: 30),
                   ],

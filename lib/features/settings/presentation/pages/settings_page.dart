@@ -1,6 +1,7 @@
 // settings_page.dart (Theme Updated)
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/settings/presentation/bloc/settings_cubit.dart';
 import 'package:stadium_eye/features/settings/presentation/widgets/setting_card.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
@@ -69,7 +70,7 @@ class SettingsView extends StatelessWidget {
                       ),
                       child: IconButton(
                         icon: const Icon(
-                          Icons.arrow_back,
+                          Icons.arrow_back_ios_new_rounded,
                           color: AppColors.whiteColor,
                         ),
                         onPressed: () => Navigator.pop(context),
@@ -190,7 +191,7 @@ class SettingsView extends StatelessWidget {
 
                           // Locale Card
                           SettingCard(
-                            icon: Icons.language_outlined,
+                            icon: Iconsax.language_circle_copy,
                             title: locale.language,
                             subtitle: state.locale.displayName,
                             trailing: Icon(
@@ -221,21 +222,25 @@ class SettingsView extends StatelessWidget {
 
                           // Notifications Card
                           SettingCard(
-                            icon: Icons.notifications_outlined,
+                            icon: Iconsax.notification_1_copy,
                             title: locale.pushNotifications,
                             subtitle: state.notificationsEnabled
                                 ? locale.receiveUpdates
                                 : locale.notificationsDisabled,
-                            trailing: Switch(
-                              value: state.notificationsEnabled,
-                              onChanged: (value) {
-                                context
-                                    .read<SettingsCubit>()
-                                    .toggleNotifications(value);
-                              },
+                            trailing: const Switch(
+                              //TODO: Add this when notifications will be implemented
+                              value: false, // state.notificationsEnabled,
+                              onChanged: null,
+                              // (value) {
+                              //   context
+                              //       .read<SettingsCubit>()
+                              //       .toggleNotifications(value);
+                              // },
                               activeThumbColor: AppColors.primary,
                             ),
                           ),
+                          const SizedBox(height: 8),
+                          const Text("Notifications will be implemented soon"),
                         ],
                       ),
                     );

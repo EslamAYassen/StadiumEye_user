@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -43,7 +44,7 @@ class ProfileHeader extends StatelessWidget {
             backgroundColor: isDarkMode
                 ? AppColors.cardDark
                 : AppColors.whiteColor,
-            child: const Icon(Icons.person, size: 40, color: AppColors.primary),
+            child: const Icon(Iconsax.user, size: 40, color: AppColors.primary),
           ),
           const SizedBox(width: 15),
           Expanded(

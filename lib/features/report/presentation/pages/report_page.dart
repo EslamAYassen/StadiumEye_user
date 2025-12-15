@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_report.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -36,7 +37,7 @@ class ReportPage extends StatelessWidget {
               _ReportSectionWidget(
                 title: locale.observations,
                 content: data.observations,
-                icon: Icons.description_outlined,
+                icon: Iconsax.document_1_copy,
                 iconColor: AppColors.primary,
               ),
 
@@ -117,7 +118,7 @@ class _ReportHeaderWidget extends StatelessWidget {
                   ),
                 ),
                 child: const Icon(
-                  Icons.location_on,
+                  Iconsax.location_copy,
                   color: AppColors.primary,
                   size: 24,
                 ),
@@ -159,7 +160,7 @@ class _ReportHeaderWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.calendar_today_outlined,
+                      Iconsax.calendar_1_copy,
                       size: 18,
                       color: isDarkMode
                           ? AppColors.textSecondaryDark
@@ -198,7 +199,7 @@ class _ReportHeaderWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.person_outline,
+                      Iconsax.user,
                       size: 18,
                       color: isDarkMode
                           ? AppColors.textSecondaryDark
@@ -275,7 +276,7 @@ class _MediaGalleryWidget extends StatelessWidget {
           Row(
             children: [
               const Icon(
-                Icons.photo_library_outlined,
+                Iconsax.gallery_add,
                 color: AppColors.primary,
                 size: 24,
               ),
@@ -471,7 +472,7 @@ class _ReportStatusWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppThemeConsts.radius16md),
             ),
             child: const Icon(
-              Icons.description,
+              Iconsax.document_copy,
               color: AppColors.success,
               size: 28,
             ),

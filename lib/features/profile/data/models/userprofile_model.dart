@@ -14,18 +14,30 @@ class UserProfileModel extends UserProfile {
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
-    final user = json['user'];
+    // final user = json['user'];
 
     return UserProfileModel(
-      id: user['_id'],
-      firstName: user['firstName'],
-      lastName: user['lastName'],
-      fullName: user['fullName'],
-      role: user['role'],
-      email: user['email'],
-      phone: user['phone'],
-      profilePicture: user['profilePicture'],
-      createdAt: DateTime.parse(user['createdAt']),
+      id: json['_id'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      fullName: json['fullName'],
+      role: json['role'],
+      email: json['email'],
+      phone: json['phone'],
+      profilePicture: json['profilePicture'],
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    '_id': id,
+    'firstName': firstName,
+    'lastName': lastName,
+    'fullName': fullName,
+    'role': role,
+    'email': email,
+    'phone': phone,
+    'profilePicture': profilePicture,
+    'createdAt': createdAt.toIso8601String(),
+  };
 }

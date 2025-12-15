@@ -10,7 +10,7 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   SettingsCubit({required this.settingsRepository}) : super(SettingsInitial());
 
-  get isDarkMode => null;
+  bool? get isDarkMode => null;
 
   // Load settings from repository (e.g., SharedPreferences)
   Future<void> loadSettings() async {

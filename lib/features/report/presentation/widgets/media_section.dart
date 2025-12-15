@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
@@ -92,23 +94,23 @@ class _MediaSectionState extends State<MediaSection> {
   }
 
   // Pick audio/voice files
-  Future<void> _pickVoices() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.audio,
-        allowMultiple: true,
-      );
+  // Future<void> _pickVoices() async {
+  //   try {
+  //     FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //       type: FileType.audio,
+  //       allowMultiple: true,
+  //     );
 
-      if (result != null) {
-        setState(() {
-          _selectedVoices.addAll(result.paths.map((p) => File(p!)));
-        });
-        _notifyVoicesChanged();
-      }
-    } catch (e) {
-      _showError('Failed to pick audio: $e');
-    }
-  }
+  //     if (result != null) {
+  //       setState(() {
+  //         _selectedVoices.addAll(result.paths.map((p) => File(p!)));
+  //       });
+  //       _notifyVoicesChanged();
+  //     }
+  //   } catch (e) {
+  //     _showError('Failed to pick audio: $e');
+  //   }
+  // }
 
   void _removeImage(int index) {
     setState(() {
@@ -192,7 +194,7 @@ class _MediaSectionState extends State<MediaSection> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _ImageSourceButton(
-                  icon: Icons.camera_alt,
+                  icon: Iconsax.camera_copy,
                   label: locale.camera,
                   onTap: () {
                     Navigator.pop(context);
@@ -200,7 +202,7 @@ class _MediaSectionState extends State<MediaSection> {
                   },
                 ),
                 _ImageSourceButton(
-                  icon: Icons.photo_library,
+                  icon: Iconsax.gallery_copy,
                   label: locale.gallery,
                   onTap: () {
                     Navigator.pop(context);
@@ -241,7 +243,7 @@ class _MediaSectionState extends State<MediaSection> {
           children: [
             Expanded(
               child: _MediaButton(
-                icon: Icons.photo_camera,
+                icon: Iconsax.camera_copy,
                 label: locale.photos,
                 count: _selectedImages.length,
                 color: AppColors.primary,
@@ -251,7 +253,7 @@ class _MediaSectionState extends State<MediaSection> {
             const SizedBox(width: 12),
             Expanded(
               child: _MediaButton(
-                icon: Icons.videocam,
+                icon: Iconsax.video_copy,
                 label: locale.videos,
                 count: _selectedVideos.length,
                 color: AppColors.info,
@@ -261,11 +263,16 @@ class _MediaSectionState extends State<MediaSection> {
             const SizedBox(width: 12),
             Expanded(
               child: _MediaButton(
-                icon: Icons.mic,
+                icon: Iconsax.microphone_copy,
                 label: locale.voice,
                 count: _selectedVoices.length,
-                color: AppColors.warning,
-                onTap: _pickVoices,
+                color: Colors.grey,
+                //TODO: implement voice when ready
+                onTap: () => AwesomeDialog(
+                  context: context,
+                  title: "This feature is not available yet",
+                  dialogType: DialogType.info,
+                ).show(), // _pickVoices ,
               ),
             ),
           ],
@@ -284,7 +291,7 @@ class _MediaSectionState extends State<MediaSection> {
           _FilePreviewList(
             title: locale.videos,
             files: _selectedVideos,
-            icon: Icons.videocam,
+            icon: Iconsax.video_copy,
             color: AppColors.info,
             onRemove: _removeVideo,
           ),
@@ -296,7 +303,7 @@ class _MediaSectionState extends State<MediaSection> {
           _FilePreviewList(
             title: locale.voiceRecordings,
             files: _selectedVoices,
-            icon: Icons.mic,
+            icon: Iconsax.microphone_copy,
             color: AppColors.warning,
             onRemove: _removeVoice,
           ),
@@ -452,7 +459,7 @@ class _ImagePreviewGrid extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.photo, size: 20, color: AppColors.primary),
+            const Icon(Iconsax.image_copy, size: 20, color: AppColors.primary),
             const SizedBox(width: 8),
             Text(
               '${locale.photos} (${images.length})',

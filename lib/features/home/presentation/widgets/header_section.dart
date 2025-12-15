@@ -55,7 +55,7 @@ class HeaderSection extends StatelessWidget {
                           ),
                         ),
                         child: const Icon(
-                          Icons.remove_red_eye,
+                          Iconsax.eye,
                           color: AppColors.primary,
                           size: 32,
                         ),

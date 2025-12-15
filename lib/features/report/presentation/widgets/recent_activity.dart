@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
@@ -13,7 +14,7 @@ class RecentActivityItem extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.timeAgo,
-    this.icon = Icons.article_rounded,
+    this.icon = Iconsax.document_1_copy,
   });
 
   @override

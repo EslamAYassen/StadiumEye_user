@@ -541,7 +541,9 @@ class _ReportFormState extends State<ReportForm> {
                 Icons.location_city_outlined,
                 color: isDisabled
                     ? (isDarkMode
-                          ? AppColors.textSecondaryDark.withOpacity(0.5)
+                          ? AppColors.textSecondaryDark.withAlpha(
+                              (0.5 * 255).toInt(),
+                            )
                           : Colors.grey[400])
                     : (isDarkMode
                           ? AppColors.textSecondaryDark
@@ -566,7 +568,9 @@ class _ReportFormState extends State<ReportForm> {
             Icons.arrow_drop_down,
             color: isDisabled
                 ? (isDarkMode
-                      ? AppColors.textSecondaryDark.withOpacity(0.5)
+                      ? AppColors.textSecondaryDark.withAlpha(
+                          (0.5 * 255).toInt(),
+                        )
                       : Colors.grey[400])
                 : AppColors.primary,
           ),
@@ -632,7 +636,9 @@ class _ReportFormState extends State<ReportForm> {
                 Icons.stadium_outlined,
                 color: isDisabled
                     ? (isDarkMode
-                          ? AppColors.textSecondaryDark.withOpacity(0.5)
+                          ? AppColors.textSecondaryDark.withAlpha(
+                              (0.5 * 255).toInt(),
+                            )
                           : Colors.grey[400])
                     : (isDarkMode
                           ? AppColors.textSecondaryDark
@@ -657,7 +663,9 @@ class _ReportFormState extends State<ReportForm> {
             Icons.arrow_drop_down,
             color: isDisabled
                 ? (isDarkMode
-                      ? AppColors.textSecondaryDark.withOpacity(0.5)
+                      ? AppColors.textSecondaryDark.withAlpha(
+                          (0.5 * 255).toInt(),
+                        )
                       : Colors.grey[400])
                 : AppColors.primary,
           ),

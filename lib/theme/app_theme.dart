@@ -11,10 +11,12 @@ abstract class AppTheme {
 
   static const TextStyle _lightTextTheme = TextStyle(
     color: AppColors.textPrimaryLight,
+    fontFamily: "cairo",
   );
 
   static const TextStyle _darkTextTheme = TextStyle(
     color: AppColors.textPrimaryDark,
+    fontFamily: "cairo",
   );
 
   // ==================== Light Theme ====================

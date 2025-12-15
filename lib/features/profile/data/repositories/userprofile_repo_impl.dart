@@ -3,6 +3,8 @@ import 'package:stadium_eye/features/profile/data/models/userprofile_model.dart'
 import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
 import 'package:stadium_eye/features/profile/domain/repositories/userprofile_repo.dart';
 
+import '../models/user_data_model.dart';
+
 class UserprofileRepoImpl implements UserRepository {
   final ProfileRemoteDs remoteDS;
   UserprofileRepoImpl(this.remoteDS);
@@ -10,20 +12,20 @@ class UserprofileRepoImpl implements UserRepository {
   @override
   Future<void> createUserProfile(UserProfile profile) async {
     final model = UserProfileModel(
-        id: profile.id,
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        fullName: profile.fullName,
-        role: profile.role,
-        email: profile.email,
-        phone: profile.phone,
-        createdAt: profile.createdAt
+      id: profile.id,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      fullName: profile.fullName,
+      role: profile.role,
+      email: profile.email,
+      phone: profile.phone,
+      createdAt: profile.createdAt,
     );
     return await remoteDS.createUserProfile(model);
   }
 
   @override
-  Future<UserProfile> getMyUserProfile() async {
+  Future<UserDataModel> getMyUserProfile() async {
     return await remoteDS.getMyUserProfile();
   }
 }

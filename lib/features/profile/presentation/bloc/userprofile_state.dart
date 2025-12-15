@@ -1,13 +1,13 @@
-import 'package:stadium_eye/features/profile/domain/entities/userprofile_entity.dart';
+import '../../domain/entities/user_profile_res.dart';
 
 abstract class UserprofileState {}
 
-class UserProfileInitial extends UserprofileState{}
+class UserProfileInitial extends UserprofileState {}
 
-class UserProfileLoading extends UserprofileState{}
+class UserProfileLoading extends UserprofileState {}
 
 class UserProfileLoaded extends UserprofileState {
-  final UserProfile profile;
+  final UserProfileResponseEntity profile;
 
   UserProfileLoaded(this.profile);
 }

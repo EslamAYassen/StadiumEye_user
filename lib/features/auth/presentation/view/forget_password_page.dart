@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import '../../../../constants/app_routes.dart';
 
@@ -100,7 +101,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                             controller: _emailController,
                             label: "Email",
                             hint: "your.email@example.com",
-                            icon: Icons.email_outlined,
+                            icon: Iconsax.user_copy,
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -383,9 +384,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
             ),
             suffixIcon: IconButton(
               icon: Icon(
-                isHidden
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
+                isHidden ? Iconsax.eye_copy : Iconsax.eye_slash_copy,
                 color: Colors.grey[600],
               ),
               onPressed: toggle,

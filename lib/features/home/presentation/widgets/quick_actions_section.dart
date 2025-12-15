@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -97,7 +98,7 @@ class QuickActionsSection extends StatelessWidget {
                 onTap: () =>
                     Navigator.pushNamed(context, AppRoutes.addReportPage),
                 textColor: AppColors.whiteColor,
-                icon: Icons.add_circle_outline,
+                icon: Iconsax.add_circle_copy,
                 gradientColors: isDarkMode
                     ? [AppColors.primaryDark, AppColors.primary]
                     : [AppColors.gradientStart, AppColors.gradientEnd],
@@ -114,7 +115,7 @@ class QuickActionsSection extends StatelessWidget {
                   AppRoutes.myReports,
                   arguments: totalreports,
                 ),
-                icon: Icons.description_outlined,
+                icon: Iconsax.document_1_copy,
                 title: locale.myReports,
                 subtitle: locale.viewSubmittedReports,
                 iconColor: AppColors.primary,
@@ -133,7 +134,7 @@ class QuickActionsSection extends StatelessWidget {
                     ? AppColors.textPrimaryDark
                     : AppColors.textPrimaryLight,
                 onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
-                icon: Icons.person_outlined,
+                icon: Iconsax.profile_2user,
                 title: locale.myProfile,
                 subtitle: locale.viewPersonalDataSettings,
                 iconColor: AppColors.primary,

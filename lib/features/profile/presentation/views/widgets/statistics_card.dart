@@ -4,9 +4,12 @@ import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../../../l10n/app_localizations.dart';
 
+import '../../../domain/entities/user_profile_res.dart';
+
 class StatisticsCard extends StatelessWidget {
   //final ReportEntity repot;
-  const StatisticsCard({super.key});
+  const StatisticsCard({super.key, required this.data});
+  final UserProfileResponseEntity data;
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +51,17 @@ class StatisticsCard extends StatelessWidget {
               //replace API data
               buildStatColumn(
                 context,
-                "12",
+                data.totalActiveUsers.toString(),
                 AppLocalizations.of(context)!.totalActiveUsers,
               ),
               buildStatColumn(
                 context,
-                '2',
+                data.totalTeams.toString(),
                 AppLocalizations.of(context)!.totalTeams,
               ),
               buildStatColumn(
                 context,
-                '1',
+                data.totalTickets.toString(),
                 AppLocalizations.of(context)!.totalTickets,
               ),
             ],

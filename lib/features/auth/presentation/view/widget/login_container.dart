@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 
 import 'package:stadium_eye/features/auth/presentation/view/widget/forget_password.dart';
@@ -128,7 +129,7 @@ class _LoginContainerState extends State<LoginContainer>
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
-                    Icons.email_outlined,
+                    Iconsax.user_copy,
                     color: Color(0xFF2E7D32),
                     size: 20,
                   ),
@@ -193,8 +194,8 @@ class _LoginContainerState extends State<LoginContainer>
                 suffixIcon: IconButton(
                   icon: Icon(
                     _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
+                        ? Iconsax.eye_copy
+                        : Iconsax.eye_slash_copy,
                     color: Colors.grey[600],
                     size: 22,
                   ),

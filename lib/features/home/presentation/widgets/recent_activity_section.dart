@@ -1,9 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
+
+import '../../../report/presentation/bloc/report_bloc.dart';
+import '../../../report/presentation/bloc/report_state.dart';
 
 class RecentActivitySection extends StatelessWidget {
   const RecentActivitySection({super.key});
@@ -56,57 +61,91 @@ class RecentActivitySection extends StatelessWidget {
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
-                decoration: BoxDecoration(
-                  color: isDarkMode
-                      ? AppColors.cardElevatedDark
-                      : AppColors.whiteColor,
-                  borderRadius: BorderRadius.circular(
-                    AppThemeConsts.radius16md,
+          child: BlocBuilder<ReportsBloc, ReportsState>(
+            builder: (context, state) {
+              if (state is ReportsLoading) {
+                return const Center(
+                  child: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: LottieLoader(),
                   ),
-                  boxShadow: [
-                    BoxShadow(
+                );
+              } else if (state is ReportsError) {
+                return Center(
+                  child: Text(
+                    state.message,
+                    style: TextStyle(
                       color: isDarkMode
-                          ? AppColors.shadowDark.withAlpha(76)
-                          : Colors.black12,
-                      blurRadius: 12,
-                      offset: const Offset(0, 3),
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimaryLight,
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              } else if (state is ReportsLoaded &&
+                  state.reports.tickets.isNotEmpty) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
+                      decoration: BoxDecoration(
+                        color: isDarkMode
+                            ? AppColors.cardElevatedDark
+                            : AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(
+                          AppThemeConsts.radius16md,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: isDarkMode
+                                ? AppColors.shadowDark.withAlpha(76)
+                                : Colors.black12,
+                            blurRadius: 12,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        "Recent Activity",
+                        style: TextStyle(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w600,
+                          color: isDarkMode
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    _RecentActivityItem(
+                      title: state.reports.tickets[0].status,
+                      subtitle:
+                          "${state.reports.tickets[0].stadium.stadiumName} - ${state.reports.tickets[0].area}",
+                      timeAgo:
+                          "${state.reports.tickets[0].createdAt.hour} hrs ago",
+                    ),
+                    _RecentActivityItem(
+                      title: state.reports.tickets[1].status,
+                      subtitle:
+                          "${state.reports.tickets[1].stadium.stadiumName} - ${state.reports.tickets[0].area}",
+                      timeAgo:
+                          "${state.reports.tickets[1].createdAt.hour} hrs ago",
+                      // icon: Iconsax.camera,
+                    ),
+                    _RecentActivityItem(
+                      title: state.reports.tickets[2].status,
+                      subtitle:
+                          "${state.reports.tickets[2].stadium.stadiumName} - ${state.reports.tickets[0].area}",
+                      timeAgo:
+                          "${state.reports.tickets[2].createdAt.hour} hrs ago",
                     ),
                   ],
-                ),
-                child: Text(
-                  "Recent Activity",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w600,
-                    color: isDarkMode
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15),
-              const _RecentActivityItem(
-                title: "Report submitted",
-                subtitle: "King Fahd Stadium - North Stand",
-                timeAgo: "2 hours ago",
-              ),
-              const _RecentActivityItem(
-                title: "Photo captured",
-                subtitle: "Al Janoub Stadium - West Entrance",
-                timeAgo: "5 hours ago",
-                icon: Iconsax.camera,
-              ),
-              const _RecentActivityItem(
-                title: "Report submitted",
-                subtitle: "Education City Stadium - East Stand",
-                timeAgo: "1 day ago",
-              ),
-            ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
       ),
@@ -118,13 +157,12 @@ class _RecentActivityItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final String timeAgo;
-  final IconData icon;
+  // final IconData icon;
 
   const _RecentActivityItem({
     required this.title,
     required this.subtitle,
     required this.timeAgo,
-    this.icon = Iconsax.document,
   });
 
   @override
@@ -157,7 +195,11 @@ class _RecentActivityItem extends StatelessWidget {
                   : AppColors.lightGreen,
               borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 28),
+            child: const Icon(
+              Iconsax.document,
+              color: AppColors.primary,
+              size: 28,
+            ),
           ),
           const SizedBox(width: AppThemeConsts.padding16md),
           Expanded(
