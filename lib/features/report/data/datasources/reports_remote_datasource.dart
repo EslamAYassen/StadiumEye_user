@@ -135,7 +135,7 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
       }
 
       final response = await dio.post(
-        options: Options(sendTimeout: const Duration(minutes: 5)),
+        options: Options(sendTimeout: const Duration(hours: 1)),
         ReportEndpoints.createReport,
         data: formData,
       );

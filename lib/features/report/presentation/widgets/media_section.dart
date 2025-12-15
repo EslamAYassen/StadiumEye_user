@@ -3,7 +3,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -75,23 +75,23 @@ class _MediaSectionState extends State<MediaSection> {
   }
 
   // Pick videos
-  Future<void> _pickVideos() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.video,
-        allowMultiple: true,
-      );
+  // Future<void> _pickVideos() async {
+  //   try {
+  //     FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //       type: FileType.video,
+  //       allowMultiple: true,
+  //     );
 
-      if (result != null) {
-        setState(() {
-          _selectedVideos.addAll(result.paths.map((p) => File(p!)));
-        });
-        _notifyVideosChanged();
-      }
-    } catch (e) {
-      _showError('Failed to pick videos: $e');
-    }
-  }
+  //     if (result != null) {
+  //       setState(() {
+  //         _selectedVideos.addAll(result.paths.map((p) => File(p!)));
+  //       });
+  //       _notifyVideosChanged();
+  //     }
+  //   } catch (e) {
+  //     _showError('Failed to pick videos: $e');
+  //   }
+  // }
 
   // Pick audio/voice files
   // Future<void> _pickVoices() async {
@@ -256,8 +256,12 @@ class _MediaSectionState extends State<MediaSection> {
                 icon: Iconsax.video_copy,
                 label: locale.videos,
                 count: _selectedVideos.length,
-                color: AppColors.info,
-                onTap: _pickVideos,
+                color: Colors.grey, //AppColors.info,
+                onTap: () => AwesomeDialog(
+                  context: context,
+                  title: "This feature is not available yet",
+                  dialogType: DialogType.info,
+                ).show(), // _pickVideos,
               ),
             ),
             const SizedBox(width: 12),
