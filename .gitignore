@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 assets/videos/motion4.1.mp4
+android/app/upload-keystore.jks
 
 # IntelliJ related
 *.iml

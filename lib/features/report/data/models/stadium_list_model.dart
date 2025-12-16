@@ -15,7 +15,8 @@ class StadiumListModel extends StadiumListEntity {
     return StadiumListModel(
       id: json['_id'] as String,
       stadiumName: json['stadiumName'] as String,
-      cityId: json['city'] as String,
+      //TODO: change this when u can
+      cityId: json['city']["_id"] as String,
       stadiumImages: (json['stadiumImages'] as List?)?.cast<String>() ?? [],
       capacity: json['capacity'] as int,
       locationLink: json['locationLink'] as String? ?? '',
