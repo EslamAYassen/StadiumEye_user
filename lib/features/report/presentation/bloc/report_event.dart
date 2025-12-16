@@ -9,7 +9,13 @@ abstract class ReportsEvent extends Equatable {
 }
 
 class LoadMyReportsEvent extends ReportsEvent {
-  const LoadMyReportsEvent();
+  final int page;
+  final String? status;
+
+  const LoadMyReportsEvent({this.page = 1, this.status});
+
+  @override
+  List<Object?> get props => [page, status];
 }
 
 class LoadCountriesEvent extends ReportsEvent {

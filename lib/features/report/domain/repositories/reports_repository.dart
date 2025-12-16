@@ -7,7 +7,12 @@ import '../entities/stadiums_response_entity.dart';
 import '../entities/ticket_entity.dart';
 
 abstract class ReportsRepository {
-  Future<Either<Failure, ReportsResponseEntity>> getMyReports();
+  Future<Either<Failure, ReportsResponseEntity>> getMyReports({
+    int page = 1,
+    int limit = 20,
+    String? status,
+  });
+
   Future<Either<Failure, StadiumsResponseEntity>> getStadiums();
   Future<Either<Failure, CountriesResponseEntity>> getCountries();
   Future<Either<Failure, CitiesResponseEntity>> getCities();

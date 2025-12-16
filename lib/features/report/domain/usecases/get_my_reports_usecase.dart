@@ -8,7 +8,15 @@ class GetMyReportsUseCase {
 
   GetMyReportsUseCase(this.repository);
 
-  Future<Either<Failure, ReportsResponseEntity>> call() {
-    return repository.getMyReports();
+  Future<Either<Failure, ReportsResponseEntity>> call({
+    int page = 1,
+    int limit = 20,
+    String? status,
+  }) async {
+    return await repository.getMyReports(
+      page: page,
+      limit: limit,
+      status: status,
+    );
   }
 }

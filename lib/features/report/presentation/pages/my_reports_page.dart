@@ -1,7 +1,10 @@
 // ignore_for_file: unused_element
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_my_report.dart';
@@ -29,11 +32,52 @@ class MyReportsPage extends StatefulWidget {
 
 class _MyReportsPageState extends State<MyReportsPage> {
   ReportFilter _selectedFilter = ReportFilter.all;
+  late final PagingController<int, TicketEntity> _pagingController;
+  Completer<List<TicketEntity>>? _currentCompleter;
 
   @override
   void initState() {
-    context.read<ReportsBloc>().add(const LoadMyReportsEvent());
     super.initState();
+    _pagingController = PagingController<int, TicketEntity>(
+      getNextPageKey: (state) {
+        // If last page is empty or has less than 20 items, it's the last page
+        if (state.lastPageIsEmpty || (state.items?.length ?? 0) % 20 != 0) {
+          return null;
+        }
+        return state.nextIntPageKey;
+      },
+      fetchPage: (pageKey) => _fetchPage(pageKey),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    _currentCompleter?.completeError('Widget disposed');
+    super.dispose();
+  }
+
+  Future<List<TicketEntity>> _fetchPage(int pageKey) async {
+    _currentCompleter = Completer<List<TicketEntity>>();
+
+    // Trigger the event to load reports with pagination and filter
+    context.read<ReportsBloc>().add(
+      LoadMyReportsEvent(
+        page: pageKey,
+        status: _selectedFilter == ReportFilter.all
+            ? null
+            : _selectedFilter.name,
+      ),
+    );
+
+    return _currentCompleter!.future;
+  }
+
+  void _onFilterChanged(ReportFilter newFilter) {
+    setState(() {
+      _selectedFilter = newFilter;
+    });
+    _pagingController.refresh();
   }
 
   @override
@@ -45,152 +89,209 @@ class _MyReportsPageState extends State<MyReportsPage> {
       backgroundColor: isDarkMode
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-      body: CustomScrollView(
-        slivers: [
-          CustomAppBarForMyReport(
-            totalReports: widget.totalReports,
-            monthReports: 0,
-          ),
-          // Filter Chips
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppThemeConsts.padding16md,
-                vertical: AppThemeConsts.padding16md,
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    _buildFilterChip(
-                      label: locale.allReports,
-                      filter: ReportFilter.all,
-                    ),
-                    const SizedBox(width: 12),
-                    _buildFilterChip(
-                      label: locale.closed,
-                      filter: ReportFilter.closed,
-                    ),
-                    const SizedBox(width: 12),
-                    _buildFilterChip(
-                      label: locale.inProgress,
-                      filter: ReportFilter.inProgress,
-                    ),
-                    const SizedBox(width: 12),
-                    _buildFilterChip(
-                      label: locale.open,
-                      filter: ReportFilter.open,
-                    ),
-                    const SizedBox(width: 12),
-                    _buildFilterChip(
-                      label: locale.rejected,
-                      filter: ReportFilter.rejected,
-                    ),
-                    const SizedBox(width: 12),
-                    _buildFilterChip(
-                      label: locale.resolved,
-                      filter: ReportFilter.resolved,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+      body: BlocListener<ReportsBloc, ReportsState>(
+        listener: (context, state) {
+          if (state is ReportsLoaded) {
+            final items = state.reports.tickets;
 
-          BlocBuilder<ReportsBloc, ReportsState>(
-            builder: (context, state) {
-              if (state is ReportsLoading) {
-                return const SliverToBoxAdapter(
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: LottieLoader(),
+            // Complete the future with the fetched items
+            if (_currentCompleter != null && !_currentCompleter!.isCompleted) {
+              _currentCompleter!.complete(items);
+              _currentCompleter = null;
+            }
+          } else if (state is ReportsError) {
+            // Complete the future with an error
+            if (_currentCompleter != null && !_currentCompleter!.isCompleted) {
+              _currentCompleter!.completeError(state.message);
+              _currentCompleter = null;
+            }
+          }
+        },
+        child: PagingListener<int, TicketEntity>(
+          controller: _pagingController,
+          builder: (context, state, fetchNextPage) {
+            return CustomScrollView(
+              slivers: [
+                CustomAppBarForMyReport(
+                  totalReports: widget.totalReports,
+                  monthReports: 0,
+                ),
+                // Filter Chips
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppThemeConsts.padding16md,
+                      vertical: AppThemeConsts.padding16md,
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          _buildFilterChip(
+                            label: locale.allReports,
+                            filter: ReportFilter.all,
+                          ),
+                          const SizedBox(width: 12),
+                          _buildFilterChip(
+                            label: locale.closed,
+                            filter: ReportFilter.closed,
+                          ),
+                          const SizedBox(width: 12),
+                          _buildFilterChip(
+                            label: locale.inProgress,
+                            filter: ReportFilter.inProgress,
+                          ),
+                          const SizedBox(width: 12),
+                          _buildFilterChip(
+                            label: locale.open,
+                            filter: ReportFilter.open,
+                          ),
+                          const SizedBox(width: 12),
+                          _buildFilterChip(
+                            label: locale.rejected,
+                            filter: ReportFilter.rejected,
+                          ),
+                          const SizedBox(width: 12),
+                          _buildFilterChip(
+                            label: locale.resolved,
+                            filter: ReportFilter.resolved,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                );
-              }
-              if (state is ReportsLoaded) {
-                final List<TicketEntity> filterdTickets =
-                    _selectedFilter == ReportFilter.all
-                    ? state.reports.tickets
-                    : state.reports.tickets
-                          .where(
-                            (element) => element.status == _selectedFilter.name,
-                          )
-                          .toList();
-                if (filterdTickets.isEmpty) {
-                  return SliverToBoxAdapter(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          width: 100,
-                          height: 100,
-                          AppConsts.noDataImage,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          locale.noData,
-                          style: TextStyle(
-                            color: isDarkMode
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimaryLight,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    return ReportCard(
+                ),
+
+                // Paged List
+                PagedSliverList<int, TicketEntity>(
+                  state: state,
+                  fetchNextPage: fetchNextPage,
+                  builderDelegate: PagedChildBuilderDelegate<TicketEntity>(
+                    itemBuilder: (context, item, index) => ReportCard(
                       index: index,
-                      stadiumName: filterdTickets[index].stadium.stadiumName,
+                      stadiumName: item.stadium.stadiumName,
                       onTap: () => Navigator.pushNamed(
                         context,
                         AppRoutes.reportDetails,
-                        arguments: filterdTickets[index],
+                        arguments: item,
                       ),
-                      section: filterdTickets[index].stadium.stadiumName,
-                      review: filterdTickets[index].observations,
-                      date: filterdTickets[index].createdAt
-                          .toIso8601String()
-                          .substring(0, 10),
-                      isSubmitted: ReportFilter.values.byName(
-                        filterdTickets[index].status,
-                      ),
-                      photoCount: filterdTickets[index].ticketImages.length,
-                    );
-                  }, childCount: filterdTickets.length),
-                );
-              }
-
-              return SliverToBoxAdapter(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(height: 100, width: 100, AppConsts.noDataImage),
-                    const SizedBox(height: 20),
-                    Text(
-                      locale.noData,
-                      style: TextStyle(
-                        color: isDarkMode
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimaryLight,
+                      section: item.stadium.stadiumName,
+                      review: item.observations,
+                      date: item.createdAt.toIso8601String().substring(0, 10),
+                      isSubmitted: ReportFilter.values.byName(item.status),
+                      photoCount: item.ticketImages.length,
+                    ),
+                    firstPageErrorIndicatorBuilder: (context) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.error_outline,
+                              size: 48,
+                              color: Colors.red,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              state.error?.toString() ?? locale.noData,
+                              style: TextStyle(
+                                color: isDarkMode
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () => _pagingController.refresh(),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: AppColors.whiteColor,
+                              ),
+                              child: const Text('Retry'),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
+                    noItemsFoundIndicatorBuilder: (context) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              width: 100,
+                              height: 100,
+                              AppConsts.noDataImage,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              locale.noData,
+                              style: TextStyle(
+                                color: isDarkMode
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    firstPageProgressIndicatorBuilder: (context) =>
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 20.0),
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: LottieLoader(),
+                            ),
+                          ),
+                        ),
+                    newPageProgressIndicatorBuilder: (context) => const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: LottieLoader(),
+                        ),
+                      ),
+                    ),
+                    newPageErrorIndicatorBuilder: (context) => Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Failed to load more',
+                              style: TextStyle(
+                                color: isDarkMode
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton(
+                              onPressed: () => fetchNextPage(),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: AppColors.whiteColor,
+                              ),
+                              child: const Text('Retry'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              );
-            },
-          ),
-        ],
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -203,11 +304,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
     final isSelected = _selectedFilter == filter;
 
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedFilter = filter;
-        });
-      },
+      onTap: () => _onFilterChanged(filter),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,

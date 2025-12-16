@@ -22,11 +22,17 @@ class ReportsLoading extends ReportsState {
 
 class ReportsLoaded extends ReportsState {
   final ReportsResponseEntity reports;
+  final int? currentPage;
+  final String? currentStatus;
 
-  const ReportsLoaded(this.reports);
+  const ReportsLoaded({
+    required this.reports,
+    this.currentPage,
+    this.currentStatus,
+  });
 
   @override
-  List<Object?> get props => [reports];
+  List<Object?> get props => [reports, currentPage, currentStatus];
 }
 
 class StadiumsLoaded extends ReportsState {

@@ -52,18 +52,24 @@ class ReportsRepositoryImpl implements ReportsRepository {
   }
 
   @override
-  Future<Either<Failure, ReportsResponseEntity>> getMyReports() async {
-    if (!await networkInfo.isConnected) {
+  Future<Either<Failure, ReportsResponseEntity>> getMyReports({
+    int page = 1,
+    int limit = 20,
+    String? status,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.getMyReports(
+          page: page,
+          limit: limit,
+          status: status,
+        );
+        return Right(result);
+      } catch (e) {
+        return Left(ServerFailure(e.toString()));
+      }
+    } else {
       return const Left(NetworkFailure('No internet connection'));
-    }
-
-    try {
-      final reports = await remoteDataSource.getMyReports();
-      return Right(reports);
-    } on Exception catch (e) {
-      return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
-    } catch (e) {
-      return const Left(ServerFailure('An unexpected error occurred'));
     }
   }
 

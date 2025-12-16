@@ -34,13 +34,25 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     LoadMyReportsEvent event,
     Emitter<ReportsState> emit,
   ) async {
-    emit(const ReportsLoading());
+    // Only show loading state on first page
+    if (event.page == 1) {
+      emit(const ReportsLoading());
+    }
 
-    final result = await getMyReportsUseCase();
+    final result = await getMyReportsUseCase(
+      page: event.page,
+      status: event.status,
+    );
 
     result.fold(
-      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
-      (reports) => emit(ReportsLoaded(reports)),
+      (failure) => emit(ReportsError(failure.message)),
+      (reports) => emit(
+        ReportsLoaded(
+          reports: reports,
+          currentPage: event.page,
+          currentStatus: event.status,
+        ),
+      ),
     );
   }
 
@@ -52,7 +64,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
 
     result.fold(
       (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
-      (reports) => emit(ReportsLoaded(reports)),
+      (reports) => emit(ReportsLoaded(reports: reports)),
     );
   }
 

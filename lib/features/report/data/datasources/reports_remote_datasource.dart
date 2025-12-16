@@ -8,7 +8,11 @@ import '../models/stadiums_response_model.dart';
 import '../models/ticket_model.dart';
 
 abstract class ReportsRemoteDataSource {
-  Future<ReportsResponseModel> getMyReports();
+  Future<ReportsResponseModel> getMyReports({
+      int page = 1,
+    int limit = 20,
+    String? status,
+  });
   Future<StadiumsResponseModel> getStadiums();
   Future<CountriesResponseModel> getCountries();
   Future<CitiesResponseModel> getCities();
@@ -32,10 +36,25 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
 
   ReportsRemoteDataSourceImpl(this.dio);
 
+  
+
   @override
-  Future<ReportsResponseModel> getMyReports() async {
+  Future<ReportsResponseModel> getMyReports({
+    int page = 1,
+    int limit = 20,
+    String? status,}) async {
     try {
-      final response = await dio.get(ReportEndpoints.myReports);
+
+       final queryParameters = {
+        'page': page,
+        'limit': limit,
+        if (status != null && status.isNotEmpty) 'status': status,
+      };
+
+
+      final response = await dio.get(ReportEndpoints.myReports,
+       queryParameters: queryParameters,
+      );
 
       if (response.statusCode == 200) {
         return ReportsResponseModel.fromJson(response.data);
