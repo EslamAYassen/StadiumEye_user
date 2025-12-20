@@ -11,7 +11,8 @@ class AddReportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: isDarkMode
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
@@ -59,6 +60,6 @@ class AddReportPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

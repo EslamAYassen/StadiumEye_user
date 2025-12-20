@@ -20,22 +20,25 @@ class OtpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthLoading) {
-          showDialog(
-            useSafeArea: false,
-            barrierDismissible: false,
-            context: context,
-            builder: (_) => const LoadingDialoge(),
-          );
-        }
+        // if (state is AuthLoading) {
+        //   showDialog(
+        //     useSafeArea: false,
+        //     barrierDismissible: false,
+        //     context: context,
+        //     builder: (_) => const LoadingDialoge(),
+        //   );
+        // }
         if (state is AuthVerificationSuccess) {
-          Navigator.pushReplacementNamed(context, AppRoutes.login);
+
+
           AwesomeDialog(
             context: context,
             dialogType: DialogType.success,
             animType: AnimType.rightSlide,
             title: 'Success',
             desc: state.message,
+            btnOkOnPress: () => Navigator.popAndPushNamed(context, AppRoutes.login),
+              btnOkText: "Back to Login"
           ).show();
         }
 

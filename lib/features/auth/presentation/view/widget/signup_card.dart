@@ -297,7 +297,7 @@ class _SignupCardState extends State<SignupCard> {
                             );
                             return;
                           }
-                          Navigator.pushNamed(
+                          Navigator.restorablePopAndPushNamed(
                             context,
                             AppRoutes.otp,
                             arguments: _emailController.text,
@@ -534,7 +534,16 @@ class _SignupCardState extends State<SignupCard> {
       if (selectedGender == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Please select a Gender'),
+            content: Text('Please select your Gender'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+      if (selectedDate == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please select your Birth Date'),
             backgroundColor: Colors.red,
           ),
         );

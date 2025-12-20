@@ -92,7 +92,8 @@ class HomePage extends StatelessWidget {
                 ),
               );
             } else if (state is HomeLoaded) {
-              return Scaffold(
+              return SafeArea(
+               child: Scaffold(
                 body: Stack(
                   children: [
                     BlocBuilder<SettingsCubit, SettingsState>(
@@ -144,7 +145,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
+              ));
             }
             return const Scaffold(body: Center(child: LottieLoader()));
           },
