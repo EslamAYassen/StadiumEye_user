@@ -7,6 +7,7 @@ import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../auth/presentation/bloc/auth_event.dart';
+import '../../../../settings/presentation/bloc/settings_cubit.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
@@ -21,7 +22,10 @@ class LogoutButton extends StatelessWidget {
       ),
       width: double.infinity,
       child: OutlinedButton.icon(
-        onPressed: () => context.read<AuthBloc>().add(const LogoutEvent()),
+        onPressed: () {
+          context.read<AuthBloc>().add(const LogoutEvent());
+          context.read<SettingsCubit>().resetSettings();
+        },
         icon: const Icon(Iconsax.logout_1_copy, color: AppColors.primary),
         label: Text(
           locale.logout,

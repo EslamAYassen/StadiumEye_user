@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:stadium_eye/features/settings/presentation/bloc/settings_cubit.dart';
 import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -75,8 +76,11 @@ class HeaderSection extends StatelessWidget {
                     ],
                   ),
                   InkWell(
-                    onTap: () =>
-                        context.read<AuthBloc>().add(const LogoutEvent()),
+                    onTap: () {
+                      context.read<AuthBloc>().add(const LogoutEvent());
+
+                      context.read<SettingsCubit>().resetSettings();
+                    },
                     borderRadius: BorderRadius.circular(
                       AppThemeConsts.radius12md,
                     ),

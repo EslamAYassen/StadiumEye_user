@@ -1,12 +1,14 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:pinput/pinput.dart';
 
 import '../../../../constants/app_routes.dart';
 
 import '../../../../core/widgets/loading/lottie_loading.dart';
+import '../../../../theme/app_colors.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -153,23 +155,25 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    OtpTextField(
-                      numberOfFields: 4,
-                      enabled: state is AuthForgotPasswordSuccess,
-                      borderColor: Colors.lightGreen,
 
-                      showFieldAsBox: true,
+                    _buildPinPut(context),
+                    // OtpTextField(
+                    //   numberOfFields: 4,
+                    //   enabled: state is AuthForgotPasswordSuccess,
+                    //   borderColor: Colors.lightGreen,
 
-                      // onCodeChanged: (String code) {},
-                      onSubmit: (String verificationCode) {
-                        BlocProvider.of<AuthBloc>(context).add(
-                          VerifyResetCodeEvent(
-                            email: _emailController.text,
-                            code: verificationCode,
-                          ),
-                        );
-                      },
-                    ),
+                    //   showFieldAsBox: true,
+
+                    //   // onCodeChanged: (String code) {},
+                    //   onSubmit: (String verificationCode) {
+                    //     BlocProvider.of<AuthBloc>(context).add(
+                    //       VerifyResetCodeEvent(
+                    //         email: _emailController.text,
+                    //         code: verificationCode,
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
 
                     // Password
                     buildPasswordField(
@@ -256,6 +260,43 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildPinPut(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      width: 40,
+      height: 56,
+      textStyle: const TextStyle(
+        fontSize: 20,
+        color: AppColors.gradientEnd,
+        fontWeight: FontWeight.w600,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: const Color.fromARGB(255, 38, 255, 129)),
+      borderRadius: BorderRadius.circular(8),
+    );
+
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration?.copyWith(
+        color: const Color.fromRGBO(234, 239, 243, 1),
+      ),
+    );
+    return Pinput(
+      defaultPinTheme: defaultPinTheme,
+      focusedPinTheme: focusedPinTheme,
+      submittedPinTheme: submittedPinTheme,
+      length: 4,
+      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+      showCursor: true,
+      onCompleted: (pin) => BlocProvider.of<AuthBloc>(
+        context,
+      ).add(VerifyResetCodeEvent(email: _emailController.text, code: pin)),
     );
   }
 

@@ -57,35 +57,37 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeError) {
-              return Scaffold(
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: .center,
-                    crossAxisAlignment: .center,
-                    children: [
-                      Image.asset(
-                        width: 100,
-                        height: 100,
-                        AppConsts.errorImage,
-                      ),
-                      const SizedBox(height: 20),
-                      Text(state.message),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () => context.read<HomeBloc>().add(
-                          const RefreshHomeDataEvent(),
+              return SafeArea(
+                child: Scaffold(
+                  body: Center(
+                    child: Column(
+                      mainAxisAlignment: .center,
+                      crossAxisAlignment: .center,
+                      children: [
+                        Image.asset(
+                          width: 100,
+                          height: 100,
+                          AppConsts.errorImage,
                         ),
-                        child: Text(AppLocalizations.of(context)!.retry),
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () => Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.login,
+                        const SizedBox(height: 20),
+                        Text(state.message),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () => context.read<HomeBloc>().add(
+                            const RefreshHomeDataEvent(),
+                          ),
+                          child: Text(AppLocalizations.of(context)!.retry),
                         ),
-                        child: Text(AppLocalizations.of(context)!.goToSignIn),
-                      ),
-                    ],
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () => Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.login,
+                          ),
+                          child: Text(AppLocalizations.of(context)!.goToSignIn),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

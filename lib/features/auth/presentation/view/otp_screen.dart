@@ -1,7 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
+import 'package:pinput/pinput.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 
 import '../../../../constants/app_routes.dart';
 import '../../../../core/widgets/loading/loading_dialoge.dart';
@@ -47,7 +49,7 @@ class OtpScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(30),
               decoration: BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   const BoxShadow(
@@ -57,27 +59,66 @@ class OtpScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: OtpTextField(
-                numberOfFields: 4,
-                borderColor: Colors.lightGreen,
+              child: _buildPinPut(context),
+              // OtpTextField(
+              //   numberOfFields: 4,
+              //   borderColor: Colors.lightGreen,
 
-                //set to true to show as box or false to show as dash
-                showFieldAsBox: true,
-                //runs when a code is typed in
-                onCodeChanged: (String code) {
-                  //handle validation or checks here
-                },
-                //runs when every textfield is filled
-                onSubmit: (String verificationCode) {
-                  BlocProvider.of<AuthBloc>(
-                    context,
-                  ).add(VerifyEmailEvent(email: email, code: verificationCode));
-                },
-              ),
+              //   textStyle: Theme.of(
+              //     context,
+              //   ).textTheme.bodyMedium?.copyWith(color: AppColors.gradientEnd),
+              //   fillColor: AppColors.gradientEnd,
+              //   //set to true to show as box or false to show as dash
+              //   showFieldAsBox: true,
+
+              //   //runs when every textfield is filled
+              //   onSubmit: (String verificationCode) {
+              //     BlocProvider.of<AuthBloc>(
+              //       context,
+              //     ).add(VerifyEmailEvent(email: email, code: verificationCode));
+              //   },
+              // ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildPinPut(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      width: 40,
+      height: 56,
+      textStyle: const TextStyle(
+        fontSize: 20,
+        color: AppColors.gradientEnd,
+        fontWeight: FontWeight.w600,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: const Color.fromARGB(255, 38, 255, 129)),
+      borderRadius: BorderRadius.circular(8),
+    );
+
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration?.copyWith(
+        color: const Color.fromRGBO(234, 239, 243, 1),
+      ),
+    );
+    return Pinput(
+      defaultPinTheme: defaultPinTheme,
+      focusedPinTheme: focusedPinTheme,
+      submittedPinTheme: submittedPinTheme,
+      length: 4,
+      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+      showCursor: true,
+      onCompleted: (pin) => BlocProvider.of<AuthBloc>(
+        context,
+      ).add(VerifyEmailEvent(email: email, code: pin)),
     );
   }
 }

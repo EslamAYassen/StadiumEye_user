@@ -17,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
           UserprofileRepoImpl(ProfileRemoteDsImpl()),
         ),
       ),
-      child: const Scaffold(body: ProfileScreenBody()),
+      child: const SafeArea(child: Scaffold(body: ProfileScreenBody())),
     );
   }
 }

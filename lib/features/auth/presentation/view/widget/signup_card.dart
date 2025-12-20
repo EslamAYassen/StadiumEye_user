@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
@@ -92,29 +92,6 @@ class _SignupCardState extends State<SignupCard> {
         ),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            if (state is AuthRegistrationSuccess) {
-              return Center(
-                child: OtpTextField(
-                  numberOfFields: 4,
-                  borderColor: Colors.lightGreen,
-                  //set to true to show as box or false to show as dash
-                  showFieldAsBox: true,
-                  //runs when a code is typed in
-                  onCodeChanged: (String code) {
-                    //handle validation or checks here
-                  },
-                  //runs when every textfield is filled
-                  onSubmit: (String verificationCode) {
-                    BlocProvider.of<AuthBloc>(context).add(
-                      VerifyEmailEvent(
-                        email: _emailController.text,
-                        code: verificationCode,
-                      ),
-                    );
-                  },
-                ),
-              );
-            }
             return Form(
               key: _formKey,
               child: Column(

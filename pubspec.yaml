@@ -3,7 +3,7 @@ description: "Stadium Eye project."
 
 publish_to: "none"
 
-version: 1.0.0+1
+version: 1.0.1+57
 
 environment:
   sdk: ^3.10.0
@@ -25,7 +25,7 @@ dependencies:
   flutter_localization: ^0.3.3
   flutter_localizations:
     sdk: flutter
-  flutter_otp_text_field: ^1.5.1+1
+  # flutter_otp_text_field: ^1.5.1+1
   flutter_secure_storage: ^9.2.4
   get_it: ^9.2.0
   http: ^1.6.0
@@ -41,6 +41,7 @@ dependencies:
   skeletonizer: ^2.1.1
   syncfusion_flutter_datepicker: ^31.2.18
   video_player: ^2.10.1
+  pinput: ^6.0.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
