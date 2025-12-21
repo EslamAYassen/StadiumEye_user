@@ -119,30 +119,31 @@ class RecentActivitySection extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    _RecentActivityItem(
-                      title: state.reports.tickets[0].status,
-                      subtitle:
-                          "${state.reports.tickets[0].stadium.stadiumName} - ${state.reports.tickets[0].area}",
-                      timeAgo:
-                          "${state.reports.tickets[0].createdAt.hour} hrs ago",
-                    ),
-                    if (state.reports.tickets.length > 1)
-                      _RecentActivityItem(
-                        title: state.reports.tickets[1].status,
+                    ...state.reports.tickets.asMap().entries.take(3).map((
+                      entry,
+                    ) {
+                      // final index = entry.key;
+
+                      final now = DateTime.now();
+                      String timeType = "hrs";
+                      int diffTieme = now
+                          .difference(entry.value.createdAt)
+                          .inHours;
+                      final ticket = entry.value;
+
+                      if (now.difference(ticket.createdAt).inHours >= 24) {
+                        diffTieme = now
+                            .difference(entry.value.createdAt)
+                            .inDays;
+                        timeType = "days";
+                      }
+                      return _RecentActivityItem(
+                        title: ticket.status,
                         subtitle:
-                            "${state.reports.tickets[1].stadium.stadiumName} - ${state.reports.tickets[0].area}",
-                        timeAgo:
-                            "${state.reports.tickets[1].createdAt.hour} hrs ago",
-                        // icon: Iconsax.camera,
-                      ),
-                    if (state.reports.tickets.length >= 2)
-                      _RecentActivityItem(
-                        title: state.reports.tickets[2].status,
-                        subtitle:
-                            "${state.reports.tickets[2].stadium.stadiumName} - ${state.reports.tickets[0].area}",
-                        timeAgo:
-                            "${state.reports.tickets[2].createdAt.hour} hrs ago",
-                      ),
+                            "${ticket.stadium.stadiumName} - ${ticket.area}",
+                        timeAgo: "$diffTieme $timeType ago",
+                      );
+                    }),
                   ],
                 );
               }

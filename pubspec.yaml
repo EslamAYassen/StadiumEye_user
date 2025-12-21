@@ -3,7 +3,7 @@ description: "Stadium Eye project."
 
 publish_to: "none"
 
-version: 1.0.3+61
+version: 1.0.4+62
 
 environment:
   sdk: ^3.10.0

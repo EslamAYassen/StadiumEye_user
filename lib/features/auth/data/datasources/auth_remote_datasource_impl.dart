@@ -19,7 +19,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.data['success'] == true &&
-          (response.data['token'] as String?) != null) {
+          (response.data['data']['token'] as String?) != null) {
         return UserModel.fromJson(response.data['data']);
       } else {
         throw Exception(response.data['message'] ?? 'Login failed');
