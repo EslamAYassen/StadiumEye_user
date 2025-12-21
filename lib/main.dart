@@ -15,7 +15,7 @@ import 'injection_container.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // await initDependencies();
+  await initDependencies();
   // debugPrint(await sl<SecureStorage>().read("token"));
 
   runApp(
