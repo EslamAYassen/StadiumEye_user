@@ -74,15 +74,13 @@ class _AboutUsPageState extends State<AboutUsPage>
     _startAnimations();
 
     // Initialize video
-    //TODO: remove this in prodaction
+    //TODO: change this
     _videoController =
-        "assets/videos/motion4.1.mp4".isNotEmpty
-              ? VideoPlayerController.asset("assets/videos/motion4.1.mp4")
-              : VideoPlayerController.networkUrl(
-                  Uri.parse(
-                    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-                  ),
-                )
+        VideoPlayerController.networkUrl(
+            Uri.parse(
+              'https://firebasestorage.googleapis.com/v0/b/nasa-team-28948.appspot.com/o/motion%204%20.1.mp4?alt=media',
+            ),
+          )
           ..initialize().then((_) {
             setState(() {
               _isVideoInitialized = true;

@@ -7,7 +7,6 @@ import 'package:stadium_eye/features/auth/presentation/view/widget/login_screen_
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_state.dart';
 
-//TODO: fix loading on OTP page
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 

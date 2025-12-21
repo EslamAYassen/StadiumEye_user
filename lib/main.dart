@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:stadium_eye/app.dart';
-import 'package:stadium_eye/core/storage/secure_storage.dart';
+
 import 'package:stadium_eye/features/report/presentation/bloc/report_bloc.dart';
 import 'package:stadium_eye/features/settings/data/repositories/settings_repository_impl.dart';
 
@@ -15,8 +15,8 @@ import 'injection_container.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await initDependencies();
-  debugPrint(await sl<SecureStorage>().read("token"));
+  // await initDependencies();
+  // debugPrint(await sl<SecureStorage>().read("token"));
 
   runApp(
     MultiBlocProvider(

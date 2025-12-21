@@ -6,7 +6,7 @@ import 'package:pinput/pinput.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 
 import '../../../../constants/app_routes.dart';
-import '../../../../core/widgets/loading/loading_dialoge.dart';
+
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -29,16 +29,15 @@ class OtpScreen extends StatelessWidget {
         //   );
         // }
         if (state is AuthVerificationSuccess) {
-
-
           AwesomeDialog(
             context: context,
             dialogType: DialogType.success,
             animType: AnimType.rightSlide,
             title: 'Success',
             desc: state.message,
-            btnOkOnPress: () => Navigator.popAndPushNamed(context, AppRoutes.login),
-              btnOkText: "Back to Login"
+            btnOkOnPress: () =>
+                Navigator.popAndPushNamed(context, AppRoutes.login),
+            btnOkText: "Back to Login",
           ).show();
         }
 
