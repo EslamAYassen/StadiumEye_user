@@ -11,13 +11,16 @@ import 'features/auth/presentation/bloc/auth_event.dart';
 
 import 'features/settings/presentation/bloc/settings_cubit.dart';
 import 'injection_container.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+//new add
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initDependencies();
   // debugPrint(await sl<SecureStorage>().read("token"));
-
+  await dotenv.load(fileName: ".env");
+//new add
   runApp(
     MultiBlocProvider(
       providers: [
