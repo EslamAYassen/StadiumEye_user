@@ -146,6 +146,24 @@ class QuickActionsSection extends StatelessWidget {
                     ? AppColors.cardDark
                     : AppColors.whiteColor,
               ),
+              const SizedBox(height: 15),
+              _ActionButton(
+                textColor: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+                onTap: () => Navigator.pushNamed(context, AppRoutes.matches),
+                icon: Icons.stadium_rounded,
+                title: "Matches",
+                subtitle: "View Todays matches",
+                iconColor: AppColors.primary,
+                fontWeight: FontWeight.w400,
+                gradientColors: isDarkMode
+                    ? [AppColors.cardElevatedDark]
+                    : [AppColors.lightGreen],
+                iconBackgroundColor: isDarkMode
+                    ? AppColors.cardDark
+                    : AppColors.whiteColor,
+              ),
             ],
           ),
         ),
