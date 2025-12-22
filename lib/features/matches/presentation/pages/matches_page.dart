@@ -18,11 +18,9 @@ class MatchesPage extends StatelessWidget {
             ? AppColors.darkGray
             : AppColors.backgroundLight,
         body: SingleChildScrollView(
-          // padding: const EdgeInsets.all(AppThemeConsts.padding16md),
           child: Column(
             children: [
               AppbarHeader(isDarkMode: isDarkMode, title: "المباريات"),
-
               _buildDateSection(context, isDarkMode),
               const SizedBox(height: AppThemeConsts.padding16md),
               ..._getDummyMatches().map(
@@ -489,10 +487,3 @@ class MatchesPage extends StatelessWidget {
     ];
   }
 }
-
-
-// lib/theme/app_colors.dart - Add these colors to your existing AppColors class
-// static const Color darkGray = Color(0xFF111827); // Already exists
-// static const Color primary = Color(0xFF0A7F3F); // Already exists
-// static const Color lightGreen = Color(0xFFDFF3E8); // Already exists
-// static const Color backgroundColor = Color(0xFFf9fafb); // Already exists
