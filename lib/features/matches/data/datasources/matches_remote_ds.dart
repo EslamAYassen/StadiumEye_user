@@ -1,19 +1,61 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../domain/entities/matches_res.dart';
+import '../models/matches_model.dart';
 
 abstract class MatchesRemoteDataSource {
-  Future<ParantMatchesRes> getMatches();
+  Future<ParantMatchesRes> getMatches({
+    String? date,
+    String? league,
+    String? season,
+    String? team,
+  });
 }
 
 class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
+  Dio dio;
+  MatchesRemoteDataSourceImpl(this.dio);
+
   @override
-  Future<ParantMatchesRes> getMatches() {
-    //TODO: implement actual API call
-    return Future.value(ParantMatchesRes(errors: [], results: 0, response: []));
+  Future<MatchResponseModel> getMatches({
+    String? date,
+    String? league,
+    String? season,
+    String? team,
+  }) async {
+    try {
+      final apiKey = dotenv.env['API_KEY'] ?? '';
+      final baseUrl = "https://v3.football.api-sports.io";
+
+      if (apiKey.isEmpty || baseUrl.isEmpty) {
+        throw Exception('API_KEY not found in .env file');
+      }
+
+      final Map<String, dynamic> queryParameters = {};
+      if (date != null) queryParameters['date'] = date;
+      if (league != null) queryParameters['league'] = league;
+      if (season != null) queryParameters['season'] = season;
+      if (team != null) queryParameters['team'] = team;
+
+      final response = await dio.get(
+        '$baseUrl/fixtures',
+        queryParameters: queryParameters,
+        options: Options(headers: {'x-rapidapi-key': apiKey}),
+      );
+
+      if (response.statusCode == 200) {
+        return MatchResponseModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load matches: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    } catch (e) {
+      throw Exception('Unexpected Error: $e');
+    }
   }
 
-  // ignore: unused_element
   Exception _handleDioError(DioException e) {
     if (e.response != null) {
       final message = e.response?.data['message'] ?? 'An error occurred';

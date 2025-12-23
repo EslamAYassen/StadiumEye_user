@@ -82,6 +82,7 @@ flutter:
     # - assets/images/
     - assets/videos/
     - assets/lottie/RollingFootbll.json
+    - .env
   fonts:
     - family: cairo
       fonts:

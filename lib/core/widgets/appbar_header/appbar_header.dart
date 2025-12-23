@@ -8,10 +8,11 @@ class AppbarHeader extends StatelessWidget {
     super.key,
     required this.isDarkMode,
     required this.title,
+    this.widget,
   });
   final bool isDarkMode;
   final String title;
-
+  final Widget? widget;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,7 +67,8 @@ class AppbarHeader extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 48),
+            // const SizedBox(width: 48),
+            widget ?? const SizedBox.shrink(),
           ],
         ),
       ),

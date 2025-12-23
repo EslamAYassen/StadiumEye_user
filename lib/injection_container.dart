@@ -8,6 +8,7 @@ import 'core/networking/network_info.dart';
 import 'core/storage/secure_storage.dart';
 import 'features/auth/auth_injection.dart';
 import 'features/home/home_injection.dart';
+import 'features/matches/matches_injection.dart';
 import 'features/report/reports_injection.dart';
 
 final sl = GetIt.instance;
@@ -37,4 +38,7 @@ Future<void> initDependencies() async {
 
   // Initialize Reports feature
   await initReportsDependencies();
+
+  // Initialize Matches feature
+  await initMatchesDependencies();
 }

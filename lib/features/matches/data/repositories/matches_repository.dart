@@ -10,17 +10,26 @@ class MatchesRepository {
 
   MatchesRepository({
     required this.remoteDataSource,
-    required this.networkInfo});
+    required this.networkInfo,
+  });
 
-
-  @override
-  Future<Either<Failure,ParantMatchesRes>> getMatches() async{
+  Future<Either<Failure, ParantMatchesRes>> getMatches({
+    String? date,
+    String? league,
+    String? season,
+    String? team,
+  }) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure('No internet connection'));
     }
 
     try {
-      final matches = await remoteDataSource.getMatches();
+      final matches = await remoteDataSource.getMatches(
+        date: date,
+        league: league,
+        season: season,
+        team: team,
+      );
       return Right(matches);
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
@@ -28,7 +37,4 @@ class MatchesRepository {
       return const Left(ServerFailure('An unexpected error occurred'));
     }
   }
-
-
 }
-
