@@ -9,7 +9,7 @@ import '../models/ticket_model.dart';
 
 abstract class ReportsRemoteDataSource {
   Future<ReportsResponseModel> getMyReports({
-      int page = 1,
+    int page = 1,
     int limit = 20,
     String? status,
   });
@@ -36,24 +36,22 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
 
   ReportsRemoteDataSourceImpl(this.dio);
 
-  
-
   @override
   Future<ReportsResponseModel> getMyReports({
     int page = 1,
     int limit = 20,
-    String? status,}) async {
+    String? status,
+  }) async {
     try {
-
-       final queryParameters = {
+      final queryParameters = {
         'page': page,
         'limit': limit,
         if (status != null && status.isNotEmpty) 'status': status,
       };
 
-
-      final response = await dio.get(ReportEndpoints.myReports,
-       queryParameters: queryParameters,
+      final response = await dio.get(
+        ReportEndpoints.myReports,
+        queryParameters: queryParameters,
       );
 
       if (response.statusCode == 200) {

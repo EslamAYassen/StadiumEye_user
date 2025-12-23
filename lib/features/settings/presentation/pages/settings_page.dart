@@ -8,6 +8,7 @@ import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 import 'package:stadium_eye/utils/language.dart';
 
+import '../../../../core/widgets/appbar_header/appbar_header.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -34,66 +35,7 @@ class SettingsView extends StatelessWidget {
         child: Column(
           children: [
             // Header with gradient background
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: isDarkMode
-                      ? [AppColors.primaryDark, AppColors.primary]
-                      : [AppColors.primary, AppColors.gradientStart],
-                ),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(AppThemeConsts.radius24xl),
-                  bottomRight: Radius.circular(AppThemeConsts.radius24xl),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppThemeConsts.padding16md,
-                  AppThemeConsts.padding16md,
-                  AppThemeConsts.padding16md,
-                  40,
-                ),
-                child: Row(
-                  children: [
-                    // Back button
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withAlpha((0.2 * 255).toInt()),
-                        borderRadius: BorderRadius.circular(
-                          AppThemeConsts.radius16lg,
-                        ),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: AppColors.whiteColor,
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          locale.settings,
-                          style: const TextStyle(
-                            color: AppColors.whiteColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 48),
-                  ],
-                ),
-              ),
-            ),
-
+            AppbarHeader(isDarkMode: isDarkMode, title: locale.settings),
             // Settings content
             Expanded(
               child: BlocBuilder<SettingsCubit, SettingsState>(

@@ -168,6 +168,20 @@
   "receiveUpdates": "Receive updates and alerts",
   "notificationsDisabled": "Notifications disabled",
   "unknownState": "Unknown state",
-  "selectLanguage": "Select Language"
+  "selectLanguage": "Select Language",
+
+  "matches": "Matches",
+  "matche": "Match",
+  "show": "Show",
+  "filterMatches": "Filter Matches",
+  "league": "League",
+  "season": "Season",
+  "all": "All",
+  "chooseLeague": "Choose League",
+  "chooseCountry": "Choose Country",
+  "chooseStatus": "Choose Status",
+  "reset": "Reset",
+  "apply": "Apply",
+  "unknownVenue": "Unknown Venue"
 
 }

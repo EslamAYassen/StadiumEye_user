@@ -484,6 +484,7 @@ class _ReportFormState extends State<ReportForm> {
           icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
           items: _countries.map((country) {
             return DropdownMenuItem(
+              //TODO: change this to work with CustomDropdown
               value: country.id,
               child: Row(
                 children: [

@@ -514,4 +514,43 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Select Language';
+
+  @override
+  String get matches => 'المباريات';
+
+  @override
+  String get matche => 'مباراة';
+
+  @override
+  String get show => 'عرض';
+
+  @override
+  String get filterMatches => 'تصفية المباريات';
+
+  @override
+  String get league => 'الدوري';
+
+  @override
+  String get season => 'الموسم';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get chooseLeague => 'اختر الدوري';
+
+  @override
+  String get chooseCountry => 'اختر الدولة';
+
+  @override
+  String get chooseStatus => 'اختر الحالة';
+
+  @override
+  String get reset => 'إعادة تعيين';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String get unknownVenue => 'مكان غير معروف';
 }

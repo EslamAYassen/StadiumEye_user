@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../features/auth/presentation/view/login_screen.dart';
 import '../features/auth/presentation/view/otp_screen.dart';
 import '../features/auth/presentation/view/signup_screen.dart';
+import '../features/matches/presentation/pages/matches_page.dart';
 import '../features/profile/presentation/views/profile_screen.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/report/domain/entities/ticket_entity.dart';
@@ -29,6 +30,7 @@ abstract class AppRoutes {
   static const String profile = '/profile';
   static const String settingsPage = '/settings';
   static const String about = '/about';
+  static const String matches = '/matches';
   static const String help = '/help';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -64,6 +66,8 @@ abstract class AppRoutes {
         return MaterialPageRoute(builder: (_) => const AboutUsPage());
       case settingsPage:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
+      case matches:
+        return MaterialPageRoute(builder: (_) => const MatchesPage());
       default:
         return MaterialPageRoute(builder: (_) => const Placeholder());
     }
