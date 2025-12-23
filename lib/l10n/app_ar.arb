@@ -30,7 +30,7 @@
    "myProfile":"ملفي الشخصي",
    "error":"خطأ",
    "closed":"مغلق",  
-   "In Progress":"قيد المراجعه",  
+   "InProgress":"قيد المراجعه",  
    "open": "مفتوح",
    "rejected":"مرفوض",
    "camera":"الكاميرة",
@@ -169,6 +169,23 @@
    "pushNotifications": "الإشعارات الفورية",
    "receiveUpdates": "استلام التحديثات والتنبيهات",
    "notificationsDisabled": "تم تعطيل الإشعارات",
-   "unknownState": "حالة غير معروفة"
+   "unknownState": "حالة غير معروفة",
+
+
+   "matches":"المباريات",
+   "matche": "مباراة",
+   "show": "عرض",
+   "filterMatches":"تصفية المباريات",
+   "league":"الدوري",
+   "season":"الموسم",
+   "all":"الكل",
+   "chooseLeague":"اختر الدوري",
+   "chooseCountry":"اختر الدولة",
+   "chooseStatus":"اختر الحالة",
+   "reset":"إعادة تعيين",
+   "apply":"تطبيق",
+   "unknownVenue":"مكان غير معروف"
+
+    
 
  }

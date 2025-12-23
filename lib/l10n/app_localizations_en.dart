@@ -514,4 +514,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Select Language';
+
+  @override
+  String get matches => 'Matches';
+
+  @override
+  String get matche => 'Match';
+
+  @override
+  String get show => 'Show';
+
+  @override
+  String get filterMatches => 'Filter Matches';
+
+  @override
+  String get league => 'League';
+
+  @override
+  String get season => 'Season';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get chooseLeague => 'Choose League';
+
+  @override
+  String get chooseCountry => 'Choose Country';
+
+  @override
+  String get chooseStatus => 'Choose Status';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get unknownVenue => 'Unknown Venue';
 }

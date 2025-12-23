@@ -1108,6 +1108,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Language'**
   String get selectLanguage;
+
+  /// No description provided for @matches.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches'**
+  String get matches;
+
+  /// No description provided for @matche.
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get matche;
+
+  /// No description provided for @show.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get show;
+
+  /// No description provided for @filterMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Matches'**
+  String get filterMatches;
+
+  /// No description provided for @league.
+  ///
+  /// In en, this message translates to:
+  /// **'League'**
+  String get league;
+
+  /// No description provided for @season.
+  ///
+  /// In en, this message translates to:
+  /// **'Season'**
+  String get season;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @chooseLeague.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose League'**
+  String get chooseLeague;
+
+  /// No description provided for @chooseCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Country'**
+  String get chooseCountry;
+
+  /// No description provided for @chooseStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Status'**
+  String get chooseStatus;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @unknownVenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Venue'**
+  String get unknownVenue;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -23,7 +23,7 @@ class MatchesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final locale = AppLocalizations.of(context)!;
     return SafeArea(
       child: Scaffold(
         backgroundColor: isDarkMode
@@ -32,16 +32,22 @@ class MatchesPage extends StatelessWidget {
         body: BlocBuilder<MatchesCubit, MatchesState>(
           builder: (context, state) {
             if (state is MatchesLoading) {
-              return _buildLoadingState(isDarkMode);
+              return _buildLoadingState(isDarkMode, locale);
             } else if (state is MatchesLoaded) {
-              return _buildLoadedState(context, isDarkMode, state);
+              return _buildLoadedState(context, isDarkMode, state, locale);
             } else if (state is MatchesError) {
-              return _buildErrorState(context, isDarkMode, state.message);
+              return _buildErrorState(
+                context,
+                isDarkMode,
+                state.message,
+                locale,
+              );
             }
             return _buildErrorState(
               context,
               isDarkMode,
-              "An unexpected error occurred",
+              locale.unknownState,
+              locale,
             );
           },
         ),
@@ -49,10 +55,10 @@ class MatchesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingState(bool isDarkMode) {
+  Widget _buildLoadingState(bool isDarkMode, AppLocalizations locale) {
     return Column(
       children: [
-        AppbarHeader(isDarkMode: isDarkMode, title: "المباريات"),
+        AppbarHeader(isDarkMode: isDarkMode, title: locale.matches),
         const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,6 +76,7 @@ class MatchesPage extends StatelessWidget {
     BuildContext context,
     bool isDarkMode,
     MatchesLoaded state,
+    AppLocalizations locale,
   ) {
     return SingleChildScrollView(
       child: Column(
@@ -78,7 +85,7 @@ class MatchesPage extends StatelessWidget {
         children: [
           AppbarHeader(
             isDarkMode: isDarkMode,
-            title: "المباريات",
+            title: locale.matches,
             widget: Container(
               width: 48,
               height: 48,
@@ -108,7 +115,7 @@ class MatchesPage extends StatelessWidget {
               vertical: AppThemeConsts.padding8xs,
             ),
             child: Text(
-              'عرض ${state.filteredMatches.length} مباراة',
+              '${locale.show} ${state.filteredMatches.length} ${locale.matche}',
               style: TextStyle(
                 color: isDarkMode
                     ? AppColors.whiteColor.withAlpha((0.7 * 255) ~/ 1)
@@ -154,6 +161,7 @@ class MatchesPage extends StatelessWidget {
           constraints: const BoxConstraints(maxHeight: 600),
           child: StatefulBuilder(
             builder: (context, setDialogState) {
+              final locale = AppLocalizations.of(context)!;
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -170,9 +178,9 @@ class MatchesPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'تصفية المباريات',
-                          style: TextStyle(
+                        Text(
+                          locale.filterMatches,
+                          style: const TextStyle(
                             color: AppColors.whiteColor,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -201,9 +209,9 @@ class MatchesPage extends StatelessWidget {
                           // League Filter
                           CustomDropdown(
                             value: selectedLeague,
-                            title: 'الدوري',
+                            title: locale.league,
                             items: ['All', ...state.availableLeagues],
-                            initText: 'اختر الدوري',
+                            initText: locale.chooseLeague,
                             onChanged: (value) {
                               setDialogState(() {
                                 selectedLeague = value;
@@ -217,9 +225,9 @@ class MatchesPage extends StatelessWidget {
                           // Country Filter
                           CustomDropdown(
                             value: selectedCountry,
-                            title: 'الدولة',
+                            title: locale.country,
                             items: ['All', ...state.availableCountries],
-                            initText: 'اختر الدولة',
+                            initText: locale.chooseCountry,
                             onChanged: (value) {
                               // setDialogState(() {
                               setDialogState(() {
@@ -235,14 +243,14 @@ class MatchesPage extends StatelessWidget {
                           // Status Filter
                           CustomDropdown(
                             value: selectedStatus,
-                            title: 'الحالة',
+                            title: locale.status,
                             items: availableStatuses,
-                            initText: 'اختر الحالة',
+                            initText: locale.chooseStatus,
                             onChanged: (value) {
                               // setDialogState(() {
                               setDialogState(() {
                                 selectedStatus = value;
-                                print('Selected Status: $selectedStatus');
+                                // print('Selected Status: $selectedStatus');
                               });
                               // });
                             },
@@ -283,9 +291,9 @@ class MatchesPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            child: const Text(
-                              'إعادة تعيين',
-                              style: TextStyle(
+                            child: Text(
+                              locale.reset,
+                              style: const TextStyle(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -298,9 +306,6 @@ class MatchesPage extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              debugPrint(
-                                'Applied Filters - League: $selectedLeague, Country: $selectedCountry, Status: $selectedStatus',
-                              );
                               context.read<MatchesCubit>().updateFilters(
                                 league: selectedLeague,
                                 country: selectedCountry,
@@ -318,9 +323,9 @@ class MatchesPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            child: const Text(
-                              'تطبيق',
-                              style: TextStyle(
+                            child: Text(
+                              locale.apply,
+                              style: const TextStyle(
                                 color: AppColors.whiteColor,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -404,6 +409,7 @@ class MatchesPage extends StatelessWidget {
     BuildContext context,
     bool isDarkMode,
     String message,
+    AppLocalizations locale,
   ) {
     return Center(
       child: Column(
@@ -412,7 +418,7 @@ class MatchesPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AppbarHeader(isDarkMode: isDarkMode, title: "المباريات"),
+              AppbarHeader(isDarkMode: isDarkMode, title: locale.matches),
             ],
           ),
           Image.asset(width: 100, height: 100, AppConsts.errorImage),
