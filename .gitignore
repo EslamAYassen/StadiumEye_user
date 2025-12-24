@@ -26,6 +26,7 @@ android/app/upload-keystore.jks
 .vscode/
 .env
 
+
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
