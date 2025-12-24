@@ -68,7 +68,7 @@ class AppbarHeader extends StatelessWidget {
               ),
             ),
             // const SizedBox(width: 48),
-            widget ?? const SizedBox.shrink(),
+            widget ?? const SizedBox(width: 48),
           ],
         ),
       ),

@@ -212,8 +212,8 @@ class _StatCardState extends State<StatCard>
     });
   }
 
-  void _onTapDown(TapDownDetails d) => _controller.reverse();
-  void _onTapUp(TapUpDetails d) => _controller.forward();
+  // void _onTapDown(TapDownDetails d) => _controller.reverse();
+  // void _onTapUp(TapUpDetails d) => _controller.forward();
 
   @override
   Widget build(BuildContext context) {
@@ -223,33 +223,29 @@ class _StatCardState extends State<StatCard>
         position: _slide,
         child: ScaleTransition(
           scale: _scale,
-          child: GestureDetector(
-            onTapDown: _onTapDown,
-            onTapUp: _onTapUp,
-            child: Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.white12,
-                borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-              ),
-              child: Column(
-                children: [
-                  Icon(widget.icon, color: AppColors.whiteColor, size: 26),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.title,
-                    style: const TextStyle(color: Colors.white70, fontSize: 12),
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Colors.white12,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
+            ),
+            child: Column(
+              children: [
+                Icon(widget.icon, color: AppColors.whiteColor, size: 26),
+                const SizedBox(height: 8),
+                Text(
+                  widget.title,
+                  style: const TextStyle(color: Colors.white70, fontSize: 12),
+                ),
+                Text(
+                  widget.value,
+                  style: const TextStyle(
+                    color: AppColors.whiteColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    widget.value,
-                    style: const TextStyle(
-                      color: AppColors.whiteColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

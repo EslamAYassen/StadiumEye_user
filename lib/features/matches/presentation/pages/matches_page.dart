@@ -17,8 +17,32 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/matches_res.dart';
 import '../cubit/matches_state.dart';
 
-class MatchesPage extends StatelessWidget {
+class MatchesPage extends StatefulWidget {
   const MatchesPage({super.key});
+
+  @override
+  State<MatchesPage> createState() => _MatchesPageState();
+}
+
+class _MatchesPageState extends State<MatchesPage>
+    with TickerProviderStateMixin {
+  late Animation<Offset> _slide;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 450),
+      vsync: this,
+    );
+
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.2),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -440,53 +464,57 @@ class MatchesPage extends StatelessWidget {
     BuildContext context,
     Response match,
     bool isDarkMode,
+    // Animation<Offset> slide,
   ) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: AppThemeConsts.padding12sm),
-      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
-      decoration: BoxDecoration(
-        color: isDarkMode
-            ? AppColors.darkGray.withAlpha((0.5 * 255) ~/ 1)
-            : AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-        border: Border.all(
+    return SlideTransition(
+      position: _slide,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: AppThemeConsts.padding12sm),
+        padding: const EdgeInsets.all(AppThemeConsts.padding16md),
+        decoration: BoxDecoration(
           color: isDarkMode
-              ? AppColors.lightGray.withAlpha((0.1 * 255) ~/ 1)
-              : AppColors.lightGray,
+              ? AppColors.darkGray.withAlpha((0.5 * 255) ~/ 1)
+              : AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+          border: Border.all(
+            color: isDarkMode
+                ? AppColors.lightGray.withAlpha((0.1 * 255) ~/ 1)
+                : AppColors.lightGray,
+          ),
+          boxShadow: isDarkMode
+              ? []
+              : [
+                  BoxShadow(
+                    color: AppColors.blackColor.withAlpha((0.05 * 255) ~/ 1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
         ),
-        boxShadow: isDarkMode
-            ? []
-            : [
-                BoxShadow(
-                  color: AppColors.blackColor.withAlpha((0.05 * 255) ~/ 1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTeam(
+                  match.teams.home.name ?? '',
+                  match.teams.home.logo ?? '',
+                  true,
+                  isDarkMode,
+                ),
+                _buildMatchScore(match, isDarkMode),
+                _buildTeam(
+                  match.teams.away.name ?? '',
+                  match.teams.away.logo ?? '',
+                  false,
+                  isDarkMode,
                 ),
               ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildTeam(
-                match.teams.home.name ?? '',
-                match.teams.home.logo ?? '',
-                true,
-                isDarkMode,
-              ),
-              _buildMatchScore(match, isDarkMode),
-              _buildTeam(
-                match.teams.away.name ?? '',
-                match.teams.away.logo ?? '',
-                false,
-                isDarkMode,
-              ),
-            ],
-          ),
-          const SizedBox(height: AppThemeConsts.padding12sm),
-          _buildMatchInfo(match, isDarkMode),
-        ],
+            ),
+            const SizedBox(height: AppThemeConsts.padding12sm),
+            _buildMatchInfo(match, isDarkMode),
+          ],
+        ),
       ),
     );
   }
@@ -546,11 +574,8 @@ class MatchesPage extends StatelessWidget {
   Widget _buildMatchScore(Response match, bool isDarkMode) {
     final status = match.fixture.status.short;
     final isLive =
-        status.toString() == 'HT' ||
-        status.toString() == '1H' ||
-        status.toString() == '2H';
-    final bool isNotStarted =
-        status.toString() == 'NS' || status.toString() == 'TBD';
+        status?.name == 'HT' || status?.name == '1H' || status?.name == '2H';
+    final bool isNotStarted = status?.name == 'NS' || status?.name == 'TBD';
 
     return Container(
       padding: const EdgeInsets.symmetric(
