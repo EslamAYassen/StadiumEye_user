@@ -45,8 +45,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'dateOfBirth': params.dateOfBirth,
           'password': params.password,
           'confirmPassword': params.confirmPassword,
-          'city': params.city,
-          'country': params.country,
+          // 'city': params.city,
+          // 'country': params.country,
         },
       );
 

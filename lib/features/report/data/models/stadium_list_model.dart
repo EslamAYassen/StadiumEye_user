@@ -14,11 +14,11 @@ class StadiumListModel extends StadiumListEntity {
   factory StadiumListModel.fromJson(Map<String, dynamic> json) {
     return StadiumListModel(
       id: json['_id'] as String,
-      stadiumName: json['stadiumName'] as String,
+      stadiumName: json['stadiumName'] as String? ?? 'Unknown Stadiuma',
       //TODO: change this when u can
-      cityId: json['city']["_id"] as String,
+      cityId: json['city']["_id"] as String? ?? '',
       stadiumImages: (json['stadiumImages'] as List?)?.cast<String>() ?? [],
-      capacity: json['capacity'] as int,
+      capacity: json['capacity'] as int? ?? 0,
       locationLink: json['locationLink'] as String? ?? '',
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
