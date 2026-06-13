@@ -553,4 +553,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unknownVenue => 'مكان غير معروف';
+
+  @override
+  String get modeChanger => 'تحليل بالذكاء الاصطناعي ؟';
 }

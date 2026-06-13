@@ -1186,6 +1186,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown Venue'**
   String get unknownVenue;
+
+  /// No description provided for @modeChanger.
+  ///
+  /// In en, this message translates to:
+  /// **'Artificial intelligence analysis ?'**
+  String get modeChanger;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

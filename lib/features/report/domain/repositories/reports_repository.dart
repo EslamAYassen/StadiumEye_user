@@ -28,5 +28,6 @@ abstract class ReportsRepository {
     List<String>? ticketVideosPaths,
     List<String>? ticketImagesPaths,
     List<String>? ticketVoicesPaths,
+    required bool mode,
   });
 }

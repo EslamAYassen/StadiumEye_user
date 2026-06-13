@@ -553,4 +553,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unknownVenue => 'Unknown Venue';
+
+  @override
+  String get modeChanger => 'Artificial intelligence analysis ?';
 }

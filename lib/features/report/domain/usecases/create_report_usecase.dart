@@ -12,6 +12,7 @@ class CreateReportParams {
   final String lessonsLearned;
   final String? modelType;
   final String? locationLink;
+  final bool mode;
   final List<String>? ticketVideosPaths;
   final List<String>? ticketImagesPaths;
   final List<String>? ticketVoicesPaths;
@@ -23,6 +24,7 @@ class CreateReportParams {
     required this.observations,
     required this.challenges,
     required this.lessonsLearned,
+    required this.mode,
     this.modelType,
     this.locationLink,
     this.ticketVideosPaths,
@@ -49,6 +51,7 @@ class CreateReportUseCase {
       ticketVideosPaths: params.ticketVideosPaths,
       ticketImagesPaths: params.ticketImagesPaths,
       ticketVoicesPaths: params.ticketVoicesPaths,
+      mode: params.mode,
     );
   }
 }

@@ -182,6 +182,6 @@
   "chooseStatus": "Choose Status",
   "reset": "Reset",
   "apply": "Apply",
-  "unknownVenue": "Unknown Venue"
-
+  "unknownVenue": "Unknown Venue",
+  "modeChanger": "Artificial intelligence analysis ?"
 }

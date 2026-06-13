@@ -37,6 +37,7 @@ class _ReportFormState extends State<ReportForm> {
   String? selectedArea;
   String? selectedTicketType;
   String? selectedModelType;
+  bool selectedMode = false; 
 
   // Stored data to prevent loss on state changes
   List<CountryEntity> _countries = [];
@@ -152,7 +153,7 @@ class _ReportFormState extends State<ReportForm> {
             lessonsLearned: _lessonsCtrl.text.trim(),
             ticketImagesPaths: _imagePaths.isNotEmpty ? _imagePaths : null,
             ticketVideosPaths: _videoPaths.isNotEmpty ? _videoPaths : null,
-            ticketVoicesPaths: _voicePaths.isNotEmpty ? _voicePaths : null,
+            ticketVoicesPaths: _voicePaths.isNotEmpty ? _voicePaths : null, mode: selectedMode,
           ),
         ),
       );
@@ -409,7 +410,18 @@ class _ReportFormState extends State<ReportForm> {
                 maxLines: 4,
               ),
               const SizedBox(height: 26),
-
+              //! mode changer
+              _buildLabel(locale.modeChanger),
+               Switch(
+                              value: selectedMode,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedMode = value;
+                                });
+                              },
+                              activeThumbColor: AppColors.primary,
+                            ),
+              if(selectedMode == true)
               MediaSection(
                 onImagesChanged: (paths) {
                   setState(() {
