@@ -35,6 +35,7 @@ android/app/upload-keystore.jks
 /build/
 /coverage/
 
+
 # Symbolication related
 app.*.symbols
 
