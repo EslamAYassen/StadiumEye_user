@@ -62,6 +62,9 @@ class _ReportFormState extends State<ReportForm> {
   @override
   void initState() {
     super.initState();
+    if(selectedMode == true){
+      selectedModelType = null;
+    }
 
     context.read<ReportsBloc>().add(const LoadCountriesEvent());
     // Add listeners to text controllers
@@ -131,7 +134,7 @@ class _ReportFormState extends State<ReportForm> {
         );
         return;
       }
-      if (selectedModelType == null) {
+      if (selectedModelType == null && selectedMode == true) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Please select a model type'),
@@ -147,7 +150,7 @@ class _ReportFormState extends State<ReportForm> {
             stadiumId: selectedStadiumId ?? '',
             area: selectedArea ?? '',
             ticketType: selectedTicketType ?? '',
-            modelType: selectedModelType ?? '',
+            modelType: selectedModelType ,
             observations: _observationsCtrl.text.trim(),
             challenges: _challengesCtrl.text.trim(),
             lessonsLearned: _lessonsCtrl.text.trim(),
@@ -365,10 +368,13 @@ class _ReportFormState extends State<ReportForm> {
               const SizedBox(height: 26),
 
               //! Model Type Dropdown
-              _buildLabel(locale.modelType),
+              if(selectedMode == true)...[
+                   _buildLabel(locale.modelType),
               const SizedBox(height: 8),
               _buildModelTypeDropdown(),
               const SizedBox(height: 26),
+              ],
+           
 
               //! Observations
               _buildLabel(locale.observations),
