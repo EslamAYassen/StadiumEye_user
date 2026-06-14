@@ -44,8 +44,11 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
         options: Options(headers: {'x-rapidapi-key': apiKey}),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.data['errors'].isEmpty) {
         return MatchResponseModel.fromJson(response.data);
+      } else if (response.statusCode == 200 &&
+          response.data['errors'].isNotEmpty) {
+        throw Exception('API Error: ${response.data['errors'][0]}');
       } else {
         throw Exception('Failed to load matches: ${response.statusCode}');
       }

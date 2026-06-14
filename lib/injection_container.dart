@@ -20,7 +20,16 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton(() => SecureStorage());
 
   // Internet Connection Checker
-  sl.registerLazySingleton(() => InternetConnection());
+  sl.registerLazySingleton(
+    () => InternetConnection.createInstance(
+      customCheckOptions: [
+        InternetCheckOption(
+          uri: Uri.parse("google.com"),
+          timeout: const Duration(seconds: 10),
+        ),
+      ],
+    ),
+  );
 
   // Network Info
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
