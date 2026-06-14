@@ -184,7 +184,8 @@
    "chooseStatus":"اختر الحالة",
    "reset":"إعادة تعيين",
    "apply":"تطبيق",
-   "unknownVenue":"مكان غير معروف"
+   "unknownVenue":"مكان غير معروف",
+   "modeChanger": "تحليل بالذكاء الاصطناعي ؟"
 
     
 

@@ -1,5 +1,5 @@
 class Endpoints {
-  static const baseUrl = "http://168.231.125.210:3030/api/v1";
+  static const baseUrl = "http://91.108.112.27:3030/api/v1";
 }
 
 class AuthEndpoints extends Endpoints {
