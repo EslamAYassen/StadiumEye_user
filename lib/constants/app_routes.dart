@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../features/auth/presentation/view/login_screen.dart';
 import '../features/auth/presentation/view/otp_screen.dart';
 import '../features/auth/presentation/view/signup_screen.dart';
 import '../features/matches/presentation/pages/matches_page.dart';
+import '../features/profile/data/datasources/profile_remote_ds_impl.dart';
+import '../features/profile/data/repositories/userprofile_repo_impl.dart';
+import '../features/profile/domain/usecases/get_userprofile.dart';
+import '../features/profile/presentation/bloc/userprofile_bloc.dart';
 import '../features/profile/presentation/views/profile_screen.dart';
 import '../features/home/presentation/pages/home_page.dart';
 import '../features/report/domain/entities/ticket_entity.dart';
@@ -61,7 +66,18 @@ abstract class AppRoutes {
         final data = settings.arguments as TicketEntity;
         return MaterialPageRoute(builder: (_) => ReportPage(data: data));
       case profile:
-        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+        return MaterialPageRoute(
+ 
+          builder: (_) => BlocProvider(
+ //TODO: change this shit
+            create: (context) => UserprofileBloc(
+        getMyUserProfile: GetUserProfileUseCase(
+          UserprofileRepoImpl(ProfileRemoteDsImpl()),
+        ),
+      ),
+            child: const ProfileScreenBody(),
+          ),
+        );
       case about:
         return MaterialPageRoute(builder: (_) => const AboutUsPage());
       case settingsPage:
