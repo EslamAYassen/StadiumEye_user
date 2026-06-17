@@ -6,11 +6,11 @@ class TicketEntity {
   final CreatorEntity? createdBy;
   final StadiumEntity stadium;
   final String area;
-  final String ticketType;
+  // final String ticketType;
   final String status;
   final String observations;
-  final String challenges;
-  final String lessonsLearned;
+  // final String challenges;
+  // final String lessonsLearned;
   final List<String> ticketVideos;
   final List<String> ticketImages;
   final List<String> ticketVoices;
@@ -23,11 +23,11 @@ class TicketEntity {
     this.createdBy,
     required this.stadium,
     required this.area,
-    required this.ticketType,
+    // required this.ticketType,
     required this.status,
     required this.observations,
-    required this.challenges,
-    required this.lessonsLearned,
+    // required this.challenges,
+    // required this.lessonsLearned,
     required this.ticketVideos,
     required this.ticketImages,
     required this.ticketVoices,

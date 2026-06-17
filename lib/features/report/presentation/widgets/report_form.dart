@@ -26,8 +26,8 @@ class ReportForm extends StatefulWidget {
 
 class _ReportFormState extends State<ReportForm> {
   final _observationsCtrl = TextEditingController();
-  final _challengesCtrl = TextEditingController();
-  final _lessonsCtrl = TextEditingController();
+  // final _challengesCtrl = TextEditingController();
+  // final _lessonsCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   // Selected values
@@ -35,7 +35,7 @@ class _ReportFormState extends State<ReportForm> {
   String? selectedCityId;
   String? selectedStadiumId;
   String? selectedArea;
-  String? selectedTicketType;
+  // String? selectedTicketType;
   String? selectedModelType;
   bool selectedMode = false; 
 
@@ -69,19 +69,19 @@ class _ReportFormState extends State<ReportForm> {
     context.read<ReportsBloc>().add(const LoadCountriesEvent());
     // Add listeners to text controllers
     _observationsCtrl.addListener(_checkFormCompletion);
-    _challengesCtrl.addListener(_checkFormCompletion);
-    _lessonsCtrl.addListener(_checkFormCompletion);
+    // _challengesCtrl.addListener(_checkFormCompletion);
+    // _lessonsCtrl.addListener(_checkFormCompletion);
   }
 
   @override
   void dispose() {
     _observationsCtrl.removeListener(_checkFormCompletion);
-    _challengesCtrl.removeListener(_checkFormCompletion);
-    _lessonsCtrl.removeListener(_checkFormCompletion);
+    // _challengesCtrl.removeListener(_checkFormCompletion);
+    // _lessonsCtrl.removeListener(_checkFormCompletion);
 
     _observationsCtrl.dispose();
-    _challengesCtrl.dispose();
-    _lessonsCtrl.dispose();
+    // _challengesCtrl.dispose();
+    // _lessonsCtrl.dispose();
     super.dispose();
   }
 
@@ -91,10 +91,10 @@ class _ReportFormState extends State<ReportForm> {
         selectedCityId != null &&
         selectedStadiumId != null &&
         selectedArea != null &&
-        selectedTicketType != null &&
-        _observationsCtrl.text.trim().isNotEmpty &&
-        _challengesCtrl.text.trim().isNotEmpty &&
-        _lessonsCtrl.text.trim().isNotEmpty;
+        // selectedTicketType != null &&
+        _observationsCtrl.text.trim().isNotEmpty; // &&
+        // _challengesCtrl.text.trim().isNotEmpty &&
+        // _lessonsCtrl.text.trim().isNotEmpty;
 
     if (_isFormComplete != isComplete) {
       setState(() {
@@ -125,15 +125,15 @@ class _ReportFormState extends State<ReportForm> {
         return;
       }
 
-      if (selectedTicketType == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please select a ticket type'),
-            backgroundColor: Colors.red,
-          ),
-        );
-        return;
-      }
+      // if (selectedTicketType == null) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(
+      //       content: Text('Please select a ticket type'),
+      //       backgroundColor: Colors.red,
+      //     ),
+      //   );
+      //   return;
+      // }
       if (selectedModelType == null && selectedMode == true) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -149,11 +149,11 @@ class _ReportFormState extends State<ReportForm> {
           CreateReportParams(
             stadiumId: selectedStadiumId ?? '',
             area: selectedArea ?? '',
-            ticketType: selectedTicketType ?? '',
+            // ticketType: selectedTicketType ,
             modelType: selectedModelType ,
             observations: _observationsCtrl.text.trim(),
-            challenges: _challengesCtrl.text.trim(),
-            lessonsLearned: _lessonsCtrl.text.trim(),
+            // challenges: _challengesCtrl.text.trim(),
+            // lessonsLearned: _lessonsCtrl.text.trim(),
             ticketImagesPaths: _imagePaths.isNotEmpty ? _imagePaths : null,
             ticketVideosPaths: _videoPaths.isNotEmpty ? _videoPaths : null,
             ticketVoicesPaths: _voicePaths.isNotEmpty ? _voicePaths : null, mode: selectedMode,
@@ -224,12 +224,12 @@ class _ReportFormState extends State<ReportForm> {
     _checkFormCompletion();
   }
 
-  void _onTicketTypeSelected(String? ticketType) {
-    setState(() {
-      selectedTicketType = ticketType;
-    });
-    _checkFormCompletion();
-  }
+  // void _onTicketTypeSelected(String? ticketType) {
+  //   setState(() {
+  //     selectedTicketType = ticketType;
+  //   });
+  //   _checkFormCompletion();
+  // }
 
   void _onModelTypeSelected(String? modelType) {
     setState(() {
@@ -361,11 +361,11 @@ class _ReportFormState extends State<ReportForm> {
               _buildAreaDropdown(),
               const SizedBox(height: 26),
 
-              //! Ticket Type Dropdown
-              _buildLabel(locale.ticketType),
-              const SizedBox(height: 8),
-              _buildTicketTypeDropdown(),
-              const SizedBox(height: 26),
+              // //! Ticket Type Dropdown
+              // _buildLabel(locale.ticketType),
+              // const SizedBox(height: 8),
+              // _buildTicketTypeDropdown(),
+              // const SizedBox(height: 26),
 
               //! Model Type Dropdown
               if(selectedMode == true)...[
@@ -389,33 +389,33 @@ class _ReportFormState extends State<ReportForm> {
               ),
               const SizedBox(height: 26),
 
-              //! Challenges
-              _buildLabel(locale.challenges),
+              // //! Challenges
+              // _buildLabel(locale.challenges),
 
-              const SizedBox(height: 8),
-              CustomTextField(
-                validator: (value) =>
-                    value == null || value.isEmpty ? "Required" : null,
-                keyboardType: TextInputType.text,
-                hint: locale.anyChallengesFaced,
-                controller: _challengesCtrl,
-                maxLines: 4,
-              ),
-              const SizedBox(height: 26),
+              // const SizedBox(height: 8),
+              // CustomTextField(
+              //   validator: (value) =>
+              //       value == null || value.isEmpty ? "Required" : null,
+              //   keyboardType: TextInputType.text,
+              //   hint: locale.anyChallengesFaced,
+              //   controller: _challengesCtrl,
+              //   maxLines: 4,
+              // ),
+              // const SizedBox(height: 26),
 
-              //! Lessons Learned
-              _buildLabel(locale.lessonsLearned),
+              // //! Lessons Learned
+              // _buildLabel(locale.lessonsLearned),
 
-              const SizedBox(height: 8),
-              CustomTextField(
-                validator: (value) =>
-                    value == null || value.isEmpty ? "Required" : null,
-                keyboardType: TextInputType.text,
-                hint: locale.lessonsLearned,
-                controller: _lessonsCtrl,
-                maxLines: 4,
-              ),
-              const SizedBox(height: 26),
+              // const SizedBox(height: 8),
+              // CustomTextField(
+              //   validator: (value) =>
+              //       value == null || value.isEmpty ? "Required" : null,
+              //   keyboardType: TextInputType.text,
+              //   hint: locale.lessonsLearned,
+              //   controller: _lessonsCtrl,
+              //   maxLines: 4,
+              // ),
+              // const SizedBox(height: 26),
               //! mode changer
               _buildLabel(locale.modeChanger),
                Switch(
@@ -803,79 +803,79 @@ class _ReportFormState extends State<ReportForm> {
     );
   }
 
-  Widget _buildTicketTypeDropdown() {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final ticketType = [
-      {'value': 'positive', 'label': 'Positive'},
-      {'value': 'negative', 'label': 'Negative'},
-    ];
+  // Widget _buildTicketTypeDropdown() {
+  //   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  //   final ticketType = [
+  //     {'value': 'positive', 'label': 'Positive'},
+  //     {'value': 'negative', 'label': 'Negative'},
+  //   ];
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppThemeConsts.padding16md,
-      ),
-      decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
-        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-        border: selectedTicketType == null
-            ? Border.all(color: Colors.transparent)
-            : Border.all(color: AppColors.primary, width: 2),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-          value: selectedTicketType,
-          isExpanded: true,
-          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
-          hint: Row(
-            children: [
-              Icon(
-                Icons.edit_document,
-                color: isDarkMode
-                    ? AppColors.textSecondaryDark
-                    : AppColors.mediumGray,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'Select Ticket Type',
-                style: TextStyle(
-                  color: isDarkMode
-                      ? AppColors.textSecondaryDark
-                      : AppColors.mediumGray,
-                ),
-              ),
-            ],
-          ),
-          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
-          items: ticketType.map((type) {
-            return DropdownMenuItem(
-              value: type['value'],
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.edit_document,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    type['label']!,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: isDarkMode
-                          ? AppColors.textPrimaryDark
-                          : AppColors.textPrimaryLight,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-          onChanged: _onTicketTypeSelected,
-        ),
-      ),
-    );
-  }
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(
+  //       horizontal: AppThemeConsts.padding16md,
+  //     ),
+  //     decoration: BoxDecoration(
+  //       color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+  //       borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+  //       border: selectedTicketType == null
+  //           ? Border.all(color: Colors.transparent)
+  //           : Border.all(color: AppColors.primary, width: 2),
+  //     ),
+  //     child: DropdownButtonHideUnderline(
+  //       child: DropdownButton<String>(
+  //         borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+  //         value: selectedTicketType,
+  //         isExpanded: true,
+  //         dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+  //         hint: Row(
+  //           children: [
+  //             Icon(
+  //               Icons.edit_document,
+  //               color: isDarkMode
+  //                   ? AppColors.textSecondaryDark
+  //                   : AppColors.mediumGray,
+  //             ),
+  //             const SizedBox(width: 10),
+  //             Text(
+  //               'Select Ticket Type',
+  //               style: TextStyle(
+  //                 color: isDarkMode
+  //                     ? AppColors.textSecondaryDark
+  //                     : AppColors.mediumGray,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
+  //         items: ticketType.map((type) {
+  //           return DropdownMenuItem(
+  //             value: type['value'],
+  //             child: Row(
+  //               children: [
+  //                 const Icon(
+  //                   Icons.edit_document,
+  //                   color: AppColors.primary,
+  //                   size: 20,
+  //                 ),
+  //                 const SizedBox(width: 10),
+  //                 Text(
+  //                   type['label']!,
+  //                   style: TextStyle(
+  //                     fontSize: 15,
+  //                     color: isDarkMode
+  //                         ? AppColors.textPrimaryDark
+  //                         : AppColors.textPrimaryLight,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           );
+  //         }).toList(),
+  //         onChanged: _onTicketTypeSelected,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildModelTypeDropdown() {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;

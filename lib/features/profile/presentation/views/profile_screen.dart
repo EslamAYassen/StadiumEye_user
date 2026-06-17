@@ -7,9 +7,6 @@ import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_state
 import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
-import '../../data/datasources/profile_remote_ds_impl.dart';
-import '../../data/repositories/userprofile_repo_impl.dart';
-import '../../domain/usecases/get_userprofile.dart';
 import 'widgets/conect_information_card.dart';
 import 'widgets/logout.dart';
 import 'widgets/profile_header.dart';

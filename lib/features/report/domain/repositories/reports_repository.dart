@@ -19,10 +19,10 @@ abstract class ReportsRepository {
   Future<Either<Failure, TicketEntity>> createReport({
     required String stadiumId,
     required String area,
-    required String ticketType,
+    // required String? ticketType,
     required String observations,
-    required String challenges,
-    required String lessonsLearned,
+    // required String? challenges,
+    // required String? lessonsLearned,
     String? modelType,
     String? locationLink,
     List<String>? ticketVideosPaths,
