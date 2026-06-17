@@ -5,8 +5,8 @@ class StadiumModel extends StadiumEntity {
 
   factory StadiumModel.fromJson(Map<String, dynamic> json) {
     return StadiumModel(
-      id: json['_id'] as String,
-      stadiumName: json['stadiumName'] as String,
+      id: json['_id'] as String? ?? '',
+      stadiumName: json['stadiumName'] as String? ?? 'Unknown Stadium',
     );
   }
 }

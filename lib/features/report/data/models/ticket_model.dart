@@ -1,3 +1,5 @@
+import 'package:stadium_eye/core/networking/endpoints.dart';
+
 import '../../domain/entities/ticket_entity.dart';
 import 'creator_model.dart';
 import 'stadium_model.dart';
@@ -8,11 +10,11 @@ class TicketModel extends TicketEntity {
     super.createdBy,
     required super.stadium,
     required super.area,
-    required super.ticketType,
+    // required super.ticketType,
     required super.status,
     required super.observations,
-    required super.challenges,
-    required super.lessonsLearned,
+    // required super.challenges,
+    // required super.lessonsLearned,
     required super.ticketVideos,
     required super.ticketImages,
     required super.ticketVoices,
@@ -23,23 +25,23 @@ class TicketModel extends TicketEntity {
 
   factory TicketModel.fromJson(Map<String, dynamic> json) {
     return TicketModel(
-      id: json['_id'] as String,
+      id: json['_id'] as String? ?? '',
       createdBy: json['createdBy'] != null
-          ? CreatorModel.fromJson(json['createdBy'] as Map<String, dynamic>)
+          ? CreatorModel.fromJson(json['createdBy'] as Map<String, dynamic>? ?? {})
           : null,
-      stadium: StadiumModel.fromJson(json['stadium'] as Map<String, dynamic>),
-      area: json['area'] as String,
-      ticketType: json['ticketType'] as String,
-      status: json['status'] as String,
-      observations: json['observations'] as String,
-      challenges: json['challenges'] as String? ?? '',
-      lessonsLearned: json['lessonsLearned'] as String? ?? '',
-      ticketVideos: (json['ticketVideos'] as List?)?.cast<String>() ?? [],
-      ticketImages: (json['ticketImages'] as List?)?.cast<String>() ?? [],
-      ticketVoices: (json['ticketVoices'] as List?)?.cast<String>() ?? [],
+      stadium: StadiumModel.fromJson(json['stadium'] as Map<String, dynamic>? ?? {}),
+      area: json['area'] as String? ?? '',
+      // ticketType: json['ticketType'] as String,
+      status: json['status'] as String? ?? 'open',
+      observations: json['observations'] as String? ?? '',
+      // challenges: json['challenges'] as String? ?? '',
+      // lessonsLearned: json['lessonsLearned'] as String? ?? '',
+      ticketVideos: (json['ticketVideos'] as List?)?.cast<String>().map((e) => Endpoints.basefileUrl + e).toList() ?? [],
+      ticketImages: (json['ticketImages'] as List?)?.cast<String>().map((e) => Endpoints.basefileUrl + e).toList() ?? [],
+      ticketVoices: (json['ticketVoices'] as List?)?.cast<String>().map((e) => Endpoints.basefileUrl + e).toList() ?? [],
       priority: json['priority'] as String? ?? 'medium',
       visibility: json['visibility'] as String? ?? 'public',
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String? ?? DateTime.now().toIso8601String()),
     );
   }
 }

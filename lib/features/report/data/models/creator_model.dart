@@ -11,11 +11,11 @@ class CreatorModel extends CreatorEntity {
 
   factory CreatorModel.fromJson(Map<String, dynamic> json) {
     return CreatorModel(
-      id: json['_id'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      email: json['email'] as String,
-      fullName: json['fullName'] as String,
+      id: json['_id'] as String? ?? '',
+      firstName: json['firstName'] as String? ?? '',
+      lastName: json['lastName'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      fullName: json['fullName'] as String? ?? '',
     );
   }
 }

@@ -6,10 +6,10 @@ import '../repositories/reports_repository.dart';
 class CreateReportParams {
   final String stadiumId;
   final String area;
-  final String ticketType;
+  final String? ticketType;
   final String observations;
-  final String challenges;
-  final String lessonsLearned;
+  final String? challenges;
+  final String? lessonsLearned;
   final String? modelType;
   final String? locationLink;
   final bool mode;
@@ -20,10 +20,10 @@ class CreateReportParams {
   CreateReportParams({
     required this.stadiumId,
     required this.area,
-    required this.ticketType,
+     this.ticketType,
     required this.observations,
-    required this.challenges,
-    required this.lessonsLearned,
+     this.challenges,
+     this.lessonsLearned,
     required this.mode,
     this.modelType,
     this.locationLink,
@@ -42,10 +42,10 @@ class CreateReportUseCase {
     return repository.createReport(
       stadiumId: params.stadiumId,
       area: params.area,
-      ticketType: params.ticketType,
+      // ticketType: params.ticketType,
       observations: params.observations,
-      challenges: params.challenges,
-      lessonsLearned: params.lessonsLearned,
+      // challenges: params.challenges,
+      // lessonsLearned: params.lessonsLearned,
       modelType: params.modelType,
       locationLink: params.locationLink,
       ticketVideosPaths: params.ticketVideosPaths,
