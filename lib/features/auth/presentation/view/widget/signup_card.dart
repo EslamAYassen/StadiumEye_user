@@ -6,6 +6,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/otp_bottom_sheet.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_text.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -58,22 +59,25 @@ class _SignupCardState extends State<SignupCard> {
     });
   }
 
+  /// Opens the OTP bottom sheet. Can be called after registration
+  /// OR from the "already have unverified account" link.
+  void _showOtpSheet(String email) {
+    OtpBottomSheet.show(context, email: email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthRegistrationSuccess) {
-          Navigator.pushNamed(
-            context,
-            AppRoutes.otp,
-            arguments: state.user.email,
-          );
-          // Show success message
+          // Show success snack then open OTP popup
           AwesomeDialog(
             context: context,
             dialogType: DialogType.success,
             title: 'Success',
             desc: state.message,
+            btnOkOnPress: () => _showOtpSheet(state.user.email),
+            btnOkText: 'Enter OTP',
           ).show();
         }
       },
@@ -82,8 +86,8 @@ class _SignupCardState extends State<SignupCard> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            const BoxShadow(
+          boxShadow: const [
+            BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 20,
               offset: Offset(0, 10),
@@ -279,7 +283,7 @@ class _SignupCardState extends State<SignupCard> {
                   ),
                   const SizedBox(height: 10),
 
-                  // Verify Link
+                  // Verify unverified account link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -289,19 +293,17 @@ class _SignupCardState extends State<SignupCard> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (_emailController.text.isEmpty) {
+                          final email = _emailController.text.trim();
+                          if (email.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text("Please enter your email"),
+                                content: Text("Please enter your email first"),
+                                backgroundColor: AppColors.warning,
                               ),
                             );
                             return;
                           }
-                          Navigator.restorablePopAndPushNamed(
-                            context,
-                            AppRoutes.otp,
-                            arguments: _emailController.text,
-                          );
+                          _showOtpSheet(email);
                         },
                         child: const Text(
                           "Verify",
@@ -323,7 +325,8 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  // Text Field Widget
+  // ─── Field builders ──────────────────────────────────────────────────────────
+
   Widget buildTextField({
     required TextEditingController controller,
     required String label,
@@ -384,7 +387,6 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  // Password Field Widget
   Widget buildPasswordField({
     required TextEditingController controller,
     required String label,
@@ -454,7 +456,6 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  // Gender Dropdown Widget
   Widget buildGenderDropdown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -528,7 +529,6 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  // Handle Signup
   void _handleSignup() {
     if (_formKey.currentState!.validate()) {
       if (selectedGender == null) {
@@ -562,7 +562,6 @@ class _SignupCardState extends State<SignupCard> {
           dateOfBirth: selectedDate!.toIso8601String(),
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,
-          //TODO: Change those
           city: '691cfbe9aad9af7504b0f29c',
           country: '691cfbe9aad9af7504b0f29c',
         ),

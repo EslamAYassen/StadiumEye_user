@@ -1,126 +1,46 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:stadium_eye/features/auth/presentation/view/widget/signup_body.dart';
 
-import 'package:pinput/pinput.dart';
-import 'package:stadium_eye/theme/app_colors.dart';
+import 'widget/otp_bottom_sheet.dart';
 
-import '../../../../constants/app_routes.dart';
-
-import '../bloc/auth_bloc.dart';
-import '../bloc/auth_event.dart';
-import '../bloc/auth_state.dart';
-import 'widget/signup_body.dart';
-
-class OtpScreen extends StatelessWidget {
+/// Thin wrapper kept for backward compatibility with [AppRoutes.otp].
+/// It shows [OtpBottomSheet] immediately on top of the signup background
+/// and then removes itself from the stack once the sheet closes.
+class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key, required this.email});
   final String email;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        // if (state is AuthLoading) {
-        //   showDialog(
-        //     useSafeArea: false,
-        //     barrierDismissible: false,
-        //     context: context,
-        //     builder: (_) => const LoadingDialoge(),
-        //   );
-        // }
-        if (state is AuthVerificationSuccess) {
-          AwesomeDialog(
-            context: context,
-            dialogType: DialogType.success,
-            animType: AnimType.rightSlide,
-            title: 'Success',
-            desc: state.message,
-            btnOkOnPress: () =>
-                Navigator.popAndPushNamed(context, AppRoutes.login),
-            btnOkText: "Back to Login",
-          ).show();
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Show the bottom sheet right after the first frame renders so the
+    // signup background is visible as a nice backdrop.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      OtpBottomSheet.show(context, email: widget.email).then((_) {
+        // After the sheet closes pop this transparent screen too
+        if (mounted && Navigator.canPop(context)) {
+          Navigator.pop(context);
         }
-
-        if (state is AuthAuthenticated) {
-          Navigator.pushReplacementNamed(context, AppRoutes.home);
-        }
-      },
-      child: Scaffold(
-        body: SignupBody(
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                // color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  const BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.1),
-                    blurRadius: 20,
-                    offset: Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: _buildPinPut(context),
-              // OtpTextField(
-              //   numberOfFields: 4,
-              //   borderColor: Colors.lightGreen,
-
-              //   textStyle: Theme.of(
-              //     context,
-              //   ).textTheme.bodyMedium?.copyWith(color: AppColors.gradientEnd),
-              //   fillColor: AppColors.gradientEnd,
-              //   //set to true to show as box or false to show as dash
-              //   showFieldAsBox: true,
-
-              //   //runs when every textfield is filled
-              //   onSubmit: (String verificationCode) {
-              //     BlocProvider.of<AuthBloc>(
-              //       context,
-              //     ).add(VerifyEmailEvent(email: email, code: verificationCode));
-              //   },
-              // ),
-            ),
-          ),
-        ),
-      ),
-    );
+      });
+    });
   }
 
-  Widget _buildPinPut(BuildContext context) {
-    final defaultPinTheme = PinTheme(
-      width: 40,
-      height: 56,
-      textStyle: const TextStyle(
-        fontSize: 20,
-        color: AppColors.gradientEnd,
-        fontWeight: FontWeight.w600,
+  @override
+  Widget build(BuildContext context) {
+    // Provide the AuthBloc so the bottom sheet can read it
+    return BlocProvider.value(
+      value: context.read<AuthBloc>(),
+      child: const Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SignupBody(), // decorative background
       ),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
-    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color.fromARGB(255, 38, 255, 129)),
-      borderRadius: BorderRadius.circular(8),
-    );
-
-    final submittedPinTheme = defaultPinTheme.copyWith(
-      decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
-      ),
-    );
-    return Pinput(
-      defaultPinTheme: defaultPinTheme,
-      focusedPinTheme: focusedPinTheme,
-      submittedPinTheme: submittedPinTheme,
-      length: 4,
-      pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-      showCursor: true,
-      onCompleted: (pin) => BlocProvider.of<AuthBloc>(
-        context,
-      ).add(VerifyEmailEvent(email: email, code: pin)),
     );
   }
 }
