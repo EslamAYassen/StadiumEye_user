@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/geometriclinespainter.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_icons.dart';
+import 'package:stadium_eye/core/widgets/preferences_bar.dart';
 
 class SignupBody extends StatefulWidget {
   const SignupBody({super.key, this.child});
@@ -14,6 +15,7 @@ class _SignupBodyState extends State<SignupBody>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +26,6 @@ class _SignupBodyState extends State<SignupBody>
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
-
     _animationController.forward();
   }
 
@@ -46,10 +47,9 @@ class _SignupBodyState extends State<SignupBody>
           end: Alignment.bottomRight,
         ),
       ),
-
-      //glowing circles
       child: Stack(
         children: [
+          // ── Glowing particles ────────────────────────────────────
           ...List.generate(30, (index) {
             return Positioned(
               left: (index * 60.0) % MediaQuery.of(context).size.width,
@@ -80,16 +80,31 @@ class _SignupBodyState extends State<SignupBody>
             );
           }),
 
-          //glowing lines
+          // ── Geometric lines ──────────────────────────────────────
           CustomPaint(
             size: Size(
               MediaQuery.of(context).size.width,
               MediaQuery.of(context).size.height,
             ),
             painter: GeometricLinesPainter(animation: _fadeAnimation),
-            //
           ),
+
+          // ── Main content ─────────────────────────────────────────
           SignupIcons(child: widget.child),
+
+          // ── Theme & Language buttons (top-right) ─────────────────
+          SafeArea(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12, right: 16),
+                  child: const PreferencesBar(),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

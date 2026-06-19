@@ -183,5 +183,13 @@
   "reset": "Reset",
   "apply": "Apply",
   "unknownVenue": "Unknown Venue",
-  "modeChanger": "Artificial intelligence analysis ?"
+  "modeChanger": "Artificial intelligence analysis ?",
+
+  "emailHint": "your.email@example.com",
+  "passwordHint": "••••••••",
+  "createAccount": "Create Account",
+  "createYourAccount": "Create your account",
+  "alreadyHaveAccount": "Already have an account?",
+  "dateOfBirth": "Date of Birth",
+  "pleaseSelectBirthDate": "Please select your Birth Date"
 }

@@ -19,7 +19,7 @@ class _SignupIconsState extends State<SignupIcons> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 60),
             const Center(child: TextTitle2()),
             const SizedBox(height: 40),
             //TODO: fix this later

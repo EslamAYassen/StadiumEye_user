@@ -3,6 +3,7 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
 import 'package:stadium_eye/core/widgets/glowing_logo/logo_splash.dart';
 import 'package:stadium_eye/l10n/app_localizations.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/animated_arrow.dart';
@@ -129,8 +130,12 @@ class _AboutUsPageState extends State<AboutUsPage>
   @override
   Widget build(BuildContext context) {
     final AppLocalizations locale = AppLocalizations.of(context)!;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode
+          ? AppColors.backgroundDark
+          : AppColors.whiteColor,
       body: SafeArea(
         child: Stack(
           children: [
@@ -146,10 +151,12 @@ class _AboutUsPageState extends State<AboutUsPage>
                       ),
                     )
                   : Container(
-                      color: Colors.grey[100],
+                      color: isDarkMode
+                          ? AppColors.backgroundDark
+                          : Colors.grey[100],
                       child: const Center(
                         child: CircularProgressIndicator(
-                          color: Color(0xFF00D856),
+                          color: AppColors.primary,
                           strokeWidth: 3,
                         ),
                       ),
@@ -171,9 +178,11 @@ class _AboutUsPageState extends State<AboutUsPage>
                 }
 
                 return Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: isDarkMode
+                        ? AppColors.surfaceDark
+                        : AppColors.whiteColor,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     ),
@@ -193,8 +202,12 @@ class _AboutUsPageState extends State<AboutUsPage>
                                 return Opacity(
                                   opacity:
                                       _logoOpacity * _logoFadeAnimation.value,
-                                  child: const Center(
-                                    child: LogoSplash(textColor: Colors.green),
+                                  child: Center(
+                                    child: LogoSplash(
+                                      textColor: isDarkMode
+                                          ? AppColors.primaryLight
+                                          : AppColors.primary,
+                                    ),
                                   ),
                                 );
                               },
@@ -215,18 +228,22 @@ class _AboutUsPageState extends State<AboutUsPage>
                                 opacity: _videoOpacity,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: isDarkMode
+                                        ? AppColors.cardDark
+                                        : AppColors.whiteColor,
                                     borderRadius: BorderRadius.circular(25),
                                     boxShadow: [
-                                      const BoxShadow(
-                                        color: Color.fromRGBO(
-                                          158,
-                                          158,
-                                          158,
-                                          0.2,
-                                        ),
+                                      BoxShadow(
+                                        color: isDarkMode
+                                            ? AppColors.shadowDark
+                                            : const Color.fromRGBO(
+                                                158,
+                                                158,
+                                                158,
+                                                0.2,
+                                              ),
                                         blurRadius: 20,
-                                        offset: Offset(0, 10),
+                                        offset: const Offset(0, 10),
                                       ),
                                     ],
                                   ),
@@ -239,7 +256,9 @@ class _AboutUsPageState extends State<AboutUsPage>
                                             Container(
                                               padding: const EdgeInsets.all(12),
                                               decoration: BoxDecoration(
-                                                color: const Color(0xFF00D856),
+                                                color: isDarkMode
+                                                    ? AppColors.primaryDark
+                                                    : AppColors.primary,
                                                 borderRadius:
                                                     BorderRadius.circular(15),
                                               ),
@@ -257,11 +276,14 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                 children: [
                                                   Text(
                                                     locale.watchOurStory,
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       fontSize: 22,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: Color(0xFF00D856),
+                                                      color: isDarkMode
+                                                          ? AppColors
+                                                                .primaryLight
+                                                          : AppColors.primary,
                                                     ),
                                                   ),
                                                   Text(
@@ -269,7 +291,10 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                         .seeHowWeTransformStadiums,
                                                     style: TextStyle(
                                                       fontSize: 13,
-                                                      color: Colors.grey[600],
+                                                      color: isDarkMode
+                                                          ? AppColors
+                                                                .textSecondaryDark
+                                                          : Colors.grey[600],
                                                     ),
                                                   ),
                                                 ],
@@ -294,13 +319,15 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                         _videoController,
                                                       )
                                                     : Container(
-                                                        color: Colors.grey[100],
+                                                        color: isDarkMode
+                                                            ? AppColors
+                                                                  .cardElevatedDark
+                                                            : Colors.grey[100],
                                                         child: const Center(
                                                           child:
                                                               CircularProgressIndicator(
-                                                                color: Color(
-                                                                  0xFF00D856,
-                                                                ),
+                                                                color: AppColors
+                                                                    .primary,
                                                                 strokeWidth: 3,
                                                               ),
                                                         ),
@@ -344,20 +371,20 @@ class _AboutUsPageState extends State<AboutUsPage>
                                                                 const EdgeInsets.all(
                                                                   10,
                                                                 ),
-                                                            decoration: const BoxDecoration(
-                                                              color: Color(
-                                                                0xFF00D856,
-                                                              ),
+                                                            decoration: BoxDecoration(
+                                                              color: isDarkMode
+                                                                  ? AppColors
+                                                                        .primaryDark
+                                                                  : AppColors
+                                                                        .primary,
                                                               shape: BoxShape
                                                                   .circle,
                                                               boxShadow: [
                                                                 BoxShadow(
-                                                                  color:
-                                                                      Color.fromRGBO(
-                                                                        0,
-                                                                        216,
-                                                                        86,
-                                                                        0.5,
+                                                                  color: AppColors
+                                                                      .primary
+                                                                      .withAlpha(
+                                                                        128,
                                                                       ),
                                                                   blurRadius:
                                                                       20,
@@ -421,7 +448,7 @@ class _AboutUsPageState extends State<AboutUsPage>
                                       child: FeatureCard(
                                         icon: Iconsax.verify_copy,
                                         title: locale.reliable,
-                                        subtitle: 'Always available',
+                                        subtitle: locale.alwaysAvailable,
                                       ),
                                     ),
                                     const SizedBox(width: 15),
@@ -453,43 +480,6 @@ class _AboutUsPageState extends State<AboutUsPage>
                 );
               },
             ),
-
-            // // Back button at top
-            // Positioned(
-            //   top: 16,
-            //   right: 16,
-            //   child: AnimatedBuilder(
-            //     animation: _logoAnimationController,
-            //     builder: (context, child) {
-            //       return FadeTransition(
-            //         opacity: _logoFadeAnimation,
-            //         child: Container(
-            //           decoration: const BoxDecoration(
-            //             color: Colors.white,
-            //             shape: BoxShape.circle,
-            //             boxShadow: [
-            //               BoxShadow(
-            //                 color: Color.fromRGBO(158, 158, 158, 0.3),
-            //                 blurRadius: 10,
-            //                 offset: Offset(0, 3),
-            //               ),
-            //             ],
-            //           ),
-            //           child: IconButton(
-            //             icon: const Icon(
-            //               Icons.arrow_forward_ios_rounded,
-            //               color: Color(0xFF00D856),
-            //               size: 26,
-            //             ),
-            //             onPressed: () {
-            //               Navigator.pop(context);
-            //             },
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),
