@@ -6,8 +6,8 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_event.dart';
-import 'package:stadium_eye/features/auth/presentation/view/widget/otp_bottom_sheet.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_text.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../core/widgets/loading/lottie_loading.dart';
@@ -59,38 +59,40 @@ class _SignupCardState extends State<SignupCard> {
     });
   }
 
-  /// Opens the OTP bottom sheet. Can be called after registration
-  /// OR from the "already have unverified account" link.
-  void _showOtpSheet(String email) {
-    OtpBottomSheet.show(context, email: email);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
+
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthRegistrationSuccess) {
-          // Show success snack then open OTP popup
+          Navigator.pushNamed(
+            context,
+            AppRoutes.otp,
+            arguments: state.user.email,
+          );
+          // Show success message
           AwesomeDialog(
             context: context,
             dialogType: DialogType.success,
             title: 'Success',
             desc: state.message,
-            btnOkOnPress: () => _showOtpSheet(state.user.email),
-            btnOkText: 'Enter OTP',
           ).show();
         }
       },
       child: Container(
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
           borderRadius: BorderRadius.circular(30),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.1),
+              color: isDarkMode
+                  ? AppColors.shadowDark
+                  : const Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 20,
-              offset: Offset(0, 10),
+              offset: const Offset(0, 10),
             ),
           ],
         ),
@@ -106,13 +108,14 @@ class _SignupCardState extends State<SignupCard> {
 
                   // First Name
                   buildTextField(
+                    isDarkMode: isDarkMode,
                     controller: _firstNameController,
-                    label: "First Name",
-                    hint: "Ahmed",
+                    label: locale.firstName,
+                    hint: locale.ahmed,
                     icon: Iconsax.user_copy,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your First name';
+                        return locale.pleaseEnterFirstName;
                       }
                       return null;
                     },
@@ -121,13 +124,14 @@ class _SignupCardState extends State<SignupCard> {
 
                   // Second Name
                   buildTextField(
+                    isDarkMode: isDarkMode,
                     controller: _lastNameController,
-                    label: "Last Name",
-                    hint: "Al-Salem",
+                    label: locale.lastName,
+                    hint: locale.alSalem,
                     icon: Iconsax.user_copy,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your last name';
+                        return locale.pleaseEnterLastName;
                       }
                       return null;
                     },
@@ -136,14 +140,15 @@ class _SignupCardState extends State<SignupCard> {
 
                   // Email
                   buildTextField(
+                    isDarkMode: isDarkMode,
                     controller: _emailController,
-                    label: "Email",
-                    hint: "your.email@example.com",
+                    label: locale.email,
+                    hint: locale.emailHint,
                     icon: Iconsax.user_copy,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return locale.pleaseEnterYourEmail;
                       }
                       return null;
                     },
@@ -152,39 +157,43 @@ class _SignupCardState extends State<SignupCard> {
 
                   // Phone
                   buildTextField(
+                    isDarkMode: isDarkMode,
                     controller: _phoneNumberController,
-                    label: "Phone",
-                    hint: "01xxx",
+                    label: locale.phone,
+                    hint: locale.phoneExample,
                     icon: Iconsax.call_copy,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your phone number';
+                        return locale.pleaseEnterPhone;
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 20),
 
-                  buildGenderDropdown(),
+                  buildGenderDropdown(isDarkMode, locale),
                   const SizedBox(height: 20),
 
-                  const Text(
-                    "Date of Birth",
+                  Text(
+                    locale.dateOfBirth,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF022C0C),
+                      color: isDarkMode
+                          ? AppColors.textPrimaryDark
+                          : AppColors.primaryDark,
                     ),
                   ),
                   const SizedBox(height: 6),
-                  _buildDateOfBirth(),
+                  _buildDateOfBirth(isDarkMode),
                   const SizedBox(height: 20),
 
                   // Password
                   buildPasswordField(
+                    isDarkMode: isDarkMode,
                     controller: _passwordController,
-                    label: "Password",
+                    label: locale.password,
                     isHidden: hidePassword,
                     toggle: () {
                       setState(() {
@@ -193,10 +202,10 @@ class _SignupCardState extends State<SignupCard> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a password';
+                        return locale.pleaseEnterPassword;
                       }
                       if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                        return locale.passwordMinLength;
                       }
                       return null;
                     },
@@ -205,8 +214,9 @@ class _SignupCardState extends State<SignupCard> {
 
                   // Confirm Password
                   buildPasswordField(
+                    isDarkMode: isDarkMode,
                     controller: _confirmPasswordController,
-                    label: "Confirm Password",
+                    label: locale.confirmPassword,
                     isHidden: hideConfirmPassword,
                     toggle: () {
                       setState(() {
@@ -215,10 +225,10 @@ class _SignupCardState extends State<SignupCard> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
+                        return locale.pleaseConfirmPassword;
                       }
                       if (value != _passwordController.text) {
-                        return 'Passwords do not match';
+                        return locale.passwordsDoNotMatch;
                       }
                       return null;
                     },
@@ -232,8 +242,8 @@ class _SignupCardState extends State<SignupCard> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          backgroundColor: const Color(0xFF00C853),
-                          foregroundColor: Colors.white,
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.whiteColor,
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
@@ -246,9 +256,9 @@ class _SignupCardState extends State<SignupCard> {
                                 height: 30,
                                 child: LottieLoader(),
                               )
-                            : const Text(
-                                "Create Account",
-                                style: TextStyle(
+                            : Text(
+                                locale.createAccount,
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -264,16 +274,23 @@ class _SignupCardState extends State<SignupCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have an account? ",
-                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                        locale.alreadyHaveAccount,
+                        style: TextStyle(
+                          color: isDarkMode
+                              ? AppColors.textSecondaryDark
+                              : Colors.grey[600],
+                          fontSize: 14,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () =>
                             Navigator.pushNamed(context, AppRoutes.login),
-                        child: const Text(
-                          "Login",
+                        child: Text(
+                          locale.login,
                           style: TextStyle(
-                            color: Color(0xFF00C853),
+                            color: isDarkMode
+                                ? AppColors.primaryLight
+                                : AppColors.primary,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -283,32 +300,41 @@ class _SignupCardState extends State<SignupCard> {
                   ),
                   const SizedBox(height: 10),
 
-                  // Verify unverified account link
+                  // Verify Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have unverified account? ",
-                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                        locale.alreadyHaveUnverifiedAccount,
+                        style: TextStyle(
+                          color: isDarkMode
+                              ? AppColors.textSecondaryDark
+                              : Colors.grey[600],
+                          fontSize: 14,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
-                          final email = _emailController.text.trim();
-                          if (email.isEmpty) {
+                          if (_emailController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Please enter your email first"),
-                                backgroundColor: AppColors.warning,
+                              SnackBar(
+                                content: Text(locale.pleaseEnterYourEmail),
                               ),
                             );
                             return;
                           }
-                          _showOtpSheet(email);
+                          Navigator.restorablePopAndPushNamed(
+                            context,
+                            AppRoutes.otp,
+                            arguments: _emailController.text,
+                          );
                         },
-                        child: const Text(
-                          "Verify",
+                        child: Text(
+                          locale.verify,
                           style: TextStyle(
-                            color: Color(0xFF00C853),
+                            color: isDarkMode
+                                ? AppColors.primaryLight
+                                : AppColors.primary,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -325,9 +351,9 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  // ─── Field builders ──────────────────────────────────────────────────────────
-
+  // Text Field Widget
   Widget buildTextField({
+    required bool isDarkMode,
     required TextEditingController controller,
     required String label,
     required String hint,
@@ -340,10 +366,12 @@ class _SignupCardState extends State<SignupCard> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF022C0C),
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.primaryDark,
           ),
         ),
         const SizedBox(height: 8),
@@ -351,12 +379,26 @@ class _SignupCardState extends State<SignupCard> {
           controller: controller,
           keyboardType: keyboardType,
           validator: validator,
+          style: TextStyle(
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, color: const Color(0xFF00C853)),
+            prefixIcon: Icon(
+              icon,
+              color: isDarkMode ? AppColors.primaryLight : AppColors.primary,
+            ),
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey[400]),
+            hintStyle: TextStyle(
+              color: isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : Colors.grey[400],
+            ),
             filled: true,
-            fillColor: const Color(0xFFF7F7F7),
+            fillColor: isDarkMode
+                ? AppColors.cardElevatedDark
+                : const Color(0xFFF7F7F7),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
@@ -367,15 +409,18 @@ class _SignupCardState extends State<SignupCard> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Color(0xFF00C853), width: 2),
+              borderSide: BorderSide(
+                color: isDarkMode ? AppColors.primaryLight : AppColors.primary,
+                width: 2,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.red, width: 1),
+              borderSide: const BorderSide(color: AppColors.error, width: 1),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.red, width: 2),
+              borderSide: const BorderSide(color: AppColors.error, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -387,7 +432,9 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
+  // Password Field Widget
   Widget buildPasswordField({
+    required bool isDarkMode,
     required TextEditingController controller,
     required String label,
     required bool isHidden,
@@ -399,10 +446,12 @@ class _SignupCardState extends State<SignupCard> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF022C0C),
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.primaryDark,
           ),
         ),
         const SizedBox(height: 8),
@@ -410,15 +459,26 @@ class _SignupCardState extends State<SignupCard> {
           controller: controller,
           obscureText: isHidden,
           validator: validator,
+          style: TextStyle(
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
           decoration: InputDecoration(
-            prefixIcon: const Icon(
+            prefixIcon: Icon(
               Icons.lock_outline,
-              color: Color(0xFF00C853),
+              color: isDarkMode ? AppColors.primaryLight : AppColors.primary,
             ),
             hintText: "••••••••",
-            hintStyle: TextStyle(color: Colors.grey[400]),
+            hintStyle: TextStyle(
+              color: isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : Colors.grey[400],
+            ),
             filled: true,
-            fillColor: const Color(0xFFF7F7F7),
+            fillColor: isDarkMode
+                ? AppColors.cardElevatedDark
+                : const Color(0xFFF7F7F7),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
@@ -429,15 +489,18 @@ class _SignupCardState extends State<SignupCard> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Color(0xFF00C853), width: 2),
+              borderSide: BorderSide(
+                color: isDarkMode ? AppColors.primaryLight : AppColors.primary,
+                width: 2,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.red, width: 1),
+              borderSide: const BorderSide(color: AppColors.error, width: 1),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: Colors.red, width: 2),
+              borderSide: const BorderSide(color: AppColors.error, width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -446,7 +509,9 @@ class _SignupCardState extends State<SignupCard> {
             suffixIcon: IconButton(
               icon: Icon(
                 isHidden ? Iconsax.eye_copy : Iconsax.eye_slash_copy,
-                color: Colors.grey[600],
+                color: isDarkMode
+                    ? AppColors.textSecondaryDark
+                    : Colors.grey[600],
               ),
               onPressed: toggle,
             ),
@@ -456,61 +521,90 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  Widget buildGenderDropdown() {
+  // Gender Dropdown Widget
+  Widget buildGenderDropdown(bool isDarkMode, AppLocalizations locale) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Gender",
+        Text(
+          locale.gender,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF022C0C),
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.primaryDark,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: const Color(0xFFF7F7F7),
+            color: isDarkMode
+                ? AppColors.cardElevatedDark
+                : const Color(0xFFF7F7F7),
             borderRadius: BorderRadius.circular(15),
             border: selectedGender == null
                 ? Border.all(color: Colors.transparent)
-                : Border.all(color: const Color(0xFF00C853), width: 2),
+                : Border.all(
+                    color: isDarkMode
+                        ? AppColors.primaryLight
+                        : AppColors.primary,
+                    width: 2,
+                  ),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: selectedGender,
               isExpanded: true,
+              dropdownColor: isDarkMode
+                  ? AppColors.cardDark
+                  : AppColors.whiteColor,
               hint: Row(
                 children: [
-                  const Icon(Iconsax.woman_copy, color: Colors.grey),
+                  Icon(
+                    Iconsax.woman_copy,
+                    color: isDarkMode
+                        ? AppColors.textSecondaryDark
+                        : Colors.grey,
+                  ),
                   const SizedBox(width: 10),
                   Text(
-                    "Select Gender",
-                    style: TextStyle(color: Colors.grey[400]),
+                    locale.selectGender,
+                    style: TextStyle(
+                      color: isDarkMode
+                          ? AppColors.textSecondaryDark
+                          : Colors.grey[400],
+                    ),
                   ),
                 ],
               ),
-              icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF00C853)),
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: isDarkMode ? AppColors.primaryLight : AppColors.primary,
+              ),
               items: genders.map((role) {
                 return DropdownMenuItem(
                   value: role,
                   child: Row(
                     children: [
                       Icon(
-                        role == "Male"
+                        role == "male"
                             ? Icons.male_rounded
                             : Icons.female_rounded,
-                        color: const Color(0xFF00C853),
+                        color: isDarkMode
+                            ? AppColors.primaryLight
+                            : AppColors.primary,
                         size: 20,
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        role,
-                        style: const TextStyle(
+                        role == "male" ? locale.male : locale.female,
+                        style: TextStyle(
                           fontSize: 15,
-                          color: Color(0xFF022C0C),
+                          color: isDarkMode
+                              ? AppColors.textPrimaryDark
+                              : AppColors.primaryDark,
                         ),
                       ),
                     ],
@@ -529,22 +623,25 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
+  // Handle Signup
   void _handleSignup() {
+    final locale = AppLocalizations.of(context)!;
+
     if (_formKey.currentState!.validate()) {
       if (selectedGender == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please select your Gender'),
-            backgroundColor: Colors.red,
+          SnackBar(
+            content: Text(locale.pleaseSelectGender),
+            backgroundColor: AppColors.error,
           ),
         );
         return;
       }
       if (selectedDate == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please select your Birth Date'),
-            backgroundColor: Colors.red,
+          SnackBar(
+            content: Text(locale.pleaseSelectBirthDate),
+            backgroundColor: AppColors.error,
           ),
         );
         return;
@@ -562,6 +659,7 @@ class _SignupCardState extends State<SignupCard> {
           dateOfBirth: selectedDate!.toIso8601String(),
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,
+          //TODO: Change those
           city: '691cfbe9aad9af7504b0f29c',
           country: '691cfbe9aad9af7504b0f29c',
         ),
@@ -569,12 +667,14 @@ class _SignupCardState extends State<SignupCard> {
     );
   }
 
-  Widget _buildDateOfBirth() {
+  Widget _buildDateOfBirth(bool isDarkMode) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha((0.5 * 255).toInt()),
+            color: isDarkMode
+                ? AppColors.shadowDark
+                : Colors.grey.withAlpha((0.5 * 255).toInt()),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -583,10 +683,42 @@ class _SignupCardState extends State<SignupCard> {
         borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
       ),
       child: SfDateRangePicker(
-        headerStyle: const DateRangePickerHeaderStyle(
-          backgroundColor: AppColors.whiteColor,
+        headerStyle: DateRangePickerHeaderStyle(
+          backgroundColor: isDarkMode
+              ? AppColors.cardElevatedDark
+              : AppColors.whiteColor,
+          textStyle: TextStyle(
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: isDarkMode
+            ? AppColors.cardElevatedDark
+            : AppColors.whiteColor,
+        monthCellStyle: DateRangePickerMonthCellStyle(
+          textStyle: TextStyle(
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
+          disabledDatesTextStyle: TextStyle(
+            color: isDarkMode
+                ? AppColors.textSecondaryDark.withAlpha(120)
+                : AppColors.mediumGray.withAlpha(120),
+          ),
+        ),
+        yearCellStyle: DateRangePickerYearCellStyle(
+          textStyle: TextStyle(
+            color: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
+        ),
+        selectionColor: AppColors.primary,
+        todayHighlightColor: AppColors.primary,
         onSelectionChanged: _onSelectionChanged,
         selectionMode: DateRangePickerSelectionMode.single,
       ),

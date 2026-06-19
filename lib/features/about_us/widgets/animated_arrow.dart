@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
 
 class AnimatedUpArrows extends StatefulWidget {
   const AnimatedUpArrows({super.key});
@@ -34,6 +35,9 @@ class _AnimatedUpArrowsState extends State<AnimatedUpArrows>
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final arrowColor = isDarkMode ? AppColors.primaryLight : AppColors.primary;
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
@@ -42,9 +46,9 @@ class _AnimatedUpArrowsState extends State<AnimatedUpArrows>
           height: 80,
           child: Stack(
             children: [
-              _buildArrow(0, _animation.value),
-              _buildArrow(1, (_animation.value + 0.33) % 1),
-              _buildArrow(2, (_animation.value + 0.66) % 1),
+              _buildArrow(0, _animation.value, arrowColor),
+              _buildArrow(1, (_animation.value + 0.33) % 1, arrowColor),
+              _buildArrow(2, (_animation.value + 0.66) % 1, arrowColor),
             ],
           ),
         );
@@ -52,7 +56,7 @@ class _AnimatedUpArrowsState extends State<AnimatedUpArrows>
     );
   }
 
-  Widget _buildArrow(int index, double progress) {
+  Widget _buildArrow(int index, double progress, Color color) {
     final double opacity = (1 - progress).clamp(0.0, 1.0);
     final double yOffset = progress * 30;
 
@@ -62,17 +66,24 @@ class _AnimatedUpArrowsState extends State<AnimatedUpArrows>
       right: 0,
       child: Opacity(
         opacity: opacity,
-        child: CustomPaint(size: const Size(60, 20), painter: ArrowPainter()),
+        child: CustomPaint(
+          size: const Size(60, 20),
+          painter: ArrowPainter(color: color),
+        ),
       ),
     );
   }
 }
 
 class ArrowPainter extends CustomPainter {
+  final Color color;
+
+  const ArrowPainter({this.color = Colors.green});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.green
+      ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
@@ -87,5 +98,6 @@ class ArrowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant ArrowPainter oldDelegate) =>
+      oldDelegate.color != color;
 }

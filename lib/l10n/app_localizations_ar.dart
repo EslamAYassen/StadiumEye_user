@@ -48,7 +48,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ourMission => 'مهمتنا';
 
   @override
-  String get ourMissionDescription => 'لإحداث ثورة في إدارة الملاعب من خلال تقارير مبتكرة وتحليلات فورية لتجربة أفضل.';
+  String get ourMissionDescription =>
+      'لإحداث ثورة في إدارة الملاعب من خلال تقارير مبتكرة وتحليلات فورية لتجربة أفضل.';
 
   @override
   String get email => 'البريد الإلكتروني';
@@ -219,7 +220,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get videos => 'الفيديوهات';
 
   @override
-  String get voice => 'Voice';
+  String get voice => 'صوت';
 
   @override
   String get voiceRecordings => 'التسجيلات الصوتيه';
@@ -267,10 +268,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lessonsLearned => 'الدروس المستفادة';
 
   @override
-  String get lesson1 => 'ضرورة فتح بوابات إضافية قبل 30 دقيقة من المباريات الهامة.';
+  String get lesson1 =>
+      'ضرورة فتح بوابات إضافية قبل 30 دقيقة من المباريات الهامة.';
 
   @override
-  String get lesson2 => 'حدوث بعض التأخير في الدخول بسبب الإقبال الكبير. يمكن تحسين إدارة الطوابير.';
+  String get lesson2 =>
+      'حدوث بعض التأخير في الدخول بسبب الإقبال الكبير. يمكن تحسين إدارة الطوابير.';
 
   @override
   String get challenges => 'التحديات';
@@ -381,7 +384,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get closed => 'مغلق';
 
   @override
-  String get inProgress => 'In Progress';
+  String get inProgress => 'قيد المراجعه';
 
   @override
   String get open => 'مفتوح';
@@ -513,7 +516,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unknownState => 'حالة غير معروفة';
 
   @override
-  String get selectLanguage => 'Select Language';
+  String get selectLanguage => 'اختر اللغة';
 
   @override
   String get matches => 'المباريات';
@@ -556,4 +559,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get modeChanger => 'تحليل بالذكاء الاصطناعي ؟';
+
+  @override
+  String get emailHint => 'your.email@example.com';
+
+  @override
+  String get passwordHint => '••••••••';
+
+  @override
+  String get createAccount => 'إنشاء حساب';
+
+  @override
+  String get createYourAccount => 'أنشئ حسابك';
+
+  @override
+  String get alreadyHaveAccount => 'هل لديك حساب؟';
+
+  @override
+  String get dateOfBirth => 'تاريخ الميلاد';
+
+  @override
+  String get pleaseSelectBirthDate => 'الرجاء اختيار تاريخ ميلادك';
 }

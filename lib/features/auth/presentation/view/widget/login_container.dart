@@ -6,6 +6,9 @@ import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/forget_password.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/no_account.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signin_button.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
+import 'package:stadium_eye/theme/app_colors.dart';
+import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../bloc/auth_event.dart';
 
@@ -44,57 +47,75 @@ class _LoginContainerState extends State<LoginContainer>
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl + 6),
         border: Border.all(
-          color: const Color.fromRGBO(118, 255, 3, 0.3),
+          color: isDarkMode
+              ? AppColors.primaryDark.withAlpha(102)
+              : const Color.fromRGBO(118, 255, 3, 0.3),
           width: 1.5,
         ),
         boxShadow: [
-          const BoxShadow(
-            color: Color.fromRGBO(118, 255, 3, 0.2),
+          BoxShadow(
+            color: isDarkMode
+                ? AppColors.shadowDark
+                : const Color.fromRGBO(118, 255, 3, 0.2),
             blurRadius: 40,
             spreadRadius: 5,
           ),
-          const BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
+          BoxShadow(
+            color: isDarkMode
+                ? AppColors.shadowDark
+                : const Color.fromRGBO(0, 0, 0, 0.1),
             blurRadius: 20,
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'Welcome Back',
+          Text(
+            locale.welcomeBack,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1B5E20),
+              color: isDarkMode
+                  ? AppColors.textPrimaryDark
+                  : AppColors.primaryDark,
             ),
           ),
 
           const SizedBox(height: 8),
 
           Text(
-            'Sign in to continue monitoring',
+            locale.signInToContinueMonitoring,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+            style: TextStyle(
+              fontSize: 14,
+              color: isDarkMode
+                  ? AppColors.textSecondaryDark
+                  : AppColors.mediumGray,
+            ),
           ),
 
           const SizedBox(height: 35),
 
-          const Text(
-            'Email',
+          Text(
+            locale.email,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF1B5E20),
+              color: isDarkMode
+                  ? AppColors.textPrimaryDark
+                  : AppColors.primaryDark,
             ),
           ),
 
@@ -103,34 +124,57 @@ class _LoginContainerState extends State<LoginContainer>
           // Email Field
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: isDarkMode
+                  ? AppColors.cardElevatedDark
+                  : AppColors.veryLightGray,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.grey[300]!, width: 1),
-              boxShadow: [
-                const BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.03),
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
-                ),
-              ],
+              border: Border.all(
+                color: isDarkMode
+                    ? AppColors.borderDark
+                    : AppColors.borderLight,
+                width: 1,
+              ),
+              boxShadow: isDarkMode
+                  ? []
+                  : [
+                      const BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.03),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
             ),
             child: TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              style: const TextStyle(fontSize: 15),
+              style: TextStyle(
+                fontSize: 15,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
               decoration: InputDecoration(
-                hintText: 'your.email@example.com',
-                hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+                hintText: locale.emailHint,
+                hintStyle: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : Colors.grey[400],
+                  fontSize: 14,
+                ),
                 prefixIcon: Container(
                   margin: const EdgeInsets.all(12),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(118, 255, 3, 0.1),
+                    color: isDarkMode
+                        ? AppColors.primaryDark.withAlpha(76)
+                        : const Color.fromRGBO(118, 255, 3, 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Iconsax.user_copy,
-                    color: Color(0xFF2E7D32),
+                    color: isDarkMode
+                        ? AppColors.primaryLight
+                        : AppColors.primaryDark,
                     size: 20,
                   ),
                 ),
@@ -146,12 +190,14 @@ class _LoginContainerState extends State<LoginContainer>
           const SizedBox(height: 25),
 
           // Password Label
-          const Text(
-            'Password',
+          Text(
+            locale.password,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF1B5E20),
+              color: isDarkMode
+                  ? AppColors.textPrimaryDark
+                  : AppColors.primaryDark,
             ),
           ),
 
@@ -160,34 +206,56 @@ class _LoginContainerState extends State<LoginContainer>
           // Password Field
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[50],
+              color: isDarkMode
+                  ? AppColors.cardElevatedDark
+                  : AppColors.veryLightGray,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Colors.grey[300]!, width: 1),
-              boxShadow: [
-                const BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.03),
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
-                ),
-              ],
+              border: Border.all(
+                color: isDarkMode
+                    ? AppColors.borderDark
+                    : AppColors.borderLight,
+                width: 1,
+              ),
+              boxShadow: isDarkMode
+                  ? []
+                  : [
+                      const BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, 0.03),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
             ),
             child: TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
-              style: const TextStyle(fontSize: 15),
+              style: TextStyle(
+                fontSize: 15,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
               decoration: InputDecoration(
-                hintText: '••••••••',
-                hintStyle: TextStyle(color: Colors.grey[400]),
+                hintText: locale.passwordHint,
+                hintStyle: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textSecondaryDark
+                      : Colors.grey[400],
+                ),
                 prefixIcon: Container(
                   margin: const EdgeInsets.all(12),
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(118, 255, 3, 0.1),
+                    color: isDarkMode
+                        ? AppColors.primaryDark.withAlpha(76)
+                        : const Color.fromRGBO(118, 255, 3, 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.lock_outline,
-                    color: Color(0xFF2E7D32),
+                    color: isDarkMode
+                        ? AppColors.primaryLight
+                        : AppColors.primaryDark,
                     size: 20,
                   ),
                 ),
@@ -196,7 +264,9 @@ class _LoginContainerState extends State<LoginContainer>
                     _isPasswordVisible
                         ? Iconsax.eye_copy
                         : Iconsax.eye_slash_copy,
-                    color: Colors.grey[600],
+                    color: isDarkMode
+                        ? AppColors.textSecondaryDark
+                        : Colors.grey[600],
                     size: 22,
                   ),
                   onPressed: () {
