@@ -561,6 +561,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modeChanger => 'Artificial intelligence analysis ?';
 
   @override
+  String get chooseVideoSource => 'Choose Video Source';
+
+  @override
+  String get tapToRecord => 'Tap to start recording';
+
+  @override
+  String get recording => 'Recording...';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get microphonePermissionRequired =>
+      'Microphone permission is required to record voice notes.';
+
+  @override
+  String get operationFailed => 'Operation failed';
+
+  @override
   String get emailHint => 'your.email@example.com';
 
   @override

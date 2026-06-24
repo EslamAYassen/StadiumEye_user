@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import 'voice_recorder_bottom_sheet.dart';
 
 class MediaSection extends StatefulWidget {
   final Function(List<String> imagePaths) onImagesChanged;
@@ -49,7 +48,7 @@ class _MediaSectionState extends State<MediaSection> {
         _notifyImagesChanged();
       }
     } catch (e) {
-      _showError('Failed to pick images: $e');
+      _showError('${AppLocalizations.of(context)!.operationFailed}: $e');
     }
   }
 
@@ -70,47 +69,63 @@ class _MediaSectionState extends State<MediaSection> {
         _notifyImagesChanged();
       }
     } catch (e) {
-      _showError('Failed to take photo: $e');
+      _showError('${AppLocalizations.of(context)!.operationFailed}: $e');
     }
   }
 
-  // Pick videos
-  // Future<void> _pickVideos() async {
-  //   try {
-  //     FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //       type: FileType.video,
-  //       allowMultiple: true,
-  //     );
+  // Record a new video using the camera
+  Future<void> _recordVideo() async {
+    try {
+      final XFile? video = await _imagePicker.pickVideo(
+        source: ImageSource.camera,
+        maxDuration: const Duration(minutes: 5),
+      );
 
-  //     if (result != null) {
-  //       setState(() {
-  //         _selectedVideos.addAll(result.paths.map((p) => File(p!)));
-  //       });
-  //       _notifyVideosChanged();
-  //     }
-  //   } catch (e) {
-  //     _showError('Failed to pick videos: $e');
-  //   }
-  // }
+      if (video != null) {
+        setState(() {
+          _selectedVideos.add(File(video.path));
+        });
+        _notifyVideosChanged();
+      }
+    } catch (e) {
+      _showError('${AppLocalizations.of(context)!.operationFailed}: $e');
+    }
+  }
 
-  // Pick audio/voice files
-  // Future<void> _pickVoices() async {
-  //   try {
-  //     FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //       type: FileType.audio,
-  //       allowMultiple: true,
-  //     );
+  // Pick an existing video from the gallery
+  Future<void> _pickVideoFromGallery() async {
+    try {
+      final XFile? video = await _imagePicker.pickVideo(
+        source: ImageSource.gallery,
+      );
 
-  //     if (result != null) {
-  //       setState(() {
-  //         _selectedVoices.addAll(result.paths.map((p) => File(p!)));
-  //       });
-  //       _notifyVoicesChanged();
-  //     }
-  //   } catch (e) {
-  //     _showError('Failed to pick audio: $e');
-  //   }
-  // }
+      if (video != null) {
+        setState(() {
+          _selectedVideos.add(File(video.path));
+        });
+        _notifyVideosChanged();
+      }
+    } catch (e) {
+      _showError('${AppLocalizations.of(context)!.operationFailed}: $e');
+    }
+  }
+
+  // Record a voice note using the microphone
+  Future<void> _recordVoiceNote() async {
+    final recordedPath = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const VoiceRecorderBottomSheet(),
+    );
+
+    if (recordedPath != null) {
+      setState(() {
+        _selectedVoices.add(File(recordedPath));
+      });
+      _notifyVoicesChanged();
+    }
+  }
 
   void _removeImage(int index) {
     setState(() {
@@ -218,6 +233,73 @@ class _MediaSectionState extends State<MediaSection> {
     );
   }
 
+  void _showVideoPicker() {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(AppThemeConsts.radius16lg),
+            topRight: Radius.circular(AppThemeConsts.radius16lg),
+          ),
+        ),
+        padding: const EdgeInsets.all(AppThemeConsts.padding16md),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: isDarkMode ? AppColors.borderDark : AppColors.lightGray,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              locale.chooseVideoSource,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: isDarkMode
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _ImageSourceButton(
+                  icon: Iconsax.video_copy,
+                  label: locale.camera,
+                  onTap: () {
+                    Navigator.pop(context);
+                    _recordVideo();
+                  },
+                ),
+                _ImageSourceButton(
+                  icon: Iconsax.gallery_copy,
+                  label: locale.gallery,
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickVideoFromGallery();
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -256,12 +338,8 @@ class _MediaSectionState extends State<MediaSection> {
                 icon: Iconsax.video_copy,
                 label: locale.videos,
                 count: _selectedVideos.length,
-                color: Colors.grey, //AppColors.info,
-                onTap: () => AwesomeDialog(
-                  context: context,
-                  title: "This feature is not available yet",
-                  dialogType: DialogType.info,
-                ).show(), // _pickVideos,
+                color: AppColors.info,
+                onTap: _showVideoPicker,
               ),
             ),
             const SizedBox(width: 12),
@@ -270,13 +348,8 @@ class _MediaSectionState extends State<MediaSection> {
                 icon: Iconsax.microphone_copy,
                 label: locale.voice,
                 count: _selectedVoices.length,
-                color: Colors.grey,
-                //TODO: implement voice when ready
-                onTap: () => AwesomeDialog(
-                  context: context,
-                  title: "This feature is not available yet",
-                  dialogType: DialogType.info,
-                ).show(), // _pickVoices ,
+                color: AppColors.warning,
+                onTap: _recordVoiceNote,
               ),
             ),
           ],
@@ -398,7 +471,7 @@ class _MediaButton extends StatelessWidget {
   }
 }
 
-// Image Source Button
+// Image/Video Source Button
 class _ImageSourceButton extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -445,7 +518,6 @@ class _ImageSourceButton extends StatelessWidget {
     );
   }
 }
-// Add these to media_section.dart
 
 // Image Preview Grid
 class _ImagePreviewGrid extends StatelessWidget {

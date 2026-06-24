@@ -561,6 +561,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get modeChanger => 'تحليل بالذكاء الاصطناعي ؟';
 
   @override
+  String get chooseVideoSource => 'اختر مصدر الفيديو';
+
+  @override
+  String get tapToRecord => 'اضغط لبدء التسجيل';
+
+  @override
+  String get recording => 'جارٍ التسجيل...';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get done => 'تم';
+
+  @override
+  String get microphonePermissionRequired =>
+      'يلزم إذن الميكروفون لتسجيل الملاحظات الصوتية.';
+
+  @override
+  String get operationFailed => 'فشلت العملية';
+
+  @override
   String get emailHint => 'your.email@example.com';
 
   @override

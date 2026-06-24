@@ -26,7 +26,7 @@ abstract class AppTheme {
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         .android: FadeUpwardsPageTransitionsBuilder(),
-        .iOS: CupertinoPageTransitionsBuilder(),
+        // .iOS: CupertinoPageTransitionsBuilder(),
       },
     ),
 
@@ -177,7 +177,7 @@ abstract class AppTheme {
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         .android: FadeUpwardsPageTransitionsBuilder(),
-        .iOS: CupertinoPageTransitionsBuilder(),
+        // .iOS: CupertinoPageTransitionsBuilder(),
       },
     ),
 

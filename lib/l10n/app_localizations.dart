@@ -1196,6 +1196,48 @@ abstract class AppLocalizations {
   /// **'Artificial intelligence analysis ?'**
   String get modeChanger;
 
+  /// No description provided for @chooseVideoSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Video Source'**
+  String get chooseVideoSource;
+
+  /// No description provided for @tapToRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to start recording'**
+  String get tapToRecord;
+
+  /// No description provided for @recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording...'**
+  String get recording;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @microphonePermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone permission is required to record voice notes.'**
+  String get microphonePermissionRequired;
+
+  /// No description provided for @operationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation failed'**
+  String get operationFailed;
+
   /// No description provided for @emailHint.
   ///
   /// In en, this message translates to:
