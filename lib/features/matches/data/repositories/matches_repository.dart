@@ -18,6 +18,7 @@ class MatchesRepository {
     String? league,
     String? season,
     String? team,
+    String? timezone,
   }) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure('No internet connection'));
@@ -29,6 +30,7 @@ class MatchesRepository {
         league: league,
         season: season,
         team: team,
+        timezone: timezone,
       );
       return Right(matches);
     } on Exception catch (e) {

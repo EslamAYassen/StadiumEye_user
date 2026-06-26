@@ -22,19 +22,23 @@ class UserModel extends UserEntity {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['_id'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      fullName: json['fullName'] as String,
+      firstName: json['firstName'] as String? ?? "First Name",
+      lastName: json['lastName'] as String? ?? "Last Name",
+      fullName: json['fullName'] as String? ?? "Name",
       role: json['role'] as String,
       profilePicture: json['profilePicture'] as String? ?? '',
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
-      age: json['age'] as int,
-      gender: json['gender'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      loginType: json['loginType'] as String,
-      token: json['token'] as String?,
+      email: json['email'] as String? ?? '',
+      phone: json['phone'] as String? ?? '',
+      dateOfBirth: DateTime.parse(
+        json['dateOfBirth'] as String? ?? DateTime.now().toIso8601String(),
+      ),
+      age: json['age'] as int? ?? 0,
+      gender: json['gender'] as String? ?? '',
+      createdAt: DateTime.parse(
+        json['createdAt'] as String? ?? DateTime.now().toIso8601String(),
+      ),
+      loginType: json['loginType'] as String? ?? '',
+      token: json['token'] as String? ?? '',
       tokenExpDate: json['tokenExpDate'] != null
           ? DateTime.parse(json['tokenExpDate'] as String)
           : null,

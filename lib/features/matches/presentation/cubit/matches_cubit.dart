@@ -18,6 +18,7 @@ class MatchesCubit extends Cubit<MatchesState> {
     String? league,
     String? season,
     String? team,
+    String? timezone,
   }) async {
     emit(MatchesLoading());
 
@@ -26,6 +27,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       league: league,
       season: season,
       team: team,
+      timezone: timezone,
     );
 
     result.fold((failure) => emit(MatchesError(failure.message)), (matches) {

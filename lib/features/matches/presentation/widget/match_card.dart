@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // import '../../../../l10n/app_localizations.dart';
@@ -119,10 +120,10 @@ class _MatchCardState extends State<MatchCard> with TickerProviderStateMixin {
               ),
             ),
             child: ClipOval(
-              child: Image.network(
-                logo,
+              child: CachedNetworkImage(
+                imageUrl: logo,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
+                errorWidget: (_, _, _) {
                   return Icon(
                     Icons.sports_soccer,
                     color: isDarkMode

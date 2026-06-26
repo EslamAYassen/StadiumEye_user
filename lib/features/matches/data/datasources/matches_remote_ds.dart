@@ -10,6 +10,7 @@ abstract class MatchesRemoteDataSource {
     String? league,
     String? season,
     String? team,
+    String? timezone,
   });
 }
 
@@ -23,6 +24,7 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
     String? league,
     String? season,
     String? team,
+    String? timezone,
   }) async {
     try {
       final apiKey = dotenv.env['API_KEY'] ?? '';
@@ -37,6 +39,7 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
       if (league != null) queryParameters['league'] = league;
       if (season != null) queryParameters['season'] = season;
       if (team != null) queryParameters['team'] = team;
+      if (timezone != null) queryParameters['timezone'] = timezone;
 
       final response = await dio.get(
         '$baseUrl/fixtures',

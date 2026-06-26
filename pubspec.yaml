@@ -45,6 +45,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^31.2.18
   video_player: ^2.10.1
   pinput: ^6.0.1
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
