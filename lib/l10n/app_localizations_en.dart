@@ -48,8 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ourMission => 'Our Mission';
 
   @override
-  String get ourMissionDescription =>
-      'To revolutionize stadium management through innovative reporting and real-time insights for a better experience.';
+  String get ourMissionDescription => 'To revolutionize stadium management through innovative reporting and real-time insights for a better experience.';
 
   @override
   String get email => 'Email';
@@ -268,12 +267,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lessonsLearned => 'Lessons Learned';
 
   @override
-  String get lesson1 =>
-      'Need to open additional entry gates 30 minutes earlier for high-profile matches.';
+  String get lesson1 => 'Need to open additional entry gates 30 minutes earlier for high-profile matches.';
 
   @override
-  String get lesson2 =>
-      'Some delays in entry due to high attendance. Queue management could be improved.';
+  String get lesson2 => 'Some delays in entry due to high attendance. Queue management could be improved.';
 
   @override
   String get challenges => 'Challenges';
@@ -576,8 +573,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get done => 'Done';
 
   @override
-  String get microphonePermissionRequired =>
-      'Microphone permission is required to record voice notes.';
+  String get microphonePermissionRequired => 'Microphone permission is required to record voice notes.';
 
   @override
   String get operationFailed => 'Operation failed';
@@ -602,4 +598,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseSelectBirthDate => 'Please select your Birth Date';
+
+  @override
+  String get ticketsOverview => 'Tickets Overview';
+
+  @override
+  String get viewAll => 'View All';
 }

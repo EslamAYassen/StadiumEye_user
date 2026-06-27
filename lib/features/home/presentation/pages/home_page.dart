@@ -9,6 +9,9 @@ import 'package:stadium_eye/features/home/presentation/bloc/home_bloc.dart';
 import 'package:stadium_eye/features/home/presentation/bloc/home_event.dart';
 import 'package:stadium_eye/features/home/presentation/bloc/home_state.dart';
 import 'package:stadium_eye/features/home/presentation/widgets/header_section.dart';
+import 'package:stadium_eye/features/home/presentation/widgets/matches_section.dart';
+import 'package:stadium_eye/features/home/presentation/widgets/tickets_status_chart.dart';
+import 'package:stadium_eye/features/matches/presentation/cubit/matches_cubit.dart';
 
 // import 'package:stadium_eye/features/report/presentation/widgets/recent_activity.dart';
 import 'package:stadium_eye/features/home/presentation/widgets/recent_activity_section.dart';
@@ -93,59 +96,81 @@ class HomePage extends StatelessWidget {
               );
             } else if (state is HomeLoaded) {
               return SafeArea(
-               child: Scaffold(
-                body: Stack(
-                  children: [
-                    BlocBuilder<SettingsCubit, SettingsState>(
-                      builder: (context, state) {
-                        final bool isDarkMode =
-                            state is SettingsLoaded && state.isDarkMode == true;
-                        return _OptimizedGlassmorphicBackground(
-                          imagePath: isDarkMode == false
-                              ? AppConsts.stadiumLight
-                              : AppConsts.stadiumDark,
-                        );
-                      },
-                    ),
+                child: Scaffold(
+                  body: Stack(
+                    children: [
+                      BlocBuilder<SettingsCubit, SettingsState>(
+                        builder: (context, state) {
+                          final bool isDarkMode =
+                              state is SettingsLoaded &&
+                              state.isDarkMode == true;
+                          return _OptimizedGlassmorphicBackground(
+                            imagePath: isDarkMode == false
+                                ? AppConsts.stadiumLight
+                                : AppConsts.stadiumDark,
+                          );
+                        },
+                      ),
 
-                    BallIndicator(
-                      onRefresh: () async {
-                        context.read<HomeBloc>().add(
-                          const RefreshHomeDataEvent(),
-                        );
-                        await Future.delayed(const Duration(seconds: 3));
-                      },
-                      child: SingleChildScrollView(
-                        child: Skeletonizer(
-                          enabled: state is HomeLoading,
-                          child: Column(
-                            children: [
-                              const HeaderSection(),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 30),
+                      BallIndicator(
+                        onRefresh: () async {
+                          context.read<HomeBloc>().add(
+                            const RefreshHomeDataEvent(),
+                          );
+                          context.read<ReportsBloc>().add(
+                            const LoadMyReportsEvent(),
+                          );
+                          context.read<MatchesCubit>().getMatchesEvent(
+                            // timezone:
+                            //     "Asia/Riyadh", // Replace with the desired timezone
+                            date: DateTime.now().toIso8601String().split(
+                              'T',
+                            )[0],
+                            // league: "649",
+                            // season: DateTime.now().year.toString(),
+                          );
+                          await Future.delayed(const Duration(seconds: 3));
+                        },
+                        child: SingleChildScrollView(
+                          child: Skeletonizer(
+                            enabled: state is HomeLoading,
+                            child: Column(
+                              children: [
+                                const HeaderSection(),
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 30),
+                                      const MatchesSection(),
+                                      const SizedBox(height: 30),
 
-                                    QuickActionsSection(
-                                      totalreports: state.homeData.totalTickets,
-                                    ),
+                                      QuickActionsSection(
+                                        totalreports:
+                                            state.homeData.totalTickets,
+                                      ),
 
-                                    const SizedBox(height: 60),
+                                      const SizedBox(height: 30),
 
-                                    const RecentActivitySection(),
-                                  ],
+                                      const TicketsStatusChart(),
+
+                                      const SizedBox(height: 30),
+
+                                      const RecentActivitySection(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ));
+              );
             }
             return const Scaffold(body: Center(child: LottieLoader()));
           },

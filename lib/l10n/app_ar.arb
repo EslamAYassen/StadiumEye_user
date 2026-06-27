@@ -201,5 +201,7 @@
   "createYourAccount": "أنشئ حسابك",
   "alreadyHaveAccount": "هل لديك حساب؟",
   "dateOfBirth": "تاريخ الميلاد",
-  "pleaseSelectBirthDate": "الرجاء اختيار تاريخ ميلادك"
+  "pleaseSelectBirthDate": "الرجاء اختيار تاريخ ميلادك",
+   "ticketsOverview":"نظرة عامة",
+   "viewAll": "المزيد"
  }

@@ -198,5 +198,7 @@
   "createYourAccount": "Create your account",
   "alreadyHaveAccount": "Already have an account?",
   "dateOfBirth": "Date of Birth",
-  "pleaseSelectBirthDate": "Please select your Birth Date"
+  "pleaseSelectBirthDate": "Please select your Birth Date",
+  "ticketsOverview":"Tickets Overview",
+  "viewAll": "View All"
 }

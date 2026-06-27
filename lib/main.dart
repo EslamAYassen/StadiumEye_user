@@ -28,7 +28,10 @@ void main() async {
         BlocProvider(
           create: (context) => MatchesCubit(getMatches: sl())
             ..getMatchesEvent(
-              date: DateTime.now().toIso8601String().split('T')[0],
+              date: DateTime.now().toIso8601String().split("T")[0],
+              //timezone: "Asia/Riyadh",
+              // league: "649",
+              // season: DateTime.now().year.toString(),
             ),
         ),
         BlocProvider(
