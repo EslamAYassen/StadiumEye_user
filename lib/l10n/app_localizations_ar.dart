@@ -48,7 +48,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ourMission => 'مهمتنا';
 
   @override
-  String get ourMissionDescription => 'لإحداث ثورة في إدارة الملاعب من خلال تقارير مبتكرة وتحليلات فورية لتجربة أفضل.';
+  String get ourMissionDescription =>
+      'لإحداث ثورة في إدارة الملاعب من خلال تقارير مبتكرة وتحليلات فورية لتجربة أفضل.';
 
   @override
   String get email => 'البريد الإلكتروني';
@@ -267,10 +268,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lessonsLearned => 'الدروس المستفادة';
 
   @override
-  String get lesson1 => 'ضرورة فتح بوابات إضافية قبل 30 دقيقة من المباريات الهامة.';
+  String get lesson1 =>
+      'ضرورة فتح بوابات إضافية قبل 30 دقيقة من المباريات الهامة.';
 
   @override
-  String get lesson2 => 'حدوث بعض التأخير في الدخول بسبب الإقبال الكبير. يمكن تحسين إدارة الطوابير.';
+  String get lesson2 =>
+      'حدوث بعض التأخير في الدخول بسبب الإقبال الكبير. يمكن تحسين إدارة الطوابير.';
 
   @override
   String get challenges => 'التحديات';
@@ -573,7 +576,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get done => 'تم';
 
   @override
-  String get microphonePermissionRequired => 'يلزم إذن الميكروفون لتسجيل الملاحظات الصوتية.';
+  String get microphonePermissionRequired =>
+      'يلزم إذن الميكروفون لتسجيل الملاحظات الصوتية.';
 
   @override
   String get operationFailed => 'فشلت العملية';
@@ -604,4 +608,115 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get viewAll => 'المزيد';
+
+  @override
+  String get aiAnalysis => 'تحليل الذكاء الاصطناعي';
+
+  @override
+  String get aiAnalysisSubtitle => 'نتائج الكشف الآلي';
+
+  @override
+  String get aiDetectedIssues => 'المشاكل المكتشفة';
+
+  @override
+  String detectionsFound(int count) {
+    return 'تم العثور على $count حالة';
+  }
+
+  @override
+  String get noDetectionsFound => 'لم يتم اكتشاف أي مشاكل';
+
+  @override
+  String get noDetectionsFoundDesc =>
+      'لم يكتشف نموذج الذكاء الاصطناعي أي مشاكل في الوسائط المرسلة.';
+
+  @override
+  String get manualReport => 'بلاغ يدوي';
+
+  @override
+  String get aiPoweredReport => 'بلاغ بالذكاء الاصطناعي';
+
+  @override
+  String get confidence => 'نسبة الثقة';
+
+  @override
+  String get modelTypeVisualPollution => 'تلوث بصري';
+
+  @override
+  String get modelTypeSafety => 'السلامة';
+
+  @override
+  String get detectionClassGraffiti => 'كتابة على الجدران';
+
+  @override
+  String get detectionClassGarbage => 'قمامة';
+
+  @override
+  String get aiRecommendations => 'التوصيات';
+
+  @override
+  String get viewDetectionsOn => 'عرض على الصورة';
+
+  @override
+  String get analyzedMedia => 'الوسائط التي تم تحليلها';
+
+  @override
+  String get lastUpdated => 'آخر تحديث';
+
+  @override
+  String get totalIssuesDetected => 'إجمالي المشاكل المكتشفة';
+
+  @override
+  String get highConfidence => 'عالية';
+
+  @override
+  String get mediumConfidence => 'متوسطة';
+
+  @override
+  String get lowConfidence => 'منخفضة';
+
+  @override
+  String get textAnalysis => 'تحليل النص';
+
+  @override
+  String get textAnalysisSubtitle => 'تصنيف الذكاء الاصطناعي لمحتوى البلاغ';
+
+  @override
+  String get textAnalysisSummary => 'الملخص';
+
+  @override
+  String get textAnalysisExtractedText => 'النص المستخرج';
+
+  @override
+  String get textAnalysisCategory => 'الفئة';
+
+  @override
+  String get textAnalysisPersona => 'الشخصية';
+
+  @override
+  String get textAnalysisInteraction => 'التفاعل';
+
+  @override
+  String get textAnalysisDepartment => 'القسم';
+
+  @override
+  String get textAnalysisSeverity => 'الخطورة';
+
+  @override
+  String get textAnalysisPriority => 'الأولوية';
+
+  @override
+  String get textAnalysisLocation => 'الموقع';
+
+  @override
+  String get textAnalysisPending => 'التحليل قيد الانتظار';
+
+  @override
+  String get textAnalysisProcessing => 'جارٍ تحليل محتوى البلاغ...';
+
+  @override
+  String get textAnalysisFailed => 'فشل تحليل النص';
+
+  @override
+  String get textAnalysisNoContent => 'لا توجد بيانات تصنيف متاحة';
 }

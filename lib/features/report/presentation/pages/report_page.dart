@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/features/report/presentation/widgets/custom_app_bar_for_report.dart';
+import 'package:stadium_eye/features/report/presentation/widgets/text_analysis_section.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/ticket_entity.dart';
+import '../widgets/ai_analysis_section.dart';
 
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key, required this.data});
@@ -28,7 +30,8 @@ class ReportPage extends StatelessWidget {
                 stadiumName: data.stadium.stadiumName,
                 section: data.area,
                 createdDate: data.createdAt.toIso8601String().substring(0, 10),
-                authorName: data.createdBy!.fullName,
+                authorName: data.createdBy?.fullName ?? '-',
+                isAiMode: data.mode == 'ai',
               ),
               // Media Gallery
               _MediaGalleryWidget(photoUrls: data.ticketImages),
@@ -41,21 +44,27 @@ class ReportPage extends StatelessWidget {
                 iconColor: AppColors.primary,
               ),
 
-              // // Challenges
-              // _ReportSectionWidget(
-              //   title: locale.challenges,
-              //   content: data.challenges,
-              //   icon: Icons.error_outline,
-              //   iconColor: AppColors.warning,
-              // ),
+              // Challenges
+              _ReportSectionWidget(
+                title: locale.challenges,
+                content: data.challenges,
+                icon: Icons.error_outline,
+                iconColor: AppColors.warning,
+              ),
 
-              // // Lessons Learned
-              // _ReportSectionWidget(
-              //   title: locale.lessonsLearned,
-              //   content: data.lessonsLearned,
-              //   icon: Icons.lightbulb_outline,
-              //   iconColor: AppColors.warning,
-              // ),
+              // Lessons Learned
+              _ReportSectionWidget(
+                title: locale.lessonsLearned,
+                content: data.lessonsLearned,
+                icon: Icons.lightbulb_outline,
+                iconColor: AppColors.warning,
+              ),
+
+              // AI Analysis (only renders when the report was AI-generated)
+              AiAnalysisSection(ticket: data),
+
+              //
+              TextAnalysisSection(ticket: data),
 
               // Status
               _ReportStatusWidget(statusText: data.status),
@@ -72,12 +81,14 @@ class _ReportHeaderWidget extends StatelessWidget {
   final String section;
   final String createdDate;
   final String authorName;
+  final bool isAiMode;
 
   const _ReportHeaderWidget({
     required this.stadiumName,
     required this.section,
     required this.createdDate,
     required this.authorName,
+    this.isAiMode = false,
   });
 
   @override
@@ -146,6 +157,56 @@ class _ReportHeaderWidget extends StatelessWidget {
                         color: isDarkMode
                             ? AppColors.textSecondaryDark
                             : AppColors.mediumGray,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: isAiMode
+                      ? AppColors.primary.withAlpha((0.12 * 255).toInt())
+                      : (isDarkMode
+                            ? AppColors.cardElevatedDark
+                            : AppColors.lightGray),
+                  borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
+                  border: isAiMode
+                      ? Border.all(
+                          color: AppColors.primary.withAlpha(
+                            (0.4 * 255).toInt(),
+                          ),
+                        )
+                      : null,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isAiMode
+                          ? Icons.auto_awesome_rounded
+                          : Icons.edit_note_rounded,
+                      size: 13,
+                      color: isAiMode
+                          ? AppColors.primary
+                          : (isDarkMode
+                                ? AppColors.textSecondaryDark
+                                : AppColors.mediumGray),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      isAiMode ? locale.aiPoweredReport : locale.manualReport,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: isAiMode
+                            ? AppColors.primary
+                            : (isDarkMode
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.mediumGray),
                       ),
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 
 import '../../bloc/auth_bloc.dart';
 import '../../bloc/auth_state.dart';
@@ -18,6 +19,7 @@ class SigninButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
     return Container(
       height: 56,
       decoration: BoxDecoration(
@@ -50,9 +52,9 @@ class SigninButton extends StatelessWidget {
                     padding: EdgeInsets.all(10.0),
                     child: LottieLoader(),
                   )
-                : const Text(
-                    'Sign In',
-                    style: TextStyle(
+                : Text(
+                    locale.signIn,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

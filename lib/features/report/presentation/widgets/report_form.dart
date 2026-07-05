@@ -37,7 +37,7 @@ class _ReportFormState extends State<ReportForm> {
   String? selectedArea;
   // String? selectedTicketType;
   String? selectedModelType;
-  bool selectedMode = false; 
+  bool selectedMode = false;
 
   // Stored data to prevent loss on state changes
   List<CountryEntity> _countries = [];
@@ -62,7 +62,7 @@ class _ReportFormState extends State<ReportForm> {
   @override
   void initState() {
     super.initState();
-    if(selectedMode == true){
+    if (selectedMode == true) {
       selectedModelType = null;
     }
 
@@ -93,8 +93,8 @@ class _ReportFormState extends State<ReportForm> {
         selectedArea != null &&
         // selectedTicketType != null &&
         _observationsCtrl.text.trim().isNotEmpty; // &&
-        // _challengesCtrl.text.trim().isNotEmpty &&
-        // _lessonsCtrl.text.trim().isNotEmpty;
+    // _challengesCtrl.text.trim().isNotEmpty &&
+    // _lessonsCtrl.text.trim().isNotEmpty;
 
     if (_isFormComplete != isComplete) {
       setState(() {
@@ -150,13 +150,14 @@ class _ReportFormState extends State<ReportForm> {
             stadiumId: selectedStadiumId ?? '',
             area: selectedArea ?? '',
             // ticketType: selectedTicketType ,
-            modelType: selectedModelType ,
+            modelType: selectedModelType,
             observations: _observationsCtrl.text.trim(),
             // challenges: _challengesCtrl.text.trim(),
             // lessonsLearned: _lessonsCtrl.text.trim(),
             ticketImagesPaths: _imagePaths.isNotEmpty ? _imagePaths : null,
             ticketVideosPaths: _videoPaths.isNotEmpty ? _videoPaths : null,
-            ticketVoicesPaths: _voicePaths.isNotEmpty ? _voicePaths : null, mode: selectedMode,
+            ticketVoicesPaths: _voicePaths.isNotEmpty ? _voicePaths : null,
+            mode: selectedMode,
           ),
         ),
       );
@@ -368,13 +369,12 @@ class _ReportFormState extends State<ReportForm> {
               // const SizedBox(height: 26),
 
               //! Model Type Dropdown
-              if(selectedMode == true)...[
-                   _buildLabel(locale.modelType),
-              const SizedBox(height: 8),
-              _buildModelTypeDropdown(),
-              const SizedBox(height: 26),
+              if (selectedMode == true) ...[
+                _buildLabel(locale.modelType),
+                const SizedBox(height: 8),
+                _buildModelTypeDropdown(),
+                const SizedBox(height: 26),
               ],
-           
 
               //! Observations
               _buildLabel(locale.observations),
@@ -418,33 +418,34 @@ class _ReportFormState extends State<ReportForm> {
               // const SizedBox(height: 26),
               //! mode changer
               _buildLabel(locale.modeChanger),
-               Switch(
-                              value: selectedMode,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedMode = value;
-                                });
-                              },
-                              activeThumbColor: AppColors.primary,
-                            ),
-              if(selectedMode == true)
-              MediaSection(
-                onImagesChanged: (paths) {
+              Switch(
+                value: selectedMode,
+                onChanged: (value) {
                   setState(() {
-                    _imagePaths = paths;
+                    selectedMode = value;
+                    if (value == false) selectedModelType = null;
                   });
                 },
-                onVideosChanged: (paths) {
-                  setState(() {
-                    _videoPaths = paths;
-                  });
-                },
-                onVoicesChanged: (paths) {
-                  setState(() {
-                    _voicePaths = paths;
-                  });
-                },
+                activeThumbColor: AppColors.primary,
               ),
+              if (selectedMode == true)
+                MediaSection(
+                  onImagesChanged: (paths) {
+                    setState(() {
+                      _imagePaths = paths;
+                    });
+                  },
+                  onVideosChanged: (paths) {
+                    setState(() {
+                      _videoPaths = paths;
+                    });
+                  },
+                  onVoicesChanged: (paths) {
+                    setState(() {
+                      _voicePaths = paths;
+                    });
+                  },
+                ),
               const SizedBox(height: 26),
 
               //! Submit Button

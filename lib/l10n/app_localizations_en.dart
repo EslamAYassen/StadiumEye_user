@@ -48,7 +48,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ourMission => 'Our Mission';
 
   @override
-  String get ourMissionDescription => 'To revolutionize stadium management through innovative reporting and real-time insights for a better experience.';
+  String get ourMissionDescription =>
+      'To revolutionize stadium management through innovative reporting and real-time insights for a better experience.';
 
   @override
   String get email => 'Email';
@@ -267,10 +268,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lessonsLearned => 'Lessons Learned';
 
   @override
-  String get lesson1 => 'Need to open additional entry gates 30 minutes earlier for high-profile matches.';
+  String get lesson1 =>
+      'Need to open additional entry gates 30 minutes earlier for high-profile matches.';
 
   @override
-  String get lesson2 => 'Some delays in entry due to high attendance. Queue management could be improved.';
+  String get lesson2 =>
+      'Some delays in entry due to high attendance. Queue management could be improved.';
 
   @override
   String get challenges => 'Challenges';
@@ -573,7 +576,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get done => 'Done';
 
   @override
-  String get microphonePermissionRequired => 'Microphone permission is required to record voice notes.';
+  String get microphonePermissionRequired =>
+      'Microphone permission is required to record voice notes.';
 
   @override
   String get operationFailed => 'Operation failed';
@@ -604,4 +608,115 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewAll => 'View All';
+
+  @override
+  String get aiAnalysis => 'AI Analysis';
+
+  @override
+  String get aiAnalysisSubtitle => 'Automated detection results';
+
+  @override
+  String get aiDetectedIssues => 'Detected Issues';
+
+  @override
+  String detectionsFound(int count) {
+    return '$count detections found';
+  }
+
+  @override
+  String get noDetectionsFound => 'No issues detected';
+
+  @override
+  String get noDetectionsFoundDesc =>
+      'The AI model did not detect any issues in the submitted media.';
+
+  @override
+  String get manualReport => 'Manual Report';
+
+  @override
+  String get aiPoweredReport => 'AI-Powered Report';
+
+  @override
+  String get confidence => 'Confidence';
+
+  @override
+  String get modelTypeVisualPollution => 'Visual Pollution';
+
+  @override
+  String get modelTypeSafety => 'Safety';
+
+  @override
+  String get detectionClassGraffiti => 'Graffiti';
+
+  @override
+  String get detectionClassGarbage => 'Garbage';
+
+  @override
+  String get aiRecommendations => 'Recommendations';
+
+  @override
+  String get viewDetectionsOn => 'View on image';
+
+  @override
+  String get analyzedMedia => 'Analyzed Media';
+
+  @override
+  String get lastUpdated => 'Last Updated';
+
+  @override
+  String get totalIssuesDetected => 'Total Issues Detected';
+
+  @override
+  String get highConfidence => 'High';
+
+  @override
+  String get mediumConfidence => 'Medium';
+
+  @override
+  String get lowConfidence => 'Low';
+
+  @override
+  String get textAnalysis => 'Text Analysis';
+
+  @override
+  String get textAnalysisSubtitle => 'AI classification of the report content';
+
+  @override
+  String get textAnalysisSummary => 'Summary';
+
+  @override
+  String get textAnalysisExtractedText => 'Extracted Text';
+
+  @override
+  String get textAnalysisCategory => 'Category';
+
+  @override
+  String get textAnalysisPersona => 'Persona';
+
+  @override
+  String get textAnalysisInteraction => 'Interaction';
+
+  @override
+  String get textAnalysisDepartment => 'Department';
+
+  @override
+  String get textAnalysisSeverity => 'Severity';
+
+  @override
+  String get textAnalysisPriority => 'Priority';
+
+  @override
+  String get textAnalysisLocation => 'Location';
+
+  @override
+  String get textAnalysisPending => 'Analysis pending';
+
+  @override
+  String get textAnalysisProcessing => 'Analyzing report content...';
+
+  @override
+  String get textAnalysisFailed => 'Text analysis failed';
+
+  @override
+  String get textAnalysisNoContent => 'No classification data available';
 }

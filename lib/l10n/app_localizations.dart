@@ -62,7 +62,8 @@ import 'app_localizations_en.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,7 +71,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -82,17 +84,18 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
-    Locale('en')
+    Locale('en'),
   ];
 
   /// No description provided for @addReport.
@@ -1288,9 +1291,226 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View All'**
   String get viewAll;
+
+  /// No description provided for @aiAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Analysis'**
+  String get aiAnalysis;
+
+  /// No description provided for @aiAnalysisSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Automated detection results'**
+  String get aiAnalysisSubtitle;
+
+  /// No description provided for @aiDetectedIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected Issues'**
+  String get aiDetectedIssues;
+
+  /// No description provided for @detectionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} detections found'**
+  String detectionsFound(int count);
+
+  /// No description provided for @noDetectionsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No issues detected'**
+  String get noDetectionsFound;
+
+  /// No description provided for @noDetectionsFoundDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI model did not detect any issues in the submitted media.'**
+  String get noDetectionsFoundDesc;
+
+  /// No description provided for @manualReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Report'**
+  String get manualReport;
+
+  /// No description provided for @aiPoweredReport.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-Powered Report'**
+  String get aiPoweredReport;
+
+  /// No description provided for @confidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence'**
+  String get confidence;
+
+  /// No description provided for @modelTypeVisualPollution.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual Pollution'**
+  String get modelTypeVisualPollution;
+
+  /// No description provided for @modelTypeSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get modelTypeSafety;
+
+  /// No description provided for @detectionClassGraffiti.
+  ///
+  /// In en, this message translates to:
+  /// **'Graffiti'**
+  String get detectionClassGraffiti;
+
+  /// No description provided for @detectionClassGarbage.
+  ///
+  /// In en, this message translates to:
+  /// **'Garbage'**
+  String get detectionClassGarbage;
+
+  /// No description provided for @aiRecommendations.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendations'**
+  String get aiRecommendations;
+
+  /// No description provided for @viewDetectionsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'View on image'**
+  String get viewDetectionsOn;
+
+  /// No description provided for @analyzedMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzed Media'**
+  String get analyzedMedia;
+
+  /// No description provided for @lastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get lastUpdated;
+
+  /// No description provided for @totalIssuesDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Issues Detected'**
+  String get totalIssuesDetected;
+
+  /// No description provided for @highConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get highConfidence;
+
+  /// No description provided for @mediumConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get mediumConfidence;
+
+  /// No description provided for @lowConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get lowConfidence;
+
+  /// No description provided for @textAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Analysis'**
+  String get textAnalysis;
+
+  /// No description provided for @textAnalysisSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI classification of the report content'**
+  String get textAnalysisSubtitle;
+
+  /// No description provided for @textAnalysisSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get textAnalysisSummary;
+
+  /// No description provided for @textAnalysisExtractedText.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted Text'**
+  String get textAnalysisExtractedText;
+
+  /// No description provided for @textAnalysisCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get textAnalysisCategory;
+
+  /// No description provided for @textAnalysisPersona.
+  ///
+  /// In en, this message translates to:
+  /// **'Persona'**
+  String get textAnalysisPersona;
+
+  /// No description provided for @textAnalysisInteraction.
+  ///
+  /// In en, this message translates to:
+  /// **'Interaction'**
+  String get textAnalysisInteraction;
+
+  /// No description provided for @textAnalysisDepartment.
+  ///
+  /// In en, this message translates to:
+  /// **'Department'**
+  String get textAnalysisDepartment;
+
+  /// No description provided for @textAnalysisSeverity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity'**
+  String get textAnalysisSeverity;
+
+  /// No description provided for @textAnalysisPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get textAnalysisPriority;
+
+  /// No description provided for @textAnalysisLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get textAnalysisLocation;
+
+  /// No description provided for @textAnalysisPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis pending'**
+  String get textAnalysisPending;
+
+  /// No description provided for @textAnalysisProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing report content...'**
+  String get textAnalysisProcessing;
+
+  /// No description provided for @textAnalysisFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Text analysis failed'**
+  String get textAnalysisFailed;
+
+  /// No description provided for @textAnalysisNoContent.
+  ///
+  /// In en, this message translates to:
+  /// **'No classification data available'**
+  String get textAnalysisNoContent;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -1299,25 +1519,26 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['ar', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['ar', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ar': return AppLocalizationsAr();
-    case 'en': return AppLocalizationsEn();
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'en':
+      return AppLocalizationsEn();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }
