@@ -44,21 +44,21 @@ class ReportPage extends StatelessWidget {
                 iconColor: AppColors.primary,
               ),
 
-              // Challenges
-              _ReportSectionWidget(
-                title: locale.challenges,
-                content: data.challenges,
-                icon: Icons.error_outline,
-                iconColor: AppColors.warning,
-              ),
+              // // Challenges
+              // _ReportSectionWidget(
+              //   title: locale.challenges,
+              //   content: data.challenges,
+              //   icon: Icons.error_outline,
+              //   iconColor: AppColors.warning,
+              // ),
 
-              // Lessons Learned
-              _ReportSectionWidget(
-                title: locale.lessonsLearned,
-                content: data.lessonsLearned,
-                icon: Icons.lightbulb_outline,
-                iconColor: AppColors.warning,
-              ),
+              // // Lessons Learned
+              // _ReportSectionWidget(
+              //   title: locale.lessonsLearned,
+              //   content: data.lessonsLearned,
+              //   icon: Icons.lightbulb_outline,
+              //   iconColor: AppColors.warning,
+              // ),
 
               // AI Analysis (only renders when the report was AI-generated)
               AiAnalysisSection(ticket: data),

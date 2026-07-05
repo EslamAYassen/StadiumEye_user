@@ -69,9 +69,14 @@ class TicketModel extends TicketEntity {
       department: json['department'] as String?,
       confidence: (json['confidence'] as num?)?.toDouble(),
       textDetection: json['textDetection'] != null
-          ? TextDetectionModel.fromJson(
-              json['textDetection'] as Map<String, dynamic>,
-            )
+          ? json['textDetection'] is List
+                ? TextDetectionModel.fromJson(
+                    (json['textDetection'] as List? ?? [])[0]
+                        as Map<String, dynamic>,
+                  )
+                : TextDetectionModel.fromJson(
+                    json['textDetection'] as Map<String, dynamic>,
+                  )
           : null,
     );
   }
