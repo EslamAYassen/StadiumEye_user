@@ -1507,6 +1507,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No classification data available'**
   String get textAnalysisNoContent;
+
+  String get videoTooLong;
 }
 
 class _AppLocalizationsDelegate

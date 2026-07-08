@@ -719,4 +719,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get textAnalysisNoContent => 'No classification data available';
+
+  @override
+  String get videoTooLong =>
+      'Video duration exceeds the allowed limit of 5 seconds';
 }

@@ -143,7 +143,9 @@ class HomePage extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      const TicketsStatusChart(),
                                       const SizedBox(height: 30),
+
                                       const MatchesSection(),
                                       const SizedBox(height: 30),
 
@@ -154,10 +156,7 @@ class HomePage extends StatelessWidget {
 
                                       const SizedBox(height: 30),
 
-                                      const TicketsStatusChart(),
-
-                                      const SizedBox(height: 30),
-
+                                      // const SizedBox(height: 30),
                                       const RecentActivitySection(),
                                     ],
                                   ),

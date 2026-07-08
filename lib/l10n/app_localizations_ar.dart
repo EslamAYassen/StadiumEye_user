@@ -719,4 +719,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get textAnalysisNoContent => 'لا توجد بيانات تصنيف متاحة';
+
+  @override
+  String get videoTooLong => 'مدة الفيديو تتجاوز الحد المسموح به 5 ثوانٍ';
 }

@@ -104,7 +104,7 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
         'observations': observations,
         // 'challenges': challenges,
         // 'lessonsLearned': lessonsLearned,
-        'mode': mode ? 'ai': 'manual',
+        'mode': mode ? 'ai' : 'manual',
         if (modelType != null) 'modelType': modelType,
         if (locationLink != null) 'locationLink': locationLink,
       });

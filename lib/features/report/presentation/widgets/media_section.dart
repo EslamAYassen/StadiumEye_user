@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import 'voice_recorder_bottom_sheet.dart';
@@ -73,12 +74,14 @@ class _MediaSectionState extends State<MediaSection> {
     }
   }
 
+  static const Duration _maxVideoDuration = Duration(seconds: 5);
+
   // Record a new video using the camera
   Future<void> _recordVideo() async {
     try {
       final XFile? video = await _imagePicker.pickVideo(
         source: ImageSource.camera,
-        maxDuration: const Duration(minutes: 5),
+        maxDuration: _maxVideoDuration,
       );
 
       if (video != null) {
@@ -99,12 +102,28 @@ class _MediaSectionState extends State<MediaSection> {
         source: ImageSource.gallery,
       );
 
-      if (video != null) {
-        setState(() {
-          _selectedVideos.add(File(video.path));
-        });
-        _notifyVideosChanged();
+      if (video == null) return;
+
+      final controller = VideoPlayerController.file(File(video.path));
+      await controller.initialize();
+
+      final duration = controller.value.duration;
+      await controller.dispose();
+
+      if (duration > _maxVideoDuration) {
+        _showError(
+          AppLocalizations.of(context)!.videoTooLong,
+          // Or:
+          // 'Video must not exceed 5 minutes.',
+        );
+        return;
       }
+
+      setState(() {
+        _selectedVideos.add(File(video.path));
+      });
+
+      _notifyVideosChanged();
     } catch (e) {
       _showError('${AppLocalizations.of(context)!.operationFailed}: $e');
     }

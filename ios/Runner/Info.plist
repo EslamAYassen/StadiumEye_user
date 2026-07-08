@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Stadium Eye uses your location to show the nearest stadium and match.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Stadium Eye needs microphone access to record voice notes for your reports.</string>
     <key>NSPhotoLibraryUsageDescription</key>

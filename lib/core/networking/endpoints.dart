@@ -45,3 +45,7 @@ class LocationEndpoints extends Endpoints {
   static const countries = "/countries";
   static const cities = "/cities";
 }
+
+class NearbyStadiumEndpoints extends Endpoints {
+  static const nearbyStadium = "/stadiums/next-match";
+}
