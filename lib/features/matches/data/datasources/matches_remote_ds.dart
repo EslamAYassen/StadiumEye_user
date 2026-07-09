@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../../../../core/networking/endpoints.dart';
 import '../../domain/entities/matches_res.dart';
 import '../models/matches_model.dart';
+import '../models/nearby_stadium_model.dart';
 
 abstract class MatchesRemoteDataSource {
   Future<ParantMatchesRes> getMatches({
@@ -10,7 +12,11 @@ abstract class MatchesRemoteDataSource {
     String? league,
     String? season,
     String? team,
-    String? timezone,
+  });
+
+  Future<NearbyStadiumDataModel> getNearbyStadium({
+    required double lat,
+    required double lng,
   });
 }
 
@@ -24,7 +30,6 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
     String? league,
     String? season,
     String? team,
-    String? timezone,
   }) async {
     try {
       final apiKey = dotenv.env['API_KEY'] ?? '';
@@ -39,7 +44,6 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
       if (league != null) queryParameters['league'] = league;
       if (season != null) queryParameters['season'] = season;
       if (team != null) queryParameters['team'] = team;
-      if (timezone != null) queryParameters['timezone'] = timezone;
 
       final response = await dio.get(
         '$baseUrl/fixtures',
@@ -59,6 +63,34 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
       throw _handleDioError(e);
     } catch (e) {
       throw Exception('Unexpected Error: $e');
+    }
+  }
+
+  @override
+  Future<NearbyStadiumDataModel> getNearbyStadium({
+    required double lat,
+    required double lng,
+  }) async {
+    try {
+      // Uses the app's own backend (Endpoints.baseUrl already configured on
+      // this shared Dio instance), unlike getMatches above which hits the
+      // external football API with an absolute URL.
+      final response = await dio.get(
+        NearbyStadiumEndpoints.nearbyStadium,
+        queryParameters: {'lat': lat, 'lng': lng},
+      );
+
+      if (response.statusCode == 200 && response.data['status'] == 'success') {
+        return NearbyStadiumDataModel.fromJson(
+          response.data['data'] as Map<String, dynamic>,
+        );
+      } else {
+        throw Exception(
+          response.data['message'] ?? 'Failed to load nearby stadium',
+        );
+      }
+    } on DioException catch (e) {
+      throw _handleDioError(e);
     }
   }
 

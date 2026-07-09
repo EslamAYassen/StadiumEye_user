@@ -1509,6 +1509,16 @@ abstract class AppLocalizations {
   String get textAnalysisNoContent;
 
   String get videoTooLong;
+
+  String get nearbyStadium;
+
+  String get upcomingMatchNearYou;
+
+  String get locationServiceDisabledMsg;
+
+  String get locationPermissionDeniedMsg;
+
+  String get awayFromYou;
 }
 
 class _AppLocalizationsDelegate

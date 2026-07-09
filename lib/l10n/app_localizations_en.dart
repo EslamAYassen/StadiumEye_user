@@ -723,4 +723,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get videoTooLong =>
       'Video duration exceeds the allowed limit of 5 seconds';
+  @override
+  String get nearbyStadium => "Nearby stadium";
+  @override
+  String get upcomingMatchNearYou => "Upcoming Match Near You";
+  @override
+  String get locationServiceDisabledMsg =>
+      "Location Service Disabled Please turn on it";
+  @override
+  String get locationPermissionDeniedMsg => "Location Permission Denied";
+  @override
+  String get awayFromYou => "Away From You";
 }

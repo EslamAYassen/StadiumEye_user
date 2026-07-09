@@ -9,9 +9,8 @@ import 'package:stadium_eye/features/home/presentation/bloc/home_bloc.dart';
 import 'package:stadium_eye/features/home/presentation/bloc/home_event.dart';
 import 'package:stadium_eye/features/home/presentation/bloc/home_state.dart';
 import 'package:stadium_eye/features/home/presentation/widgets/header_section.dart';
-import 'package:stadium_eye/features/home/presentation/widgets/matches_section.dart';
-import 'package:stadium_eye/features/home/presentation/widgets/tickets_status_chart.dart';
-import 'package:stadium_eye/features/matches/presentation/cubit/matches_cubit.dart';
+import 'package:stadium_eye/features/home/presentation/widgets/nearby_stadium_section.dart';
+import 'package:stadium_eye/features/matches/presentation/cubit/nearby_stadium_cubit.dart';
 
 // import 'package:stadium_eye/features/report/presentation/widgets/recent_activity.dart';
 import 'package:stadium_eye/features/home/presentation/widgets/recent_activity_section.dart';
@@ -25,8 +24,10 @@ import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../report/presentation/bloc/report_event.dart';
 import '../../../settings/presentation/bloc/settings_cubit.dart';
 import '../../home_injection.dart';
+import '../widgets/matches_section.dart';
 import '../widgets/quick_actions_section.dart';
 import '../widgets/ball_indicator.dart';
+import '../widgets/tickets_status_chart.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -49,6 +50,9 @@ class HomePage extends StatelessWidget {
             getCitiesUseCase: sl(),
             getCountriesUseCase: sl(),
           )..add(const LoadMyReportsEvent()),
+        ),
+        BlocProvider(
+          create: (context) => sl<NearbyStadiumCubit>()..fetchNearbyStadium(),
         ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
@@ -117,52 +121,52 @@ class HomePage extends StatelessWidget {
                           context.read<HomeBloc>().add(
                             const RefreshHomeDataEvent(),
                           );
-                          context.read<ReportsBloc>().add(
-                            const LoadMyReportsEvent(),
-                          );
-                          context.read<MatchesCubit>().getMatchesEvent(
-                            // timezone:
-                            //     "Asia/Riyadh", // Replace with the desired timezone
-                            date: DateTime.now().toIso8601String().split(
-                              'T',
-                            )[0],
-                            // league: "649",
-                            // season: DateTime.now().year.toString(),
-                          );
                           await Future.delayed(const Duration(seconds: 3));
                         },
                         child: SingleChildScrollView(
-                          child: Skeletonizer(
-                            enabled: state is HomeLoading,
-                            child: Column(
-                              children: [
-                                const HeaderSection(),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const TicketsStatusChart(),
-                                      const SizedBox(height: 30),
+                          child: Column(
+                            children: [
+                              // Nearby Stadium section sits at the very top of
+                              // the home page and manages its own
+                              // loading/error/permission states independently
+                              // of the main HomeBloc.
+                              Skeletonizer(
+                                enabled: state is HomeLoading,
+                                child: Column(
+                                  children: [
+                                    const HeaderSection(),
 
-                                      const MatchesSection(),
-                                      const SizedBox(height: 30),
+                                    const NearbyStadiumSection(),
 
-                                      QuickActionsSection(
-                                        totalreports:
-                                            state.homeData.totalTickets,
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const MatchesSection(),
+                                          const SizedBox(height: 30),
+
+                                          const TicketsStatusChart(),
+
+                                          const SizedBox(height: 30),
+                                          const SizedBox(height: 30),
+
+                                          QuickActionsSection(
+                                            totalreports:
+                                                state.homeData.totalTickets,
+                                          ),
+
+                                          const SizedBox(height: 60),
+
+                                          const RecentActivitySection(),
+                                        ],
                                       ),
-
-                                      const SizedBox(height: 30),
-
-                                      // const SizedBox(height: 30),
-                                      const RecentActivitySection(),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

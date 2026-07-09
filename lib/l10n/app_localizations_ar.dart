@@ -722,4 +722,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get videoTooLong => 'مدة الفيديو تتجاوز الحد المسموح به 5 ثوانٍ';
+
+  @override
+  String get nearbyStadium => "ملعب قريب";
+  @override
+  String get upcomingMatchNearYou => "متشات مترقبة قريبه منك";
+  @override
+  String get locationServiceDisabledMsg => "خدمة الGPS مغلقة من فضلك شغلها";
+  @override
+  String get locationPermissionDeniedMsg => "تم رفض إذن الموقع من فضلك شغله";
+  @override
+  String get awayFromYou => "بعيد عنك";
 }

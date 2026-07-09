@@ -4,6 +4,8 @@ import 'package:stadium_eye/core/networking/network_info.dart';
 import 'package:stadium_eye/features/matches/data/datasources/matches_remote_ds.dart';
 import 'package:stadium_eye/features/matches/domain/entities/matches_res.dart';
 
+import '../../domain/entities/nearby_stadium_res.dart';
+
 class MatchesRepository {
   final MatchesRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
@@ -18,7 +20,6 @@ class MatchesRepository {
     String? league,
     String? season,
     String? team,
-    String? timezone,
   }) async {
     if (!await networkInfo.isConnected) {
       return const Left(NetworkFailure('No internet connection'));
@@ -30,9 +31,29 @@ class MatchesRepository {
         league: league,
         season: season,
         team: team,
-        timezone: timezone,
       );
       return Right(matches);
+    } on Exception catch (e) {
+      return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
+    } catch (e) {
+      return const Left(ServerFailure('An unexpected error occurred'));
+    }
+  }
+
+  Future<Either<Failure, NearbyStadiumDataEntity>> getNearbyStadium({
+    required double lat,
+    required double lng,
+  }) async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+
+    try {
+      final result = await remoteDataSource.getNearbyStadium(
+        lat: lat,
+        lng: lng,
+      );
+      return Right(result);
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
     } catch (e) {

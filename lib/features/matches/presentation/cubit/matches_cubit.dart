@@ -27,7 +27,7 @@ class MatchesCubit extends Cubit<MatchesState> {
       league: league,
       season: season,
       team: team,
-      timezone: timezone,
+      // timezone: timezone,
     );
 
     result.fold((failure) => emit(MatchesError(failure.message)), (matches) {
