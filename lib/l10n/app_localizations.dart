@@ -1519,6 +1519,36 @@ abstract class AppLocalizations {
   String get locationPermissionDeniedMsg;
 
   String get awayFromYou;
+
+  /// No description provided for @sessionExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Expired'**
+  String get sessionExpiredTitle;
+
+  /// No description provided for @sessionExpiredMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please sign in again to continue.'**
+  String get sessionExpiredMessage;
+
+  /// No description provided for @noInternetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet Connection'**
+  String get noInternetTitle;
+
+  /// No description provided for @noInternetMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your connection and try again.'**
+  String get noInternetMessage;
+
+  /// No description provided for @somethingWentWrongTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something Went Wrong'**
+  String get somethingWentWrongTitle;
 }
 
 class _AppLocalizationsDelegate

@@ -733,4 +733,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get locationPermissionDeniedMsg => "تم رفض إذن الموقع من فضلك شغله";
   @override
   String get awayFromYou => "بعيد عنك";
+
+  @override
+  String get sessionExpiredTitle => 'انتهت الجلسة';
+
+  @override
+  String get sessionExpiredMessage =>
+      'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى للمتابعة.';
+
+  @override
+  String get noInternetTitle => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get noInternetMessage => 'يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+
+  @override
+  String get somethingWentWrongTitle => 'حدث خطأ ما';
 }

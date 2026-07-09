@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/networking/endpoints.dart';
 import '../models/home_data_model.dart';
 
@@ -22,7 +23,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       if (response.statusCode == 200) {
         return HomeDataModel.fromJson(response.data as Map<String, dynamic>);
       } else {
-        throw Exception(response.data['message'] ?? 'Failed to load home data');
+        throw ServerException(
+          response.data['message'] ?? 'Failed to load home data',
+        );
       }
     } on DioException catch (e) {
       throw _handleDioError(e);
@@ -30,16 +33,24 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   Exception _handleDioError(DioException e) {
+    if (e.response?.statusCode == 401) {
+      return UnauthorizedException(
+        e.response?.data['message'] ??
+            'Your session has expired. Please sign in again.',
+      );
+    }
+
+    if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.receiveTimeout ||
+        e.type == DioExceptionType.connectionError) {
+      return const NoInternetException();
+    }
+
     if (e.response != null) {
       final message = e.response?.data['message'] ?? 'An error occurred';
-      return Exception(message);
-    } else if (e.type == DioExceptionType.connectionTimeout ||
-        e.type == DioExceptionType.receiveTimeout) {
-      return Exception('Connection timeout');
-    } else if (e.type == DioExceptionType.connectionError) {
-      return Exception('No internet connection');
-    } else {
-      return Exception('An unexpected error occurred');
+      return ServerException(message);
     }
+
+    return const ServerException('An unexpected error occurred');
   }
 }

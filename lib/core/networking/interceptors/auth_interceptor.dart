@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../../services/session_expired_notifier.dart';
 import '../../storage/secure_storage.dart';
 
 class AuthInterceptor extends Interceptor {
@@ -22,11 +23,12 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // Handle 401 Unauthorized errors (token expired or invalid)
+    // Token is invalid or expired. Notify the app so AuthBloc can clear the
+    // cached session and redirect to the login screen, instead of silently
+    // swallowing the 401 and showing the same "session expired" error on
+    // every future app launch.
     if (err.response?.statusCode == 401) {
-      // Token is invalid or expired
-      // You might want to clear the token and redirect to login
-      // secureStorage.delete("token");
+      SessionExpiredNotifier.instance.notify();
     }
 
     handler.next(err);

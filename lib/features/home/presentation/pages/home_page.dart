@@ -15,7 +15,6 @@ import 'package:stadium_eye/features/matches/presentation/cubit/nearby_stadium_c
 // import 'package:stadium_eye/features/report/presentation/widgets/recent_activity.dart';
 import 'package:stadium_eye/features/home/presentation/widgets/recent_activity_section.dart';
 import 'package:stadium_eye/features/report/presentation/bloc/report_bloc.dart';
-import 'package:stadium_eye/l10n/app_localizations.dart';
 
 import '../../../../constants/app_routes.dart';
 import '../../../../core/widgets/loading/lottie_loading.dart';
@@ -24,6 +23,7 @@ import '../../../auth/presentation/bloc/auth_state.dart';
 import '../../../report/presentation/bloc/report_event.dart';
 import '../../../settings/presentation/bloc/settings_cubit.dart';
 import '../../home_injection.dart';
+import '../widgets/home_error_view.dart';
 import '../widgets/matches_section.dart';
 import '../widgets/quick_actions_section.dart';
 import '../widgets/ball_indicator.dart';
@@ -66,34 +66,10 @@ class HomePage extends StatelessWidget {
             if (state is HomeError) {
               return SafeArea(
                 child: Scaffold(
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: .center,
-                      crossAxisAlignment: .center,
-                      children: [
-                        Image.asset(
-                          width: 100,
-                          height: 100,
-                          AppConsts.errorImage,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(state.message),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () => context.read<HomeBloc>().add(
-                            const RefreshHomeDataEvent(),
-                          ),
-                          child: Text(AppLocalizations.of(context)!.retry),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () => Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.login,
-                          ),
-                          child: Text(AppLocalizations.of(context)!.goToSignIn),
-                        ),
-                      ],
+                  body: HomeErrorView(
+                    failure: state.failure,
+                    onRetry: () => context.read<HomeBloc>().add(
+                      const RefreshHomeDataEvent(),
                     ),
                   ),
                 ),
@@ -126,10 +102,6 @@ class HomePage extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              // Nearby Stadium section sits at the very top of
-                              // the home page and manages its own
-                              // loading/error/permission states independently
-                              // of the main HomeBloc.
                               Skeletonizer(
                                 enabled: state is HomeLoading,
                                 child: Column(

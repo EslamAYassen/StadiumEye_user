@@ -41,6 +41,13 @@ class LogoutEvent extends AuthEvent {
   const LogoutEvent();
 }
 
+/// Fired internally whenever [SessionExpiredNotifier] reports a 401 from
+/// any API call across the app, so [AuthBloc] can log the user out exactly
+/// once instead of repeatedly retrying with the same invalid token.
+class SessionExpiredEvent extends AuthEvent {
+  const SessionExpiredEvent();
+}
+
 class CheckAuthStatusEvent extends AuthEvent {
   const CheckAuthStatusEvent();
 }

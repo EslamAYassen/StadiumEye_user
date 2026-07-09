@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../../core/error/failures.dart';
 import '../../domain/entites/home_data_entity.dart';
 
 abstract class HomeState extends Equatable {
@@ -26,10 +27,15 @@ class HomeLoaded extends HomeState {
 }
 
 class HomeError extends HomeState {
-  final String message;
+  /// The typed failure (AuthFailure / NetworkFailure / ServerFailure / ...)
+  /// so the UI can render a different message, icon, and action per error
+  /// type instead of one generic "something went wrong" screen.
+  final Failure failure;
 
-  const HomeError(this.message);
+  const HomeError(this.failure);
+
+  String get message => failure.message;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [failure.message];
 }

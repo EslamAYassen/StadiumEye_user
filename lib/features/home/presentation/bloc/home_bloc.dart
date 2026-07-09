@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stadium_eye/core/error/failures.dart';
 
 import '../../domain/usecases/get_home_usecase.dart';
 import 'home_event.dart';
@@ -22,7 +21,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await getHomeDataUseCase();
 
     result.fold(
-      (failure) => emit(HomeError(_mapFailureToMessage(failure))),
+      (failure) => emit(HomeError(failure)),
       (homeData) => emit(HomeLoaded(homeData)),
     );
   }
@@ -35,12 +34,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await getHomeDataUseCase();
 
     result.fold(
-      (failure) => emit(HomeError(_mapFailureToMessage(failure))),
+      (failure) => emit(HomeError(failure)),
       (homeData) => emit(HomeLoaded(homeData)),
     );
-  }
-
-  String _mapFailureToMessage(Failure failure) {
-    return failure.message;
   }
 }

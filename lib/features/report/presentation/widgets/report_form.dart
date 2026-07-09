@@ -248,6 +248,10 @@ class _ReportFormState extends State<ReportForm> {
         if (state is CountriesLoaded) {
           setState(() {
             _countries = state.countries.countries;
+            _onCountrySelected(_countries.first.id);
+            // selectedCountryId ??= _countries.isNotEmpty
+            //     ? _countries.first.id
+            //     : null;
             _isLoadingCountries = false;
           });
         } else if (state is CitiesLoaded) {
@@ -503,6 +507,7 @@ class _ReportFormState extends State<ReportForm> {
           icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
           items: _countries.map((country) {
             return DropdownMenuItem(
+              enabled: false,
               //TODO: change this to work with CustomDropdown
               value: country.id,
               child: Row(

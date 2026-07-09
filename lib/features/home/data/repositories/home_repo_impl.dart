@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 
 import '../../../../core/networking/network_info.dart';
@@ -27,16 +28,13 @@ class HomeRepositoryImpl implements HomeRepository {
       final homeData = await remoteDataSource.getHomeData();
 
       return Right(homeData.toEntity());
-    } on Exception catch (e) {
-      // // If remote fails, try cached data
-      // try {
-      //   final cachedData = await localDataSource.getCachedHomeData();
-      //   if (cachedData != null) {
-      //     return Right(cachedData.toEntity());
-      //   }
-      // } catch (_) {}
-
-      return Left(ServerFailure(e.toString().replaceAll('Exception: ', '')));
+    } on UnauthorizedException catch (e) {
+      // Access token is missing/invalid/expired.
+      return Left(AuthFailure(e.message));
+    } on NoInternetException catch (e) {
+      return Left(NetworkFailure(e.message));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     } catch (e) {
       return const Left(ServerFailure('An unexpected error occurred'));
     }

@@ -734,4 +734,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationPermissionDeniedMsg => "Location Permission Denied";
   @override
   String get awayFromYou => "Away From You";
+
+  @override
+  String get sessionExpiredTitle => 'Session Expired';
+
+  @override
+  String get sessionExpiredMessage =>
+      'Your session has expired. Please sign in again to continue.';
+
+  @override
+  String get noInternetTitle => 'No Internet Connection';
+
+  @override
+  String get noInternetMessage => 'Please check your connection and try again.';
+
+  @override
+  String get somethingWentWrongTitle => 'Something Went Wrong';
 }
