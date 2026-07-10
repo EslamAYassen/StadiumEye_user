@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -12,6 +10,12 @@ import '../../../matches/domain/entities/matches_res.dart';
 import '../../../matches/domain/entities/nearby_stadium_res.dart';
 import '../../../matches/presentation/cubit/nearby_stadium_cubit.dart';
 
+/// Standalone nearby-stadium card, kept for any context that still wants
+/// the fully self-contained gradient card (its own background + border +
+/// shadow). On the Home page this content now lives directly inside
+/// [HomeSliverAppBar] via [NearbyStadiumContent] instead, since the
+/// location preview is the hero of the app bar rather than a separate
+/// section below it.
 class NearbyStadiumSection extends StatefulWidget {
   const NearbyStadiumSection({super.key});
 
@@ -33,8 +37,10 @@ class _NearbyStadiumSectionState extends State<NearbyStadiumSection>
       vsync: this,
     );
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
-    _slide = Tween<Offset>(begin: const Offset(0, 0.15), end: Offset.zero)
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.15),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     _controller.forward();
   }
 
@@ -80,46 +86,47 @@ class _NearbyStadiumCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(AppThemeConsts.padding16md),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDarkMode
-                  ? [AppColors.primaryDark, AppColors.primary]
-                  : [AppColors.gradientStart, AppColors.gradientEnd],
-            ),
-            borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-            border: Border.all(
-              color: Colors.white.withAlpha((0.15 * 255).toInt()),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDarkMode
-                    ? AppColors.shadowDark
-                    : AppColors.primary.withAlpha((0.25 * 255).toInt()),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: _buildContent(context),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDarkMode
+              ? [AppColors.primaryDark, AppColors.primary]
+              : [AppColors.gradientStart, AppColors.gradientEnd],
         ),
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
+        border: Border.all(
+          color: Colors.white.withAlpha((0.15 * 255).toInt()),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode
+                ? AppColors.shadowDark
+                : AppColors.primary.withAlpha((0.25 * 255).toInt()),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
+      child: NearbyStadiumContent(state: state),
     );
   }
+}
 
-  Widget _buildContent(BuildContext context) {
+class NearbyStadiumContent extends StatelessWidget {
+  const NearbyStadiumContent({super.key, required this.state});
+  final NearbyStadiumState state;
+
+  @override
+  Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
 
     switch (state.status) {
+      case NearbyStadiumStatus.initial:
       case NearbyStadiumStatus.loading:
         return _StatusContent(
           loading: true,
@@ -131,7 +138,8 @@ class _NearbyStadiumCard extends StatelessWidget {
           icon: Iconsax.gps_slash,
           title: locale.nearbyStadium,
           message: locale.locationServiceDisabledMsg,
-          onRetry: () => context.read<NearbyStadiumCubit>().fetchNearbyStadium(),
+          onRetry: () =>
+              context.read<NearbyStadiumCubit>().fetchNearbyStadium(),
           retryLabel: locale.retry,
         );
       case NearbyStadiumStatus.locationPermissionDenied:
@@ -139,21 +147,52 @@ class _NearbyStadiumCard extends StatelessWidget {
           icon: Iconsax.location_slash,
           title: locale.nearbyStadium,
           message: locale.locationPermissionDeniedMsg,
-          onRetry: () => context.read<NearbyStadiumCubit>().fetchNearbyStadium(),
+          onRetry: () =>
+              context.read<NearbyStadiumCubit>().fetchNearbyStadium(),
           retryLabel: locale.retry,
         );
       case NearbyStadiumStatus.error:
+        // return _NearbyStadiumLoadedContent(
+        //   data: NearbyStadiumDataEntity(
+        //     fixture: Response(
+        //       fixture: Fixture(
+        //         id: 12,
+        //         timezone: Timezone.UTC,
+        //         periods: Periods(first: 1, second: 2),
+        //         venue: Venue(),
+        //         status: Status(),
+        //       ),
+        //       league: League(id: 1),
+        //       teams: Teams(
+        //         home: AwayAndHomeClass(id: 1),
+        //         away: AwayAndHomeClass(id: 2),
+        //       ),
+        //       goals: Goals(),
+        //       score: Score(
+        //         halftime: Goals(),
+        //         fulltime: Goals(),
+        //         extratime: Goals(),
+        //         penalty: Goals(),
+        //       ),
+        //     ),
+        //     stadium: StadiumProximityEntity(
+        //       location: StadiumLocationEntity(name: "ss", lat: 12, lng: 12),
+        //       isActive: true,
+        //       distance: 12.2,
+        //     ),
+        //     venue: VenueDetailsEntity(id: 1, name: "name"),
+        //   ),
+        // );
         return _StatusContent(
           icon: Icons.error_outline,
           title: locale.nearbyStadium,
           message: state.message ?? '',
-          onRetry: () => context.read<NearbyStadiumCubit>().fetchNearbyStadium(),
+          onRetry: () =>
+              context.read<NearbyStadiumCubit>().fetchNearbyStadium(),
           retryLabel: locale.retry,
         );
       case NearbyStadiumStatus.loaded:
         return _NearbyStadiumLoadedContent(data: state.data!);
-      case NearbyStadiumStatus.initial:
-        return const SizedBox.shrink();
     }
   }
 }
@@ -177,55 +216,147 @@ class _StatusContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // If you are using AppLocalizations, uncomment this and replace the hardcoded strings below:
+    // final locale = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
+        // --- HEADER (Matches _NearbyStadiumLoadedContent exactly) ---
         Row(
           children: [
-            const Icon(Iconsax.location_copy, color: AppColors.whiteColor, size: 20),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: const TextStyle(
+            Container(
+              padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
+              decoration: BoxDecoration(
                 color: AppColors.whiteColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+                borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+              ),
+              child: const Icon(
+                Iconsax.location_copy,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Nearby Stadium', // Replace with locale.nearbyStadium
+                    style: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    'Upcoming match near you', // Replace with locale.upcomingMatchNearYou
+                    style: TextStyle(color: Colors.white70, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            // Placeholder Status Chip to keep the header width stable
+            // so it doesn't "jump" when the real data loads.
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha((0.15 * 255).toInt()),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                '--:--',
+                style: TextStyle(
+                  color: AppColors.whiteColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
+
+        // --- BODY (The Status/Loading Content) ---
         if (loading)
           const Center(
-            child: SizedBox(height: 60, width: 60, child: LottieLoader()),
+            child: SizedBox(height: 80, width: 80, child: LottieLoader()),
           )
         else
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: Colors.white70, size: 28),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  message,
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (icon != null) ...[
+                    // Subtle icon badge to match the premium feel
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withAlpha((0.1 * 255).toInt()),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(icon, color: Colors.white70, size: 22),
+                    ),
+                    const SizedBox(width: 12),
+                  ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            color: AppColors.whiteColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          message,
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 13,
+                            height: 1.4, // Better line height for readability
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
+              if (onRetry != null) ...[
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: onRetry,
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.whiteColor,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      retryLabel ?? 'Retry',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
-        if (!loading && onRetry != null) ...[
-          const SizedBox(height: 12),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: onRetry,
-              style: TextButton.styleFrom(foregroundColor: AppColors.whiteColor),
-              child: Text(
-                retryLabel ?? '',
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-        ],
       ],
     );
   }
@@ -285,6 +416,7 @@ class _NearbyStadiumLoadedContent extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           children: [
@@ -432,7 +564,10 @@ class _NearbyStadiumLoadedContent extends StatelessWidget {
                     const SizedBox(width: 6),
                     Text(
                       _formatDateTime(fixture.fixture.date),
-                      style: const TextStyle(color: Colors.white70, fontSize: 12),
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),

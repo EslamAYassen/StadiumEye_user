@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
@@ -31,9 +32,10 @@ class _LogoutButtonState extends State<LogoutButton>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _fade = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
-    );
+    _fade = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
     _slide = Tween<Offset>(
       begin: const Offset(0, 0.4),
       end: Offset.zero,
@@ -99,14 +101,18 @@ class _LogoutButtonState extends State<LogoutButton>
               backgroundColor: AppColors.error,
               foregroundColor: AppColors.whiteColor,
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(AppThemeConsts.radius8sm),
+                borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
               ),
             ),
             onPressed: () {
               Navigator.pop(dialogCtx);
               context.read<AuthBloc>().add(const LogoutEvent());
               context.read<SettingsCubit>().resetSettings();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.about,
+                (route) => false,
+              );
             },
             child: Text(AppLocalizations.of(context)!.logout),
           ),
@@ -142,8 +148,7 @@ class _LogoutButtonState extends State<LogoutButton>
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 color: AppColors.errorLight,
-                borderRadius:
-                    BorderRadius.circular(AppThemeConsts.radius16lg),
+                borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
                 border: Border.all(
                   color: AppColors.error.withAlpha(80),
                   width: 1.5,

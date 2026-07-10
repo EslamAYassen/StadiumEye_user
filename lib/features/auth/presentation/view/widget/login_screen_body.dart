@@ -5,6 +5,7 @@ import 'package:stadium_eye/features/auth/presentation/view/widget/geometricline
 import 'package:stadium_eye/features/auth/presentation/view/widget/logo_icon.dart';
 import 'package:stadium_eye/core/widgets/preferences_bar.dart';
 
+import '../../../../../theme/app_colors.dart';
 import '../../bloc/auth_bloc.dart';
 import '../../bloc/auth_state.dart';
 
@@ -41,6 +42,7 @@ class _LoginBodyState extends State<LoginBody>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -113,16 +115,55 @@ class _LoginBodyState extends State<LoginBody>
           SafeArea(
             child: FadeTransition(
               opacity: _fadeAnimation,
-              child: Align(
+              child: const Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 12, right: 16),
-                  child: const PreferencesBar(),
+                  padding: EdgeInsets.only(top: 12, right: 16),
+                  child: PreferencesBar(),
                 ),
               ),
             ),
           ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 12,
+            left: 16,
+            child: _BackButton(isDarkMode: isDark),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Floating back button ──
+class _BackButton extends StatelessWidget {
+  final bool isDarkMode;
+  const _BackButton({required this.isDarkMode});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 44,
+        height: 44,
+        decoration: BoxDecoration(
+          color: Colors.white.withAlpha(40),
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.white.withAlpha(80), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(40),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: const Icon(
+          Icons.arrow_back_ios_new_rounded,
+          color: AppColors.whiteColor,
+          size: 18,
+        ),
       ),
     );
   }

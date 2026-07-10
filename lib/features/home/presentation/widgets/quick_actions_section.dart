@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_routes.dart';
@@ -16,157 +15,130 @@ class QuickActionsSection extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final locale = AppLocalizations.of(context)!;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 10.0),
-        child: Container(
-          padding: const EdgeInsets.all(AppThemeConsts.padding16md),
-          decoration: BoxDecoration(
-            color: isDarkMode
-                ? AppColors.cardDark.withAlpha(76)
-                : const Color.fromARGB(26, 255, 255, 255),
-            gradient: isDarkMode
-                ? LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppColors.cardDark.withAlpha(122),
-                      AppColors.cardDark.withAlpha(76),
-                    ],
-                  )
-                : const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(50, 255, 255, 255),
-                      Color.fromARGB(26, 255, 255, 255),
-                    ],
-                  ),
-            borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-            border: Border.all(
-              color: isDarkMode
-                  ? AppColors.borderDark.withAlpha(122)
-                  : const Color.fromARGB(75, 255, 255, 255),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDarkMode
-                    ? AppColors.shadowDark
-                    : const Color.fromARGB(26, 255, 255, 255),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
-            ],
+    // Solid, theme-matched card. The old translucent BackdropFilter/blur
+    // treatment here was designed to "frost" over the stadium-photo
+    // background; now that the home page uses a flat theme background,
+    // a plain elevated card reads cleaner and is cheaper to render.
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
+      decoration: BoxDecoration(
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 16,
+            offset: const Offset(0, 4),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
               Container(
                 padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
                 decoration: BoxDecoration(
                   color: isDarkMode
-                      ? AppColors.cardElevatedDark
-                      : AppColors.whiteColor,
+                      ? AppColors.primaryDark.withAlpha(76)
+                      : AppColors.lightGreen,
                   borderRadius: BorderRadius.circular(
-                    AppThemeConsts.radius16md,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: isDarkMode
-                          ? AppColors.shadowDark.withAlpha(76)
-                          : const Color.fromARGB(13, 0, 0, 0),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Text(
-                  locale.quickActions,
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w600,
-                    color: isDarkMode
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
+                    AppThemeConsts.radius12md,
                   ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              _ActionButton(
-                onTap: () =>
-                    Navigator.pushNamed(context, AppRoutes.addReportPage),
-                textColor: AppColors.whiteColor,
-                icon: Iconsax.add_circle_copy,
-                gradientColors: isDarkMode
-                    ? [AppColors.primaryDark, AppColors.primary]
-                    : [AppColors.gradientStart, AppColors.gradientEnd],
-                title: locale.addReport,
-                subtitle: locale.reportAnIssueQuickly,
-              ),
-              const SizedBox(height: 15),
-              _ActionButton(
-                textColor: isDarkMode
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  AppRoutes.myReports,
-                  arguments: totalreports,
+                child: const Icon(
+                  Icons.bolt_rounded,
+                  color: AppColors.primary,
+                  size: 22,
                 ),
-                icon: Iconsax.document_1_copy,
-                title: locale.myReports,
-                subtitle: locale.viewSubmittedReports,
-                iconColor: AppColors.primary,
-                fontWeight: FontWeight.w400,
-                gradientColors: isDarkMode
-                    ? [AppColors.cardElevatedDark]
-                    : [AppColors.lightGreen],
-                iconBackgroundColor: isDarkMode
-                    ? AppColors.cardDark
-                    : AppColors.whiteColor,
-                numberOfReports: totalreports,
               ),
-              const SizedBox(height: 15),
-              _ActionButton(
-                textColor: isDarkMode
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
-                onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
-                icon: Iconsax.profile_2user,
-                title: locale.myProfile,
-                subtitle: locale.viewPersonalDataSettings,
-                iconColor: AppColors.primary,
-                fontWeight: FontWeight.w400,
-                gradientColors: isDarkMode
-                    ? [AppColors.cardElevatedDark]
-                    : [AppColors.veryLightGreen],
-                iconBackgroundColor: isDarkMode
-                    ? AppColors.cardDark
-                    : AppColors.whiteColor,
-              ),
-              const SizedBox(height: 15),
-              _ActionButton(
-                textColor: isDarkMode
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
-                onTap: () => Navigator.pushNamed(context, AppRoutes.matches),
-                icon: Icons.stadium_rounded,
-                title: "Matches",
-                subtitle: "View Todays matches",
-                iconColor: AppColors.primary,
-                fontWeight: FontWeight.w400,
-                gradientColors: isDarkMode
-                    ? [AppColors.cardElevatedDark]
-                    : [AppColors.lightGreen],
-                iconBackgroundColor: isDarkMode
-                    ? AppColors.cardDark
-                    : AppColors.whiteColor,
+              const SizedBox(width: 12),
+              Text(
+                locale.quickActions,
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w600,
+                  color: isDarkMode
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
+                ),
               ),
             ],
           ),
-        ),
+          const SizedBox(height: 18),
+          // _ActionButton(
+          //   onTap: () =>
+          //       Navigator.pushNamed(context, AppRoutes.addReportPage),
+          //   textColor: AppColors.whiteColor,
+          //   icon: Iconsax.add_circle_copy,
+          //   gradientColors: isDarkMode
+          //       ? [AppColors.primaryDark, AppColors.primary]
+          //       : [AppColors.gradientStart, AppColors.gradientEnd],
+          //   title: locale.addReport,
+          //   subtitle: locale.reportAnIssueQuickly,
+          // ),
+          const SizedBox(height: 14),
+          _ActionButton(
+            textColor: isDarkMode
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRoutes.myReports,
+              arguments: totalreports,
+            ),
+            icon: Iconsax.document_1_copy,
+            title: locale.myReports,
+            subtitle: locale.viewSubmittedReports,
+            iconColor: AppColors.primary,
+            fontWeight: FontWeight.w400,
+            gradientColors: isDarkMode
+                ? [AppColors.cardElevatedDark]
+                : [AppColors.lightGreen],
+            iconBackgroundColor: isDarkMode
+                ? AppColors.backgroundDark
+                : AppColors.whiteColor,
+            numberOfReports: totalreports,
+          ),
+          const SizedBox(height: 14),
+          // _ActionButton(
+          //   textColor: isDarkMode
+          //       ? AppColors.textPrimaryDark
+          //       : AppColors.textPrimaryLight,
+          //   onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
+          //   icon: Iconsax.profile_2user,
+          //   title: locale.myProfile,
+          //   subtitle: locale.viewPersonalDataSettings,
+          //   iconColor: AppColors.primary,
+          //   fontWeight: FontWeight.w400,
+          //   gradientColors: isDarkMode
+          //       ? [AppColors.cardElevatedDark]
+          //       : [AppColors.veryLightGreen],
+          //   iconBackgroundColor: isDarkMode
+          //       ? AppColors.backgroundDark
+          //       : AppColors.whiteColor,
+          // ),
+          // const SizedBox(height: 14),
+          // _ActionButton(
+          //   textColor: isDarkMode
+          //       ? AppColors.textPrimaryDark
+          //       : AppColors.textPrimaryLight,
+          //   onTap: () => Navigator.pushNamed(context, AppRoutes.matches),
+          //   icon: Icons.stadium_rounded,
+          //   title: "Matches",
+          //   subtitle: "View Todays matches",
+          //   iconColor: AppColors.primary,
+          //   fontWeight: FontWeight.w400,
+          //   gradientColors: isDarkMode
+          //       ? [AppColors.cardElevatedDark]
+          //       : [AppColors.lightGreen],
+          //   iconBackgroundColor: isDarkMode
+          //       ? AppColors.backgroundDark
+          //       : AppColors.whiteColor,
+          // ),
+        ],
       ),
     );
   }

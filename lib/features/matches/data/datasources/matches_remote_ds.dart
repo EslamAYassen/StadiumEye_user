@@ -72,12 +72,9 @@ class MatchesRemoteDataSourceImpl implements MatchesRemoteDataSource {
     required double lng,
   }) async {
     try {
-      // Uses the app's own backend (Endpoints.baseUrl already configured on
-      // this shared Dio instance), unlike getMatches above which hits the
-      // external football API with an absolute URL.
-      final response = await dio.get(
+      final response = await dio.post(
         NearbyStadiumEndpoints.nearbyStadium,
-        queryParameters: {'lat': lat, 'lng': lng},
+        data: {'lat': lat, 'lng': lng},
       );
 
       if (response.statusCode == 200 && response.data['status'] == 'success') {

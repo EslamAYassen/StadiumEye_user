@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/constants/app_consts.dart';
-import 'package:stadium_eye/core/widgets/glowing_logo/logo_splash.dart';
 import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:video_player/video_player.dart';

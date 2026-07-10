@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
 import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 
@@ -16,141 +15,113 @@ class RecentActivitySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final locale = AppLocalizations.of(context)!;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 10.0),
-        child: Container(
-          padding: const EdgeInsets.all(AppThemeConsts.padding16md),
-          decoration: BoxDecoration(
-            color: isDarkMode
-                ? AppColors.cardDark.withAlpha(76)
-                : const Color.fromARGB(26, 255, 255, 255),
-            gradient: isDarkMode
-                ? LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppColors.cardDark.withAlpha(122),
-                      AppColors.cardDark.withAlpha(76),
-                    ],
-                  )
-                : const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(50, 255, 255, 255),
-                      Color.fromARGB(26, 255, 255, 255),
-                    ],
-                  ),
-            borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-            border: Border.all(
-              color: isDarkMode
-                  ? AppColors.borderDark.withAlpha(76)
-                  : const Color.fromARGB(75, 255, 255, 255),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDarkMode
-                    ? AppColors.shadowDark
-                    : const Color.fromARGB(26, 0, 0, 0),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
-            ],
+    // Solid, theme-matched card — see QuickActionsSection for why the old
+    // BackdropFilter/blur treatment was dropped.
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppThemeConsts.padding16md),
+      decoration: BoxDecoration(
+        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 16,
+            offset: const Offset(0, 4),
           ),
-          child: BlocBuilder<ReportsBloc, ReportsState>(
-            builder: (context, state) {
-              if (state is ReportsLoading) {
-                return const Center(
-                  child: SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: LottieLoader(),
-                  ),
-                );
-              } else if (state is ReportsError) {
-                return Center(
-                  child: Text(
-                    state.message,
-                    style: TextStyle(
-                      color: isDarkMode
-                          ? AppColors.textPrimaryDark
-                          : AppColors.textPrimaryLight,
-                      fontSize: 16,
-                    ),
-                  ),
-                );
-              } else if (state is ReportsLoaded &&
-                  state.reports.tickets.isNotEmpty) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        ],
+      ),
+      child: BlocBuilder<ReportsBloc, ReportsState>(
+        builder: (context, state) {
+          if (state is ReportsLoading) {
+            return const Center(
+              child: SizedBox(
+                height: 100,
+                width: 100,
+                child: LottieLoader(),
+              ),
+            );
+          } else if (state is ReportsError) {
+            return Center(
+              child: Text(
+                state.message,
+                style: TextStyle(
+                  color: isDarkMode
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
+                  fontSize: 16,
+                ),
+              ),
+            );
+          } else if (state is ReportsLoaded &&
+              state.reports.tickets.isNotEmpty) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
+                      padding: const EdgeInsets.all(
+                        AppThemeConsts.padding8xs,
+                      ),
                       decoration: BoxDecoration(
                         color: isDarkMode
-                            ? AppColors.cardElevatedDark
-                            : AppColors.whiteColor,
+                            ? AppColors.primaryDark.withAlpha(76)
+                            : AppColors.lightGreen,
                         borderRadius: BorderRadius.circular(
-                          AppThemeConsts.radius16md,
+                          AppThemeConsts.radius12md,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: isDarkMode
-                                ? AppColors.shadowDark.withAlpha(76)
-                                : Colors.black12,
-                            blurRadius: 12,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
                       ),
-                      child: Text(
-                        "Recent Activity",
-                        style: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.w600,
-                          color: isDarkMode
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                        ),
+                      child: const Icon(
+                        Icons.history_rounded,
+                        color: AppColors.primary,
+                        size: 20,
                       ),
                     ),
-                    const SizedBox(height: 15),
-                    ...state.reports.tickets.asMap().entries.take(3).map((
-                      entry,
-                    ) {
-                      // final index = entry.key;
-
-                      final now = DateTime.now();
-                      String timeType = "hrs";
-                      int diffTieme = now
-                          .difference(entry.value.createdAt)
-                          .inHours;
-                      final ticket = entry.value;
-
-                      if (now.difference(ticket.createdAt).inHours >= 24) {
-                        diffTieme = now
-                            .difference(entry.value.createdAt)
-                            .inDays;
-                        timeType = "days";
-                      }
-                      return _RecentActivityItem(
-                        title: ticket.status,
-                        subtitle:
-                            "${ticket.stadium.stadiumName} - ${ticket.area}",
-                        timeAgo: "$diffTieme $timeType ago",
-                      );
-                    }),
+                    const SizedBox(width: 12),
+                    Text(
+                      locale.recentActivity,
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w600,
+                        color: isDarkMode
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ),
+                    ),
                   ],
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-        ),
+                ),
+                const SizedBox(height: 15),
+                ...state.reports.tickets.asMap().entries.take(3).map((
+                  entry,
+                ) {
+                  final now = DateTime.now();
+                  String timeType = "hrs";
+                  int diffTieme = now
+                      .difference(entry.value.createdAt)
+                      .inHours;
+                  final ticket = entry.value;
+
+                  if (now.difference(ticket.createdAt).inHours >= 24) {
+                    diffTieme = now
+                        .difference(entry.value.createdAt)
+                        .inDays;
+                    timeType = "days";
+                  }
+                  return _RecentActivityItem(
+                    title: ticket.status,
+                    subtitle:
+                        "${ticket.stadium.stadiumName} - ${ticket.area}",
+                    timeAgo: "$diffTieme $timeType ago",
+                  );
+                }),
+              ],
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
@@ -160,7 +131,6 @@ class _RecentActivityItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final String timeAgo;
-  // final IconData icon;
 
   const _RecentActivityItem({
     required this.title,
@@ -176,17 +146,10 @@ class _RecentActivityItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6),
       padding: const EdgeInsets.all(AppThemeConsts.padding16md),
       decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+        color: isDarkMode
+            ? AppColors.cardElevatedDark
+            : AppColors.veryLightGray,
         borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-        boxShadow: [
-          BoxShadow(
-            color: isDarkMode
-                ? AppColors.shadowDark.withAlpha(76)
-                : Colors.black12,
-            blurRadius: 12,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: Row(
         children: [
