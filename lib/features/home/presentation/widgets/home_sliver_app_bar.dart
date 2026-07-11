@@ -63,6 +63,7 @@ class HomeSliverAppBar extends StatelessWidget {
               end: 60,
             ),
             centerTitle: false,
+
             title: AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
               opacity: shrinkPct > 0.6 ? 1 : 0,
@@ -92,6 +93,7 @@ class HomeSliverAppBar extends StatelessWidget {
             ),
             background: Container(
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,

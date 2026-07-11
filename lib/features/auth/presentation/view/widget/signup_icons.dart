@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/signup_card.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/text_title.dart';
 
+import '../../../../../core/widgets/preferences_bar.dart';
+
 class SignupIcons extends StatefulWidget {
   const SignupIcons({super.key, this.child});
   final Widget? child;
@@ -19,7 +21,13 @@ class _SignupIconsState extends State<SignupIcons> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const SizedBox(height: 60),
+            const SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(top: 12),
+                child: PreferencesBar(),
+              ),
+            ),
+            // const SizedBox(height: 60),
             const Center(child: TextTitle2()),
             const SizedBox(height: 40),
             //TODO: fix this later

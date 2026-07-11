@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
@@ -11,6 +12,9 @@ import 'package:stadium_eye/features/matches/presentation/cubit/nearby_stadium_c
 
 import 'package:stadium_eye/features/home/presentation/widgets/recent_activity_section.dart';
 import 'package:stadium_eye/features/report/presentation/bloc/report_bloc.dart';
+import 'package:stadium_eye/features/settings/presentation/bloc/settings_cubit.dart';
+import 'package:stadium_eye/l10n/app_localizations.dart';
+import 'package:stadium_eye/utils/language.dart';
 
 import '../../../../constants/app_routes.dart';
 import '../../../../core/widgets/loading/lottie_loading.dart';
@@ -60,6 +64,7 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+            final locale = AppLocalizations.of(context)!;
 
             if (state is HomeError) {
               return SafeArea(
@@ -78,11 +83,15 @@ class HomePage extends StatelessWidget {
             } else if (state is HomeLoaded) {
               return SafeArea(
                 child: Scaffold(
+                  // floatingActionButtonLocation:
+
+                  //     FloatingActionButtonLocation.,
                   floatingActionButton: SpeedDial(
                     // 1. BUTTERY SMOOTH ANIMATION
                     animationCurve: Curves
                         .easeOutExpo, // Gives that premium, Apple-like smooth feel
                     isOpenOnStart: false,
+                    direction: SpeedDialDirection.up,
 
                     // 2. ELEGANT DARK OVERLAY
                     overlayColor: AppColors.primaryDark,
@@ -113,7 +122,7 @@ class HomePage extends StatelessWidget {
                         ),
                         labelWidget: Padding(
                           padding: const EdgeInsets.all(8),
-                          child: _buildPremiumLabel('Open New Report'),
+                          child: _buildPremiumLabel(locale.addReport),
                         ),
                         elevation: 4.0,
                         onTap: () => Navigator.pushNamed(
@@ -141,7 +150,7 @@ class HomePage extends StatelessWidget {
                         ),
                         labelWidget: Padding(
                           padding: const EdgeInsets.all(8),
-                          child: _buildPremiumLabel('View My Reports'),
+                          child: _buildPremiumLabel(locale.myReports),
                         ),
                         elevation: 4.0,
                         onTap: () {

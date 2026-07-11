@@ -93,18 +93,6 @@ class _SignupBodyState extends State<SignupBody>
           SignupIcons(child: widget.child),
 
           // ── Theme & Language buttons (top-right) ─────────────────
-          SafeArea(
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 12, right: 16),
-                  child: const PreferencesBar(),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

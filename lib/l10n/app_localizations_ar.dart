@@ -160,7 +160,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pleaseSelectGender => 'الرجاء اختيار الجنس';
 
   @override
-  String get joinStadiumEye => 'انضم إلى ستاديوم آي';
+  String get joinStadiumEye => 'انضم الى عين الملعب';
 
   @override
   String get contactInformation => 'معلومات الاتصال';

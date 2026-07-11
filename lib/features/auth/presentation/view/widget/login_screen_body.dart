@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/geometriclinespainter.dart';
 import 'package:stadium_eye/features/auth/presentation/view/widget/logo_icon.dart';
 import 'package:stadium_eye/core/widgets/preferences_bar.dart';
@@ -110,60 +111,7 @@ class _LoginBodyState extends State<LoginBody>
             },
             child: const LogoIcon(),
           ),
-
-          // ── Theme & Language buttons (top-right) ─────────────────
-          SafeArea(
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: const Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 12, right: 16),
-                  child: PreferencesBar(),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 12,
-            left: 16,
-            child: _BackButton(isDarkMode: isDark),
-          ),
         ],
-      ),
-    );
-  }
-}
-
-// ── Floating back button ──
-class _BackButton extends StatelessWidget {
-  final bool isDarkMode;
-  const _BackButton({required this.isDarkMode});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(
-          color: Colors.white.withAlpha(40),
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.white.withAlpha(80), width: 1),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(40),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: const Icon(
-          Icons.arrow_back_ios_new_rounded,
-          color: AppColors.whiteColor,
-          size: 18,
-        ),
       ),
     );
   }

@@ -7,22 +7,6 @@ import 'package:stadium_eye/theme/app_colors.dart';
 import 'package:stadium_eye/theme/app_theme_consts.dart';
 import 'package:stadium_eye/utils/language.dart';
 
-/// A row of two pill buttons (theme + language) designed to float
-/// on top of the dark green gradient backgrounds used by the auth
-/// and about-us screens.
-///
-/// Usage (always at the TOP of a Stack, wrapped in SafeArea):
-/// ```dart
-/// SafeArea(
-///   child: Align(
-///     alignment: Alignment.topRight,
-///     child: Padding(
-///       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-///       child: const PreferencesBar(),
-///     ),
-///   ),
-/// )
-/// ```
 class PreferencesBar extends StatelessWidget {
   const PreferencesBar({super.key});
 
@@ -36,11 +20,13 @@ class PreferencesBar extends StatelessWidget {
             : AppLanguage.english;
 
         return Row(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: .spaceBetween,
+          // crossAxisAlignment: .center,
           children: [
-            _ThemeButton(isDark: isDark),
+            ThemeButton(isDark: isDark),
             const SizedBox(width: 10),
-            _LangButton(lang: lang),
+            LangButton(lang: lang),
           ],
         );
       },
@@ -51,15 +37,15 @@ class PreferencesBar extends StatelessWidget {
 // ──────────────────────────────────────────────────────────────────
 // Theme toggle pill
 // ──────────────────────────────────────────────────────────────────
-class _ThemeButton extends StatefulWidget {
-  const _ThemeButton({required this.isDark});
+class ThemeButton extends StatefulWidget {
+  const ThemeButton({super.key, required this.isDark});
   final bool isDark;
 
   @override
-  State<_ThemeButton> createState() => _ThemeButtonState();
+  State<ThemeButton> createState() => ThemeButtonState();
 }
 
-class _ThemeButtonState extends State<_ThemeButton>
+class ThemeButtonState extends State<ThemeButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _ctrl;
   late Animation<double> _scale;
@@ -72,12 +58,14 @@ class _ThemeButtonState extends State<_ThemeButton>
       duration: const Duration(milliseconds: 350),
       vsync: this,
     );
-    _scale = Tween<double>(begin: 1, end: 0.88).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut),
-    );
-    _rotation = Tween<double>(begin: 0, end: 0.5).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut),
-    );
+    _scale = Tween<double>(
+      begin: 1,
+      end: 0.88,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
+    _rotation = Tween<double>(
+      begin: 0,
+      end: 0.5,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
   }
 
   @override
@@ -109,13 +97,13 @@ class _ThemeButtonState extends State<_ThemeButton>
       onTap: () => _toggle(context),
       child: AnimatedBuilder(
         animation: _ctrl,
-        builder: (context, child) => Transform.scale(
-          scale: _scale.value,
-          child: child,
-        ),
+        builder: (context, child) =>
+            Transform.scale(scale: _scale.value, child: child),
         child: _PillShell(
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: .spaceBetween,
+
             children: [
               RotationTransition(
                 turns: _rotation,
@@ -142,15 +130,15 @@ class _ThemeButtonState extends State<_ThemeButton>
 // ──────────────────────────────────────────────────────────────────
 // Language toggle pill
 // ──────────────────────────────────────────────────────────────────
-class _LangButton extends StatefulWidget {
-  const _LangButton({required this.lang});
+class LangButton extends StatefulWidget {
+  const LangButton({super.key, required this.lang});
   final AppLanguage lang;
 
   @override
-  State<_LangButton> createState() => _LangButtonState();
+  State<LangButton> createState() => LangButtonState();
 }
 
-class _LangButtonState extends State<_LangButton>
+class LangButtonState extends State<LangButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _ctrl;
   late Animation<double> _scale;
@@ -162,9 +150,10 @@ class _LangButtonState extends State<_LangButton>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _scale = Tween<double>(begin: 1, end: 0.88).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut),
-    );
+    _scale = Tween<double>(
+      begin: 1,
+      end: 0.88,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut));
   }
 
   @override
@@ -196,10 +185,8 @@ class _LangButtonState extends State<_LangButton>
       onTap: () => _toggle(context),
       child: AnimatedBuilder(
         animation: _ctrl,
-        builder: (context, child) => Transform.scale(
-          scale: _scale.value,
-          child: child,
-        ),
+        builder: (context, child) =>
+            Transform.scale(scale: _scale.value, child: child),
         child: _PillShell(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -263,10 +250,7 @@ class _PillShell extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white.withAlpha(30),
         borderRadius: BorderRadius.circular(AppThemeConsts.radius24xl),
-        border: Border.all(
-          color: Colors.white.withAlpha(60),
-          width: 1,
-        ),
+        border: Border.all(color: Colors.white.withAlpha(60), width: 1),
       ),
       child: child,
     );
