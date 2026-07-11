@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:stadium_eye/constants/app_routes.dart';
 import 'package:stadium_eye/core/widgets/loading/lottie_loading.dart';
 import 'package:stadium_eye/features/report/domain/entities/ticket_entity.dart';
 import 'package:stadium_eye/features/report/presentation/bloc/report_bloc.dart';
@@ -95,6 +96,11 @@ class _TicketsStatusChartState extends State<TicketsStatusChart>
             return _buildHeader(
               isDarkMode,
               locale,
+              onViewAll: () => Navigator.pushNamed(
+                context,
+                AppRoutes.myReports,
+                arguments: 0,
+              ),
               child: const SizedBox(
                 height: 180,
                 child: Center(
@@ -142,6 +148,11 @@ class _TicketsStatusChartState extends State<TicketsStatusChart>
           return _buildHeader(
             isDarkMode,
             locale,
+            onViewAll: () => Navigator.pushNamed(
+              context,
+              AppRoutes.myReports,
+              arguments: total,
+            ),
             child: total == 0
                 ? _buildEmptyState(isDarkMode, locale)
                 : _buildChartRow(isDarkMode, locale, segments, total),
@@ -155,35 +166,69 @@ class _TicketsStatusChartState extends State<TicketsStatusChart>
     bool isDarkMode,
     AppLocalizations locale, {
     required Widget child,
+    required VoidCallback onViewAll,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
-              decoration: BoxDecoration(
-                color: isDarkMode
-                    ? AppColors.primaryDark.withAlpha(76)
-                    : AppColors.lightGreen,
-                borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-              ),
-              child: const Icon(
-                Iconsax.chart_1_copy,
-                color: AppColors.primary,
-                size: 22,
-              ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
+                  decoration: BoxDecoration(
+                    color: isDarkMode
+                        ? AppColors.primaryDark.withAlpha(76)
+                        : AppColors.lightGreen,
+                    borderRadius: BorderRadius.circular(
+                      AppThemeConsts.radius12md,
+                    ),
+                  ),
+                  child: const Icon(
+                    Iconsax.chart_1_copy,
+                    color: AppColors.primary,
+                    size: 22,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  locale.ticketsOverview,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isDarkMode
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Text(
-              locale.ticketsOverview,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: isDarkMode
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
+            InkWell(
+              onTap: onViewAll,
+              borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      locale.viewAll,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                    ),
+                    const SizedBox(width: 2),
+                    const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 12,
+                      color: AppColors.primary,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -228,126 +273,150 @@ class _TicketsStatusChartState extends State<TicketsStatusChart>
     List<_StatusSegment> segments,
     int total,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return SizedBox(
-              width: 130,
-              height: 130,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  CustomPaint(
-                    size: const Size(130, 130),
-                    painter: _DonutChartPainter(
-                      values: segments.map((s) => s.count.toDouble()).toList(),
-                      colors: segments.map((s) => s.color).toList(),
-                      animationValue: _animation.value,
-                      backgroundColor: isDarkMode
-                          ? AppColors.cardElevatedDark
-                          : AppColors.lightGray,
-                    ),
-                  ),
-                  TweenAnimationBuilder<int>(
-                    duration: const Duration(milliseconds: 1100),
-                    curve: Curves.easeOutCubic,
-                    tween: IntTween(begin: 0, end: total),
-                    builder: (context, value, child) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '$value',
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: isDarkMode
-                                  ? AppColors.textPrimaryDark
-                                  : AppColors.textPrimaryLight,
-                            ),
-                          ),
-                          Text(
-                            locale.totalReports,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: isDarkMode
-                                  ? AppColors.textSecondaryDark
-                                  : AppColors.mediumGray,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: segments.asMap().entries.map((entry) {
-              final index = entry.key;
-              final segment = entry.value;
-
-              return TweenAnimationBuilder<double>(
-                duration: Duration(milliseconds: 500 + index * 120),
-                curve: Curves.easeOut,
-                tween: Tween(begin: 0, end: 1),
-                builder: (context, value, child) {
-                  return Opacity(
-                    opacity: value,
-                    child: Transform.translate(
-                      offset: Offset(20 * (1 - value), 0),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: segment.color,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                segment.label,
-                                overflow: TextOverflow.ellipsis,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return SizedBox(
+                  width: 130,
+                  height: 130,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CustomPaint(
+                        size: const Size(130, 130),
+                        painter: _DonutChartPainter(
+                          values: segments
+                              .map((s) => s.count.toDouble())
+                              .toList(),
+                          colors: segments.map((s) => s.color).toList(),
+                          animationValue: _animation.value,
+                          backgroundColor: isDarkMode
+                              ? AppColors.cardElevatedDark
+                              : AppColors.lightGray,
+                        ),
+                      ),
+                      TweenAnimationBuilder<int>(
+                        duration: const Duration(milliseconds: 1100),
+                        curve: Curves.easeOutCubic,
+                        tween: IntTween(begin: 0, end: total),
+                        builder: (context, value, child) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '$value',
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: isDarkMode
+                                      ? AppColors.textPrimaryDark
+                                      : AppColors.textPrimaryLight,
+                                ),
+                              ),
+                              Text(
+                                locale.totalReports,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 10,
                                   color: isDarkMode
                                       ? AppColors.textSecondaryDark
                                       : AppColors.mediumGray,
                                 ),
                               ),
-                            ),
-                            Text(
-                              '${segment.count}',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: isDarkMode
-                                    ? AppColors.textPrimaryDark
-                                    : AppColors.textPrimaryLight,
-                              ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          );
+                        },
                       ),
-                    ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: segments.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final segment = entry.value;
+
+                  return TweenAnimationBuilder<double>(
+                    duration: Duration(milliseconds: 500 + index * 120),
+                    curve: Curves.easeOut,
+                    tween: Tween(begin: 0, end: 1),
+                    builder: (context, value, child) {
+                      return Opacity(
+                        opacity: value,
+                        child: Transform.translate(
+                          offset: Offset(20 * (1 - value), 0),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: segment.color,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    segment.label,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: isDarkMode
+                                          ? AppColors.textSecondaryDark
+                                          : AppColors.mediumGray,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${segment.count}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: isDarkMode
+                                        ? AppColors.textPrimaryDark
+                                        : AppColors.textPrimaryLight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   );
-                },
-              );
-            }).toList(),
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
+        // Purely decorative flourish (no new asset needed) echoing the
+        // stadium theme in the corner of the summary card.
+        Positioned(
+          right: -6,
+          bottom: -14,
+          child: IgnorePointer(
+            child: Icon(
+              Icons.stadium_rounded,
+              size: 60,
+              color:
+                  (isDarkMode
+                          ? AppColors.textSecondaryDark
+                          : AppColors.mediumGray)
+                      .withAlpha(28),
+            ),
           ),
         ),
       ],

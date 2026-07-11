@@ -75,4 +75,10 @@ abstract class AppColors {
   static const Color badgeGreenText = Color(0xFF065F46);
   static const Color badgeGray = Color(0xFFF3F4F6);
   static const Color badgeGrayText = Color(0xFF374151);
+
+  // Accent Colors (used for categorizing quick actions / tiles that need
+  // a 4th hue beyond primary/info/warning — kept in the shared palette
+  // rather than hardcoded locally so it stays reusable and themeable).
+  static const Color accentPurple = Color(0xFF8B5CF6);
+  static const Color accentPurpleLight = Color(0xFFEDE9FE);
 }

@@ -21,7 +21,7 @@ class _AboutUsPageState extends State<AboutUsPage>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   ScrollController? _attachedController;
-
+  bool withSound = true;
   // // Animation Controllers
   // late AnimationController _logoAnimationController;
   // late AnimationController _contentAnimationController;
@@ -99,7 +99,7 @@ class _AboutUsPageState extends State<AboutUsPage>
           _isInitVideoInitialized = true;
           _initvideoController.play();
           _initvideoController.setLooping(true);
-          _initvideoController.setVolume(0);
+          _initvideoController.setVolume(1);
         });
       });
   }
@@ -128,7 +128,10 @@ class _AboutUsPageState extends State<AboutUsPage>
     // _logoAnimationController.dispose();
     // _contentAnimationController.dispose();
     _scrollController.dispose();
+    _videoController.pause();
+    _initvideoController.pause();
     _videoController.dispose();
+    _initvideoController.dispose();
     super.dispose();
   }
 
@@ -152,7 +155,63 @@ class _AboutUsPageState extends State<AboutUsPage>
                       child: SizedBox(
                         width: _initvideoController.value.size.width,
                         height: _initvideoController.value.size.height,
-                        child: VideoPlayer(_initvideoController),
+                        child: Stack(
+                          children: [
+                            VideoPlayer(_initvideoController),
+                            if (_isInitVideoInitialized)
+                              Positioned.fill(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (_initvideoController
+                                          .value
+                                          .isPlaying) {
+                                        _initvideoController.pause();
+                                      } else {
+                                        _initvideoController.play();
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    color: Colors.transparent,
+                                    child: Center(
+                                      child: AnimatedOpacity(
+                                        opacity:
+                                            _initvideoController.value.isPlaying
+                                            ? 0.0
+                                            : 1.0,
+                                        duration: const Duration(
+                                          milliseconds: 300,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: isDarkMode
+                                                ? AppColors.primaryDark
+                                                : AppColors.primary,
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: AppColors.primary
+                                                    .withAlpha(128),
+                                                blurRadius: 20,
+                                                spreadRadius: 5,
+                                              ),
+                                            ],
+                                          ),
+                                          child: const Icon(
+                                            Iconsax.play_copy,
+                                            size: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                     )
                   : Container(
@@ -166,6 +225,31 @@ class _AboutUsPageState extends State<AboutUsPage>
                         ),
                       ),
                     ),
+            ),
+
+            Positioned(
+              top: 30,
+              right: 30,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black54,
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      withSound = !withSound;
+                      _initvideoController.setVolume(withSound ? 1.0 : 0.0);
+                    });
+                  },
+                  icon: Icon(
+                    withSound
+                        ? Iconsax.volume_high_copy
+                        : Iconsax.volume_slash_copy,
+                  ),
+                  tooltip: withSound ? 'Mute' : 'Unmute',
+                ),
+              ),
             ),
 
             // Main scrollable content

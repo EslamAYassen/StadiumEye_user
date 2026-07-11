@@ -6,6 +6,9 @@ import 'package:stadium_eye/theme/app_theme_consts.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
+/// Quick access grid: four equal tiles (icon-in-tinted-square, title,
+/// subtitle) for the most common actions — a denser, app-launcher-style
+/// layout replacing the previous full-width action rows.
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key, this.totalreports = 0});
   final int totalreports;
@@ -15,10 +18,6 @@ class QuickActionsSection extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final locale = AppLocalizations.of(context)!;
 
-    // Solid, theme-matched card. The old translucent BackdropFilter/blur
-    // treatment here was designed to "frost" over the stadium-photo
-    // background; now that the home page uses a flat theme background,
-    // a plain elevated card reads cleaner and is cheaper to render.
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppThemeConsts.padding16md),
@@ -36,281 +35,197 @@ class QuickActionsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            locale.quickActions,
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w600,
+              color: isDarkMode
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: 18),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.all(AppThemeConsts.padding8xs),
-                decoration: BoxDecoration(
-                  color: isDarkMode
+              Expanded(
+                child: _QuickActionTile(
+                  index: 0,
+                  icon: Icons.add_rounded,
+                  iconColor: AppColors.primary,
+                  iconBackground: isDarkMode
                       ? AppColors.primaryDark.withAlpha(76)
                       : AppColors.lightGreen,
-                  borderRadius: BorderRadius.circular(
-                    AppThemeConsts.radius12md,
-                  ),
-                ),
-                child: const Icon(
-                  Icons.bolt_rounded,
-                  color: AppColors.primary,
-                  size: 22,
+                  title: locale.addReport,
+                  subtitle: locale.reportAnIssueQuickly,
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.addReportPage),
                 ),
               ),
-              const SizedBox(width: 12),
-              Text(
-                locale.quickActions,
-                style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w600,
-                  color: isDarkMode
-                      ? AppColors.textPrimaryDark
-                      : AppColors.textPrimaryLight,
+              Expanded(
+                child: _QuickActionTile(
+                  index: 1,
+                  icon: Iconsax.document_1_copy,
+                  iconColor: AppColors.info,
+                  iconBackground: isDarkMode
+                      ? AppColors.info.withAlpha(46)
+                      : AppColors.infoLight,
+                  title: locale.myReports,
+                  subtitle: locale.viewSubmittedReports,
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AppRoutes.myReports,
+                    arguments: totalreports,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: _QuickActionTile(
+                  index: 2,
+                  icon: Icons.stadium_rounded,
+                  iconColor: AppColors.accentPurple,
+                  iconBackground: isDarkMode
+                      ? AppColors.accentPurple.withAlpha(46)
+                      : AppColors.accentPurpleLight,
+                  title: locale.matches,
+                  subtitle: locale.viewAll,
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.matches),
+                ),
+              ),
+              Expanded(
+                child: _QuickActionTile(
+                  index: 3,
+                  icon: Iconsax.profile_2user,
+                  iconColor: AppColors.warning,
+                  iconBackground: isDarkMode
+                      ? AppColors.warning.withAlpha(46)
+                      : AppColors.warningLight,
+                  title: locale.myProfile,
+                  subtitle: locale.viewPersonalDataSettings,
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 18),
-          // _ActionButton(
-          //   onTap: () =>
-          //       Navigator.pushNamed(context, AppRoutes.addReportPage),
-          //   textColor: AppColors.whiteColor,
-          //   icon: Iconsax.add_circle_copy,
-          //   gradientColors: isDarkMode
-          //       ? [AppColors.primaryDark, AppColors.primary]
-          //       : [AppColors.gradientStart, AppColors.gradientEnd],
-          //   title: locale.addReport,
-          //   subtitle: locale.reportAnIssueQuickly,
-          // ),
-          const SizedBox(height: 14),
-          _ActionButton(
-            textColor: isDarkMode
-                ? AppColors.textPrimaryDark
-                : AppColors.textPrimaryLight,
-            onTap: () => Navigator.pushNamed(
-              context,
-              AppRoutes.myReports,
-              arguments: totalreports,
-            ),
-            icon: Iconsax.document_1_copy,
-            title: locale.myReports,
-            subtitle: locale.viewSubmittedReports,
-            iconColor: AppColors.primary,
-            fontWeight: FontWeight.w400,
-            gradientColors: isDarkMode
-                ? [AppColors.cardElevatedDark]
-                : [AppColors.lightGreen],
-            iconBackgroundColor: isDarkMode
-                ? AppColors.backgroundDark
-                : AppColors.whiteColor,
-            numberOfReports: totalreports,
-          ),
-          const SizedBox(height: 14),
-          // _ActionButton(
-          //   textColor: isDarkMode
-          //       ? AppColors.textPrimaryDark
-          //       : AppColors.textPrimaryLight,
-          //   onTap: () => Navigator.pushNamed(context, AppRoutes.profile),
-          //   icon: Iconsax.profile_2user,
-          //   title: locale.myProfile,
-          //   subtitle: locale.viewPersonalDataSettings,
-          //   iconColor: AppColors.primary,
-          //   fontWeight: FontWeight.w400,
-          //   gradientColors: isDarkMode
-          //       ? [AppColors.cardElevatedDark]
-          //       : [AppColors.veryLightGreen],
-          //   iconBackgroundColor: isDarkMode
-          //       ? AppColors.backgroundDark
-          //       : AppColors.whiteColor,
-          // ),
-          // const SizedBox(height: 14),
-          // _ActionButton(
-          //   textColor: isDarkMode
-          //       ? AppColors.textPrimaryDark
-          //       : AppColors.textPrimaryLight,
-          //   onTap: () => Navigator.pushNamed(context, AppRoutes.matches),
-          //   icon: Icons.stadium_rounded,
-          //   title: "Matches",
-          //   subtitle: "View Todays matches",
-          //   iconColor: AppColors.primary,
-          //   fontWeight: FontWeight.w400,
-          //   gradientColors: isDarkMode
-          //       ? [AppColors.cardElevatedDark]
-          //       : [AppColors.lightGreen],
-          //   iconBackgroundColor: isDarkMode
-          //       ? AppColors.backgroundDark
-          //       : AppColors.whiteColor,
-          // ),
         ],
       ),
     );
   }
 }
 
-class _ActionButton extends StatefulWidget {
-  final IconData icon;
-  final String title;
-  final Color iconColor;
-  final Color iconBackgroundColor;
-  final String subtitle;
-  final Color textColor;
-  final FontWeight fontWeight;
-  final int? numberOfReports;
-  final List<Color> gradientColors;
-  final VoidCallback? onTap;
-
-  const _ActionButton({
+class _QuickActionTile extends StatefulWidget {
+  const _QuickActionTile({
+    required this.index,
     required this.icon,
-    this.iconColor = AppColors.whiteColor,
-    this.iconBackgroundColor = Colors.white24,
+    required this.iconColor,
+    required this.iconBackground,
     required this.title,
     required this.subtitle,
-    required this.textColor,
-    this.fontWeight = FontWeight.bold,
-    this.numberOfReports,
-    this.onTap,
-    this.gradientColors = const [
-      AppColors.gradientStart,
-      AppColors.gradientEnd,
-    ],
+    required this.onTap,
   });
 
+  final int index;
+  final IconData icon;
+  final Color iconColor;
+  final Color iconBackground;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
   @override
-  State<_ActionButton> createState() => _ActionButtonState();
+  State<_QuickActionTile> createState() => _QuickActionTileState();
 }
 
-class _ActionButtonState extends State<_ActionButton>
+class _QuickActionTileState extends State<_QuickActionTile>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scale;
-  late Animation<double> _fade;
-  late Animation<Offset> _slide;
+  late final AnimationController _controller;
+  late final Animation<double> _scale;
+  late final Animation<double> _fade;
 
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       duration: const Duration(milliseconds: 450),
       vsync: this,
     );
-
     _scale = Tween<double>(
-      begin: 0.95,
+      begin: 0.85,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 
-    _fade = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-
-    _slide = Tween<Offset>(
-      begin: const Offset(0, 0.2),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 80 * widget.index), () {
       if (mounted) _controller.forward();
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
-    return InkWell(
-      onTap: widget.onTap,
-      borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-      child: FadeTransition(
-        opacity: _fade,
-        child: SlideTransition(
-          position: _slide,
-          child: ScaleTransition(
-            scale: _scale,
-            child: Container(
-              padding: const EdgeInsets.all(AppThemeConsts.padding16md),
-              decoration: BoxDecoration(
-                color: widget.gradientColors.length != 1
-                    ? null
-                    : widget.gradientColors[0],
-                boxShadow: [
-                  BoxShadow(
-                    color: isDarkMode
-                        ? AppColors.shadowDark.withAlpha(76)
-                        : const Color.fromARGB(20, 0, 0, 0),
-                    blurRadius: 12,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-                gradient: widget.gradientColors.length == 1
-                    ? null
-                    : LinearGradient(colors: widget.gradientColors),
-                borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 28,
-                    backgroundColor: widget.iconBackgroundColor,
-                    child: Icon(widget.icon, size: 30, color: widget.iconColor),
-                  ),
-                  const SizedBox(width: 18),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.title,
-                          style: TextStyle(
-                            color: widget.textColor,
-                            fontSize: 18,
-                            fontWeight: widget.fontWeight,
-                          ),
-                        ),
-                        Text(
-                          widget.subtitle,
-                          style: TextStyle(
-                            color: widget.textColor.withAlpha(178),
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (widget.numberOfReports != null) ...[
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isDarkMode
-                            ? AppColors.cardDark
-                            : AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(
-                          AppThemeConsts.radius16md,
-                        ),
-                      ),
-                      child: Text(
-                        widget.numberOfReports.toString(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return FadeTransition(
+      opacity: _fade,
+      child: ScaleTransition(
+        scale: _scale,
+        child: InkWell(
+          onTap: widget.onTap,
+          borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: widget.iconBackground,
+                    borderRadius: BorderRadius.circular(
+                      AppThemeConsts.radius16md,
+                    ),
+                  ),
+                  child: Icon(widget.icon, color: widget.iconColor, size: 24),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  widget.title,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w700,
+                    color: isDarkMode
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  widget.subtitle,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    color: isDarkMode
+                        ? AppColors.textSecondaryDark
+                        : AppColors.mediumGray,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

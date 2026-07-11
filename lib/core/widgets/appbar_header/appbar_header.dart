@@ -8,11 +8,14 @@ class AppbarHeader extends StatelessWidget {
     super.key,
     required this.isDarkMode,
     required this.title,
+
     this.widget,
+    required this.showBackButton,
   });
   final bool isDarkMode;
   final String title;
   final Widget? widget;
+  final bool showBackButton;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,37 +41,40 @@ class AppbarHeader extends StatelessWidget {
           40,
         ),
         child: Row(
+          crossAxisAlignment: .center,
+          mainAxisAlignment: showBackButton ? .spaceBetween : .center,
           children: [
             // Back button
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.white.withAlpha((0.2 * 255).toInt()),
-                borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-              ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: AppColors.whiteColor,
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    color: AppColors.whiteColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+            if (showBackButton)
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha((0.2 * 255).toInt()),
+                  borderRadius: BorderRadius.circular(
+                    AppThemeConsts.radius16lg,
                   ),
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: AppColors.whiteColor,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            Center(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color: AppColors.whiteColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
             // const SizedBox(width: 48),
-            widget ?? const SizedBox(width: 48),
+            // widget ?? const SizedBox(width: 48),
           ],
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path/path.dart';
 
 import 'package:stadium_eye/app.dart';
+import 'package:stadium_eye/features/profile/presentation/bloc/userprofile_bloc.dart';
 
 import 'package:stadium_eye/features/report/presentation/bloc/report_bloc.dart';
 import 'package:stadium_eye/features/settings/data/repositories/settings_repository_impl.dart';
@@ -9,7 +11,10 @@ import 'package:stadium_eye/features/settings/data/repositories/settings_reposit
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 
+import 'features/home/presentation/bloc/home_bloc.dart';
 import 'features/matches/presentation/cubit/matches_cubit.dart';
+import 'features/matches/presentation/cubit/nearby_stadium_cubit.dart';
+import 'features/report/presentation/bloc/report_event.dart';
 import 'features/settings/presentation/bloc/settings_cubit.dart';
 import 'injection_container.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -44,6 +49,11 @@ void main() async {
                 ..loadSettings(),
         ),
         BlocProvider(create: (context) => sl<ReportsBloc>()),
+
+        BlocProvider(create: (context) => HomeBloc(getHomeDataUseCase: sl())),
+        BlocProvider(create: (context) => sl<ReportsBloc>()),
+        BlocProvider(create: (context) => sl<NearbyStadiumCubit>()),
+        BlocProvider(create: (context) => sl<UserprofileBloc>()),
       ],
       child: const MyApp(),
     ),

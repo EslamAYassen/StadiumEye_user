@@ -749,4 +749,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get somethingWentWrongTitle => 'حدث خطأ ما';
+
+  @override
+  String get areYouSureYouWantToLogout => "هل انت متاكد من تسجيل الخروج ؟";
 }

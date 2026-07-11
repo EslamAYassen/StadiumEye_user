@@ -1549,6 +1549,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something Went Wrong'**
   String get somethingWentWrongTitle;
+
+  String get dashboard => localeName == 'ar' ? 'لوحة التحكم' : 'Dashboard';
+
+  String get areYouSureYouWantToLogout;
 }
 
 class _AppLocalizationsDelegate

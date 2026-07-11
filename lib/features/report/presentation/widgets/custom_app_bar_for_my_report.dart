@@ -14,7 +14,9 @@ class CustomAppBarForMyReport extends StatelessWidget {
     this.totalReports = 3,
     this.monthReports = 3,
     this.onBackPressed,
+    required this.showBackButton,
   });
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -31,22 +33,26 @@ class CustomAppBarForMyReport extends StatelessWidget {
       ),
       pinned: true,
       backgroundColor: isDarkMode ? AppColors.surfaceDark : AppColors.primary,
-      leading: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white.withAlpha(61),
-            borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-          ),
-          child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: AppColors.whiteColor,
-            ),
-            onPressed: onBackPressed ?? () => Navigator.pop(context),
-          ),
-        ),
-      ),
+      leading: showBackButton
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(61),
+                  borderRadius: BorderRadius.circular(
+                    AppThemeConsts.radius16lg,
+                  ),
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: AppColors.whiteColor,
+                  ),
+                  onPressed: onBackPressed ?? () => Navigator.pop(context),
+                ),
+              ),
+            )
+          : null,
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final double top = constraints.biggest.height;

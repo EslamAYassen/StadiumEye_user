@@ -12,16 +12,8 @@ import '../../../../core/widgets/appbar_header/appbar_header.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SettingsView();
-  }
-}
-
-class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
+  const SettingsPage({super.key, this.fromNormalNav = false});
+  final bool fromNormalNav;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +27,11 @@ class SettingsView extends StatelessWidget {
         child: Column(
           children: [
             // Header with gradient background
-            AppbarHeader(isDarkMode: isDarkMode, title: locale.settings),
+            AppbarHeader(
+              isDarkMode: isDarkMode,
+              title: locale.settings,
+              showBackButton: fromNormalNav,
+            ),
             // Settings content
             Expanded(
               child: BlocBuilder<SettingsCubit, SettingsState>(

@@ -23,8 +23,8 @@ import '../bloc/report_state.dart';
 enum ReportFilter { all, open, inProgress, resolved, closed, rejected }
 
 class MyReportsPage extends StatefulWidget {
-  const MyReportsPage({super.key, required this.totalReports});
-  final int totalReports;
+  const MyReportsPage({super.key, this.fromNormalNav = false});
+  final bool fromNormalNav;
 
   @override
   State<MyReportsPage> createState() => _MyReportsPageState();
@@ -113,8 +113,10 @@ class _MyReportsPageState extends State<MyReportsPage> {
             return CustomScrollView(
               slivers: [
                 CustomAppBarForMyReport(
-                  totalReports: widget.totalReports,
-                  monthReports: 0,
+                  showBackButton: widget.fromNormalNav,
+                  totalReports: state.items?.length ?? 0,
+                  // widget.totalReports,
+                  monthReports: state.items?.length ?? 0,
                 ),
                 // Filter Chips
                 SliverToBoxAdapter(

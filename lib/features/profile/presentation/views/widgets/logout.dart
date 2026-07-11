@@ -55,69 +55,72 @@ class _LogoutButtonState extends State<LogoutButton>
   void _onLogout(BuildContext context) {
     showDialog(
       context: context,
-      builder: (dialogCtx) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
-        ),
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.errorLight,
-                borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
+      builder: (dialogCtx) {
+        final locale = AppLocalizations.of(context)!;
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppThemeConsts.radius16lg),
+          ),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.errorLight,
+                  borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
+                ),
+                child: const Icon(
+                  Iconsax.logout_1_copy,
+                  color: AppColors.error,
+                  size: 20,
+                ),
               ),
-              child: const Icon(
-                Iconsax.logout_1_copy,
-                color: AppColors.error,
-                size: 20,
+              const SizedBox(width: 12),
+              Text(
+                AppLocalizations.of(context)!.logout,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+          content: Text(
+            locale.areYouSureYouWantToLogout,
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.mediumGray,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogCtx),
+              child: Text(
+                AppLocalizations.of(context)!.reset,
+                style: const TextStyle(color: AppColors.mediumGray),
               ),
             ),
-            const SizedBox(width: 12),
-            Text(
-              AppLocalizations.of(context)!.logout,
-              style: const TextStyle(fontSize: 18),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.error,
+                foregroundColor: AppColors.whiteColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(dialogCtx);
+                context.read<AuthBloc>().add(const LogoutEvent());
+                context.read<SettingsCubit>().resetSettings();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.about,
+                  (route) => false,
+                );
+              },
+              child: Text(AppLocalizations.of(context)!.logout),
             ),
           ],
-        ),
-        content: Text(
-          'Are you sure you want to logout?',
-          style: TextStyle(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? AppColors.textSecondaryDark
-                : AppColors.mediumGray,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogCtx),
-            child: Text(
-              AppLocalizations.of(context)!.reset,
-              style: const TextStyle(color: AppColors.mediumGray),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.error,
-              foregroundColor: AppColors.whiteColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppThemeConsts.radius8sm),
-              ),
-            ),
-            onPressed: () {
-              Navigator.pop(dialogCtx);
-              context.read<AuthBloc>().add(const LogoutEvent());
-              context.read<SettingsCubit>().resetSettings();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoutes.about,
-                (route) => false,
-              );
-            },
-            child: Text(AppLocalizations.of(context)!.logout),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

@@ -750,4 +750,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get somethingWentWrongTitle => 'Something Went Wrong';
+
+  @override
+  String get areYouSureYouWantToLogout => "Are you sure you want to logout";
 }

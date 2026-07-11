@@ -30,7 +30,7 @@ class NavigatorPage extends StatelessWidget {
         if (state is AuthLodingForCheckAuthStatus || state is AuthInitial) {
           return const SplashScreen();
         } else if (state is AuthAuthenticated) {
-          return const HomePage();
+          return const HomeShell();
         } else {
           return const AboutUsPage();
         }

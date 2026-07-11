@@ -45,7 +45,7 @@ abstract class AppRoutes {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => const HomeShell());
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case register:
@@ -56,32 +56,37 @@ abstract class AppRoutes {
       case forgetPasswordPage:
         return MaterialPageRoute(builder: (_) => const ForgetPasswordPage());
       case addReportPage:
-        return MaterialPageRoute(builder: (_) => const AddReportPage());
-      case myReports:
-        final totalReports = settings.arguments as int;
+        // final fromNormalNav = settings.arguments as bool? ?? false;
         return MaterialPageRoute(
-          builder: (_) => MyReportsPage(totalReports: totalReports),
+          builder: (_) => const AddReportPage(fromNormalNav: true),
+        );
+      case myReports:
+        // final totalReports = settings.arguments as int;
+        // final fromNormalNav = settings.arguments as bool? ?? false;
+
+        return MaterialPageRoute(
+          builder: (_) => const MyReportsPage(fromNormalNav: true),
         );
       case reportDetails:
         final data = settings.arguments as TicketEntity;
         return MaterialPageRoute(builder: (_) => ReportPage(data: data));
       case profile:
         return MaterialPageRoute(
- 
           builder: (_) => BlocProvider(
- //TODO: change this shit
             create: (context) => UserprofileBloc(
-        getMyUserProfile: GetUserProfileUseCase(
-          UserprofileRepoImpl(ProfileRemoteDsImpl()),
-        ),
-      ),
+              getMyUserProfile: GetUserProfileUseCase(
+                UserprofileRepoImpl(ProfileRemoteDsImpl()),
+              ),
+            ),
             child: const ProfileScreenBody(),
           ),
         );
       case about:
         return MaterialPageRoute(builder: (_) => const AboutUsPage());
       case settingsPage:
-        return MaterialPageRoute(builder: (_) => const SettingsPage());
+        return MaterialPageRoute(
+          builder: (_) => const SettingsPage(fromNormalNav: true),
+        );
       case matches:
         return MaterialPageRoute(builder: (_) => const MatchesPage());
       default:

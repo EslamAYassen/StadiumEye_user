@@ -7,7 +7,8 @@ import 'package:stadium_eye/theme/app_theme_consts.dart';
 import '../../../../core/widgets/appbar_header/appbar_header.dart';
 
 class AddReportPage extends StatelessWidget {
-  const AddReportPage({super.key});
+  const AddReportPage({super.key, this.fromNormalNav = false});
+  final bool fromNormalNav;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class AddReportPage extends StatelessWidget {
               AppbarHeader(
                 isDarkMode: isDarkMode,
                 title: AppLocalizations.of(context)!.addReport,
+                showBackButton: fromNormalNav,
               ),
               const SizedBox(height: 20),
               const Padding(

@@ -9,11 +9,14 @@ import 'core/storage/secure_storage.dart';
 import 'features/auth/auth_injection.dart';
 import 'features/home/home_injection.dart';
 import 'features/matches/matches_injection.dart';
+import 'features/profile/profile_injection.dart';
 import 'features/report/reports_injection.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
+  //
+
   // ==================== Core Dependencies ====================
 
   // Secure Storage
@@ -50,4 +53,7 @@ Future<void> initDependencies() async {
 
   // Initialize Matches feature
   await initMatchesDependencies();
+
+  // Init Profile
+  await initProfileDependencies();
 }

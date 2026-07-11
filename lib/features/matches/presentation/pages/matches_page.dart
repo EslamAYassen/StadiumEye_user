@@ -60,7 +60,11 @@ class MatchesPage extends StatelessWidget {
   Widget _buildLoadingState(bool isDarkMode, AppLocalizations locale) {
     return Column(
       children: [
-        AppbarHeader(isDarkMode: isDarkMode, title: locale.matches),
+        AppbarHeader(
+          isDarkMode: isDarkMode,
+          title: locale.matches,
+          showBackButton: true,
+        ),
         const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,6 +107,7 @@ class MatchesPage extends StatelessWidget {
                 onPressed: () => _showFilterDialog(context, state),
               ),
             ),
+            showBackButton: true,
           ),
           const SizedBox(height: AppThemeConsts.padding16md),
 
@@ -423,7 +428,11 @@ class MatchesPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AppbarHeader(isDarkMode: isDarkMode, title: locale.matches),
+              AppbarHeader(
+                isDarkMode: isDarkMode,
+                title: locale.matches,
+                showBackButton: true,
+              ),
             ],
           ),
           Image.asset(width: 100, height: 100, AppConsts.errorImage),
