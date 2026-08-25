@@ -23,7 +23,7 @@ abstract class ReportsRepository {
     required String observations,
     // required String? challenges,
     // required String? lessonsLearned,
-    String? modelType,
+    // String? modelType,
     String? locationLink,
     List<String>? ticketVideosPaths,
     List<String>? ticketImagesPaths,

@@ -25,7 +25,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     on<LoadMyReportsEvent>(_onLoadMyReports);
     on<RefreshMyReportsEvent>(_onRefreshMyReports);
     on<LoadStadiumsEvent>(_onLoadStadiums);
-    on<LoadCountriesEvent>(_onLoadCountries);
+    // on<LoadCountriesEvent>(_onLoadCountries);
     on<CreateReportEvent>(_onCreateReport);
     on<LoadCitiesEvent>(_onLoadCities);
   }
@@ -68,19 +68,19 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     );
   }
 
-  Future<void> _onLoadCountries(
-    LoadCountriesEvent event,
-    Emitter<ReportsState> emit,
-  ) async {
-    emit(const ReportsLoading());
+  // Future<void> _onLoadCountries(
+  //   LoadCountriesEvent event,
+  //   Emitter<ReportsState> emit,
+  // ) async {
+  //   emit(const ReportsLoading());
 
-    final result = await getCountriesUseCase();
+  //   final result = await getCountriesUseCase();
 
-    result.fold(
-      (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
-      (countries) => emit(CountriesLoaded(countries)),
-    );
-  }
+  //   result.fold(
+  //     (failure) => emit(ReportsError(_mapFailureToMessage(failure))),
+  //     (countries) => emit(CountriesLoaded(countries)),
+  //   );
+  // }
 
   Future<void> _onLoadCities(
     LoadCitiesEvent event,

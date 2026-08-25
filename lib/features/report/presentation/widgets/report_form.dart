@@ -10,7 +10,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_theme_consts.dart';
 import '../../domain/entities/city_entity.dart';
-import '../../domain/entities/country_entity.dart';
 import '../../domain/entities/stadium_list_entity.dart';
 import '../../domain/usecases/create_report_usecase.dart';
 import '../bloc/report_bloc.dart';
@@ -31,23 +30,23 @@ class _ReportFormState extends State<ReportForm> {
   final _formKey = GlobalKey<FormState>();
 
   // Selected values
-  String? selectedCountryId;
+  // String? selectedCountryId;
   String? selectedCityId;
   String? selectedStadiumId;
   String? selectedArea;
   // String? selectedTicketType;
-  String? selectedModelType;
+  // String? selectedModelType;
   bool selectedMode = false;
 
   // Stored data to prevent loss on state changes
-  List<CountryEntity> _countries = [];
+  // List<CountryEntity> _countries = [];
   List<CityEntity> _cities = [];
   List<CityEntity> _filteredCities = [];
   List<StadiumListEntity> _stadiums = [];
   List<StadiumListEntity> _filteredStadiums = [];
 
   // Loading states
-  bool _isLoadingCountries = false;
+  // bool _isLoadingCountries = false;
   bool _isLoadingCities = false;
   bool _isLoadingStadiums = false;
 
@@ -62,11 +61,11 @@ class _ReportFormState extends State<ReportForm> {
   @override
   void initState() {
     super.initState();
-    if (selectedMode == true) {
-      selectedModelType = null;
-    }
+    // if (selectedMode == true) {
+    //   selectedModelType = null;
+    // }
 
-    context.read<ReportsBloc>().add(const LoadCountriesEvent());
+    context.read<ReportsBloc>().add(const LoadCitiesEvent());
     // Add listeners to text controllers
     _observationsCtrl.addListener(_checkFormCompletion);
     // _challengesCtrl.addListener(_checkFormCompletion);
@@ -87,7 +86,7 @@ class _ReportFormState extends State<ReportForm> {
 
   void _checkFormCompletion() {
     final isComplete =
-        selectedCountryId != null &&
+        // selectedCountryId != null &&
         selectedCityId != null &&
         selectedStadiumId != null &&
         selectedArea != null &&
@@ -134,15 +133,15 @@ class _ReportFormState extends State<ReportForm> {
       //   );
       //   return;
       // }
-      if (selectedModelType == null && selectedMode == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please select a model type'),
-            backgroundColor: Colors.red,
-          ),
-        );
-        return;
-      }
+      // if (selectedModelType == null && selectedMode == true) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(
+      //       content: Text('Please select a model type'),
+      //       backgroundColor: Colors.red,
+      //     ),
+      //   );
+      //   return;
+      // }
 
       context.read<ReportsBloc>().add(
         CreateReportEvent(
@@ -150,7 +149,7 @@ class _ReportFormState extends State<ReportForm> {
             stadiumId: selectedStadiumId ?? '',
             area: selectedArea ?? '',
             // ticketType: selectedTicketType ,
-            modelType: selectedModelType,
+            // modelType: selectedModelType,
             observations: _observationsCtrl.text.trim(),
             // challenges: _challengesCtrl.text.trim(),
             // lessonsLearned: _lessonsCtrl.text.trim(),
@@ -164,30 +163,30 @@ class _ReportFormState extends State<ReportForm> {
     }
   }
 
-  void _onCountrySelected(String? countryId) {
-    setState(() {
-      selectedCountryId = countryId;
-      selectedCityId = null; // Reset city
-      selectedStadiumId = null; // Reset stadium
+  // void _onCountrySelected(String? countryId) {
+  //   setState(() {
+  //     // selectedCountryId = countryId;
+  //     selectedCityId = null; // Reset city
+  //     selectedStadiumId = null; // Reset stadium
 
-      // Filter cities by selected country
-      if (countryId != null) {
-        _filteredCities = _cities
-            .where((city) => city.countryId == countryId)
-            .toList();
-        _filteredStadiums = []; // Clear stadiums
-      } else {
-        _filteredCities = [];
-        _filteredStadiums = [];
-      }
-    });
+  //     // Filter cities by selected country
+  //     if (countryId != null) {
+  //       _filteredCities = _cities
+  //           .where((city) => city.countryId == countryId)
+  //           .toList();
+  //       _filteredStadiums = []; // Clear stadiums
+  //     } else {
+  //       _filteredCities = [];
+  //       _filteredStadiums = [];
+  //     }
+  //   });
 
-    // Load cities if not loaded yet
-    if (countryId != null && _cities.isEmpty) {
-      context.read<ReportsBloc>().add(const LoadCitiesEvent());
-    }
-    _checkFormCompletion();
-  }
+  //   // Load cities if not loaded yet
+  //   if (countryId != null && _cities.isEmpty) {
+  //     context.read<ReportsBloc>().add(const LoadCitiesEvent());
+  //   }
+  //   _checkFormCompletion();
+  // }
 
   void _onCitySelected(String? cityId) {
     setState(() {
@@ -232,12 +231,12 @@ class _ReportFormState extends State<ReportForm> {
   //   _checkFormCompletion();
   // }
 
-  void _onModelTypeSelected(String? modelType) {
-    setState(() {
-      selectedModelType = modelType;
-    });
-    _checkFormCompletion();
-  }
+  // void _onModelTypeSelected(String? modelType) {
+  //   // setState(() {
+  //   //   selectedModelType = modelType;
+  //   // });
+  //   _checkFormCompletion();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -245,26 +244,25 @@ class _ReportFormState extends State<ReportForm> {
     return BlocConsumer<ReportsBloc, ReportsState>(
       listener: (context, state) {
         debugPrint('State: $state');
-        if (state is CountriesLoaded) {
-          setState(() {
-            _countries = state.countries.countries;
-            _onCountrySelected(_countries.first.id);
-            // selectedCountryId ??= _countries.isNotEmpty
-            //     ? _countries.first.id
-            //     : null;
-            _isLoadingCountries = false;
-          });
-        } else if (state is CitiesLoaded) {
+        // if (state is CountriesLoaded) {
+        //   setState(() {
+        //     _countries = state.countries.countries;
+        //     _onCountrySelected(_countries.first.id);
+        //     // selectedCountryId ??= _countries.isNotEmpty
+        //     //     ? _countries.first.id
+        //     //     : null;
+        //     _isLoadingCountries = false;
+        //   });
+        // } else
+        if (state is CitiesLoaded) {
           setState(() {
             _cities = state.cities.cities;
             _isLoadingCities = false;
 
-            // Filter by selected country
-            if (selectedCountryId != null) {
-              _filteredCities = _cities
-                  .where((city) => city.countryId == selectedCountryId)
-                  .toList();
-            }
+            // // Filter by selected country
+            // if (selectedCountryId != null) {
+            // }
+            _filteredCities = _cities;
           });
         } else if (state is StadiumsLoaded) {
           setState(() {
@@ -279,10 +277,7 @@ class _ReportFormState extends State<ReportForm> {
             }
           });
         } else if (state is ReportsLoading) {
-          // Determine what's loading
-          if (_countries.isEmpty) {
-            setState(() => _isLoadingCountries = true);
-          } else if (_cities.isEmpty) {
+          if (_cities.isEmpty) {
             setState(() => _isLoadingCities = true);
           } else if (_stadiums.isEmpty) {
             setState(() => _isLoadingStadiums = true);
@@ -297,7 +292,7 @@ class _ReportFormState extends State<ReportForm> {
           ).show();
 
           setState(() {
-            _isLoadingCountries = false;
+            // _isLoadingCountries = false;
             _isLoadingCities = false;
             _isLoadingStadiums = false;
           });
@@ -318,19 +313,19 @@ class _ReportFormState extends State<ReportForm> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //! Country Dropdown
-              _buildLabel(locale.country),
-              const SizedBox(height: 8),
-              _isLoadingCountries
-                  ? const Center(
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: LottieLoader(),
-                      ),
-                    )
-                  : _buildCountryDropdown(),
-              const SizedBox(height: 26),
+              // //! Country Dropdown
+              // _buildLabel(locale.country),
+              // const SizedBox(height: 8),
+              // _isLoadingCountries
+              //     ? const Center(
+              //         child: SizedBox(
+              //           width: 40,
+              //           height: 40,
+              //           child: LottieLoader(),
+              //         ),
+              //       )
+              //     : _buildCountryDropdown(),
+              // const SizedBox(height: 26),
 
               //! City Dropdown
               _buildLabel(locale.city),
@@ -372,13 +367,13 @@ class _ReportFormState extends State<ReportForm> {
               // _buildTicketTypeDropdown(),
               // const SizedBox(height: 26),
 
-              //! Model Type Dropdown
-              if (selectedMode == true) ...[
-                _buildLabel(locale.modelType),
-                const SizedBox(height: 8),
-                _buildModelTypeDropdown(),
-                const SizedBox(height: 26),
-              ],
+              // //! Model Type Dropdown
+              // if (selectedMode == true) ...[
+              //   _buildLabel(locale.modelType),
+              //   const SizedBox(height: 8),
+              //   _buildModelTypeDropdown(),
+              //   const SizedBox(height: 26),
+              // ],
 
               //! Observations
               _buildLabel(locale.observations),
@@ -419,15 +414,14 @@ class _ReportFormState extends State<ReportForm> {
               //   controller: _lessonsCtrl,
               //   maxLines: 4,
               // ),
-              // const SizedBox(height: 26),
-              //! mode changer
+              // // const SizedBox(height: 26),
+              // //! mode changer
               _buildLabel(locale.modeChanger),
               Switch(
                 value: selectedMode,
                 onChanged: (value) {
                   setState(() {
                     selectedMode = value;
-                    if (value == false) selectedModelType = null;
                   });
                 },
                 activeThumbColor: AppColors.primary,
@@ -465,81 +459,81 @@ class _ReportFormState extends State<ReportForm> {
     );
   }
 
-  Widget _buildCountryDropdown() {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  // Widget _buildCountryDropdown() {
+  //   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppThemeConsts.padding16md,
-      ),
-      decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
-        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-        border: selectedCountryId == null
-            ? Border.all(color: Colors.transparent)
-            : Border.all(color: AppColors.primary, width: 2),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-          value: selectedCountryId,
-          isExpanded: true,
-          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
-          hint: Row(
-            children: [
-              Icon(
-                Icons.public_outlined,
-                color: isDarkMode
-                    ? AppColors.textSecondaryDark
-                    : AppColors.mediumGray,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'Select Country',
-                style: TextStyle(
-                  color: isDarkMode
-                      ? AppColors.textSecondaryDark
-                      : AppColors.mediumGray,
-                ),
-              ),
-            ],
-          ),
-          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
-          items: _countries.map((country) {
-            return DropdownMenuItem(
-              enabled: false,
-              //TODO: change this to work with CustomDropdown
-              value: country.id,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.public_outlined,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    country.nameEn,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: isDarkMode
-                          ? AppColors.textPrimaryDark
-                          : AppColors.textPrimaryLight,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-          onChanged: _onCountrySelected,
-        ),
-      ),
-    );
-  }
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(
+  //       horizontal: AppThemeConsts.padding16md,
+  //     ),
+  //     decoration: BoxDecoration(
+  //       color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+  //       borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+  //       border: selectedCountryId == null
+  //           ? Border.all(color: Colors.transparent)
+  //           : Border.all(color: AppColors.primary, width: 2),
+  //     ),
+  //     child: DropdownButtonHideUnderline(
+  //       child: DropdownButton<String>(
+  //         borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+  //         value: selectedCountryId,
+  //         isExpanded: true,
+  //         dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+  //         hint: Row(
+  //           children: [
+  //             Icon(
+  //               Icons.public_outlined,
+  //               color: isDarkMode
+  //                   ? AppColors.textSecondaryDark
+  //                   : AppColors.mediumGray,
+  //             ),
+  //             const SizedBox(width: 10),
+  //             Text(
+  //               'Select Country',
+  //               style: TextStyle(
+  //                 color: isDarkMode
+  //                     ? AppColors.textSecondaryDark
+  //                     : AppColors.mediumGray,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
+  //         items: _countries.map((country) {
+  //           return DropdownMenuItem(
+  //             enabled: false,
+  //             //TODO: change this to work with CustomDropdown
+  //             value: country.id,
+  //             child: Row(
+  //               children: [
+  //                 const Icon(
+  //                   Icons.public_outlined,
+  //                   color: AppColors.primary,
+  //                   size: 20,
+  //                 ),
+  //                 const SizedBox(width: 10),
+  //                 Text(
+  //                   country.nameEn,
+  //                   style: TextStyle(
+  //                     fontSize: 15,
+  //                     color: isDarkMode
+  //                         ? AppColors.textPrimaryDark
+  //                         : AppColors.textPrimaryLight,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           );
+  //         }).toList(),
+  //         onChanged: _onCountrySelected,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildCityDropdown() {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final isDisabled = selectedCountryId == null || _filteredCities.isEmpty;
+    final isDisabled = false || _filteredCities.isEmpty;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -576,11 +570,7 @@ class _ReportFormState extends State<ReportForm> {
               ),
               const SizedBox(width: 10),
               Text(
-                selectedCountryId == null
-                    ? 'Select country first'
-                    : _filteredCities.isEmpty
-                    ? 'No cities available'
-                    : 'Select City',
+                _filteredCities.isEmpty ? 'No cities available' : 'Select City',
                 style: TextStyle(
                   color: isDarkMode
                       ? AppColors.textSecondaryDark
@@ -883,79 +873,79 @@ class _ReportFormState extends State<ReportForm> {
   //   );
   // }
 
-  Widget _buildModelTypeDropdown() {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final modelType = [
-      {'value': 'visualPollution', 'label': 'Visual Pollution'},
-      {'value': 'safety', 'label': 'Safety'},
-    ];
+  // Widget _buildModelTypeDropdown() {
+  //   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  //   final modelType = [
+  //     {'value': 'visualPollution', 'label': 'Visual Pollution'},
+  //     {'value': 'safety', 'label': 'Safety'},
+  //   ];
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppThemeConsts.padding16md,
-      ),
-      decoration: BoxDecoration(
-        color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
-        borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-        border: selectedModelType == null
-            ? Border.all(color: Colors.transparent)
-            : Border.all(color: AppColors.primary, width: 2),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
-          value: selectedModelType,
-          isExpanded: true,
-          dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
-          hint: Row(
-            children: [
-              Icon(
-                Icons.model_training_rounded,
-                color: isDarkMode
-                    ? AppColors.textSecondaryDark
-                    : AppColors.mediumGray,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'Select Model Type',
-                style: TextStyle(
-                  color: isDarkMode
-                      ? AppColors.textSecondaryDark
-                      : AppColors.mediumGray,
-                ),
-              ),
-            ],
-          ),
-          icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
-          items: modelType.map((type) {
-            return DropdownMenuItem(
-              value: type['value'],
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.model_training_rounded,
-                    color: AppColors.primary,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    type['label']!,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: isDarkMode
-                          ? AppColors.textPrimaryDark
-                          : AppColors.textPrimaryLight,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-          onChanged: _onModelTypeSelected,
-        ),
-      ),
-    );
-  }
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(
+  //       horizontal: AppThemeConsts.padding16md,
+  //     ),
+  //     decoration: BoxDecoration(
+  //       color: isDarkMode ? AppColors.cardDark : AppColors.lightGray,
+  //       borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+  //       border: selectedModelType == null
+  //           ? Border.all(color: Colors.transparent)
+  //           : Border.all(color: AppColors.primary, width: 2),
+  //     ),
+  //     child: DropdownButtonHideUnderline(
+  //       child: DropdownButton<String>(
+  //         borderRadius: BorderRadius.circular(AppThemeConsts.radius12md),
+  //         value: selectedModelType,
+  //         isExpanded: true,
+  //         dropdownColor: isDarkMode ? AppColors.cardDark : AppColors.whiteColor,
+  //         hint: Row(
+  //           children: [
+  //             Icon(
+  //               Icons.model_training_rounded,
+  //               color: isDarkMode
+  //                   ? AppColors.textSecondaryDark
+  //                   : AppColors.mediumGray,
+  //             ),
+  //             const SizedBox(width: 10),
+  //             Text(
+  //               'Select Model Type',
+  //               style: TextStyle(
+  //                 color: isDarkMode
+  //                     ? AppColors.textSecondaryDark
+  //                     : AppColors.mediumGray,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
+  //         items: modelType.map((type) {
+  //           return DropdownMenuItem(
+  //             value: type['value'],
+  //             child: Row(
+  //               children: [
+  //                 const Icon(
+  //                   Icons.model_training_rounded,
+  //                   color: AppColors.primary,
+  //                   size: 20,
+  //                 ),
+  //                 const SizedBox(width: 10),
+  //                 Text(
+  //                   type['label']!,
+  //                   style: TextStyle(
+  //                     fontSize: 15,
+  //                     color: isDarkMode
+  //                         ? AppColors.textPrimaryDark
+  //                         : AppColors.textPrimaryLight,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           );
+  //         }).toList(),
+  //         onChanged: _onModelTypeSelected,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildLabel(String text) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;

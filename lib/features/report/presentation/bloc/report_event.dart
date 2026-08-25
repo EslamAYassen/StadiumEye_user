@@ -18,9 +18,9 @@ class LoadMyReportsEvent extends ReportsEvent {
   List<Object?> get props => [page, status];
 }
 
-class LoadCountriesEvent extends ReportsEvent {
-  const LoadCountriesEvent();
-}
+// class LoadCountriesEvent extends ReportsEvent {
+//   const LoadCountriesEvent();
+// }
 
 class LoadCitiesEvent extends ReportsEvent {
   const LoadCitiesEvent();

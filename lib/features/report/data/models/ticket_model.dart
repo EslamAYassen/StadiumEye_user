@@ -35,15 +35,15 @@ class TicketModel extends TicketEntity {
 
   factory TicketModel.fromJson(Map<String, dynamic> json) {
     return TicketModel(
-      id: json['_id'] as String,
+      id: json['_id'] as String? ?? '',
       createdBy: json['createdBy'] != null
           ? CreatorModel.fromJson(json['createdBy'] as Map<String, dynamic>)
           : null,
       stadium: StadiumModel.fromJson(json['stadium'] as Map<String, dynamic>),
-      area: json['area'] as String,
+      area: json['area'] as String? ?? '',
       ticketType: json['ticketType'] as String? ?? '',
-      status: json['status'] as String,
-      observations: json['observations'] as String,
+      status: json['status'] as String? ?? '',
+      observations: json['observations'] as String? ?? '',
       challenges: json['challenges'] as String? ?? '',
       lessonsLearned: json['lessonsLearned'] as String? ?? '',
       ticketVideos: (json['ticketVideos'] as List?)?.cast<String>() ?? [],
@@ -69,11 +69,13 @@ class TicketModel extends TicketEntity {
       department: json['department'] as String?,
       confidence: (json['confidence'] as num?)?.toDouble(),
       textDetection: json['textDetection'] != null
-          ? json['textDetection'] is List
-                ? TextDetectionModel.fromJson(
-                    (json['textDetection'] as List? ?? [])[0]
-                        as Map<String, dynamic>,
-                  )
+          ? json['textDetection'] is List?
+                ? (json['textDetection'] as List).isEmpty
+                      ? null
+                      : TextDetectionModel.fromJson(
+                          ((json['textDetection'] as List? ?? [])[0]
+                              as Map<String, dynamic>),
+                        )
                 : TextDetectionModel.fromJson(
                     json['textDetection'] as Map<String, dynamic>,
                   )

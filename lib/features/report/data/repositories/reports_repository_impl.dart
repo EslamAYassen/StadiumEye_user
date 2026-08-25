@@ -98,7 +98,7 @@ class ReportsRepositoryImpl implements ReportsRepository {
     // required String? challenges,
     // required String? lessonsLearned,
     required bool mode,
-    String? modelType,
+    // String? modelType,
     String? locationLink,
     List<String>? ticketVideosPaths,
     List<String>? ticketImagesPaths,
@@ -116,11 +116,12 @@ class ReportsRepositoryImpl implements ReportsRepository {
         observations: observations,
         // challenges: challenges,
         // lessonsLearned: lessonsLearned,
-        modelType: modelType,
+        // modelType: modelType,
         locationLink: locationLink,
         ticketVideosPaths: ticketVideosPaths,
         ticketImagesPaths: ticketImagesPaths,
-        ticketVoicesPaths: ticketVoicesPaths, mode: mode,
+        ticketVoicesPaths: ticketVoicesPaths,
+        mode: mode,
       );
       return Right(ticket);
     } on Exception catch (e) {

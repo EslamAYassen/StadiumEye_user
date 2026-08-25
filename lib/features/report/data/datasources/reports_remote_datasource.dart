@@ -24,7 +24,7 @@ abstract class ReportsRemoteDataSource {
     // required String? challenges,
     // required String? lessonsLearned,
     required bool mode,
-    String? modelType,
+    // String? modelType,
     String? locationLink,
     List<String>? ticketVideosPaths,
     List<String>? ticketImagesPaths,
@@ -89,7 +89,7 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
     // required String? challenges,
     // required String? lessonsLearned,
     required bool mode,
-    String? modelType,
+    // String? modelType,
     String? locationLink,
     List<String>? ticketVideosPaths,
     List<String>? ticketImagesPaths,
@@ -105,7 +105,7 @@ class ReportsRemoteDataSourceImpl implements ReportsRemoteDataSource {
         // 'challenges': challenges,
         // 'lessonsLearned': lessonsLearned,
         'mode': mode ? 'ai' : 'manual',
-        if (modelType != null) 'modelType': modelType,
+        // if (modelType != null) 'modelType': modelType,
         if (locationLink != null) 'locationLink': locationLink,
       });
 
